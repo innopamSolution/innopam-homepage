@@ -1,0 +1,6 @@
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- diagonal line: top-left to bottom-right -->
+  <line x1="1.5" y1="1.5" x2="10.2" y2="10.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" opacity="0.9"/>
+  <!-- L-shape: bottom-left corner + right edge -->
+  <polyline points="1.1,10.7 10.7,10.7 10.7,1.1" stroke="currentColor" stroke-width="1.8" stroke-miterlimit="20" stroke-linecap="square" fill="none" opacity="0.9"/>
+</svg>
