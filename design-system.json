@@ -1,0 +1,122 @@
+{
+  "name": "Innopam Design System",
+  "version": "1.0.0",
+  "description": "Design tokens for Innopam homepage renewal",
+  "colors": {
+    "neutral": {
+      "100": "#FFFFFF",
+      "200": "#F8FAFF",
+      "300": "#F1F3F7",
+      "400": "#E1E4ED",
+      "600": "#6D758F"
+    },
+    "brand": {
+      "blue": "#4262FF",
+      "blueLight": "#03C7FD",
+      "indigo": "#5871ED"
+    },
+    "background": {
+      "darkNavy": "#0B1225",
+      "darkBg": "#1C193F",
+      "black": "#000000",
+      "white": "#FFFFFF",
+      "lightBlue": "#EEF1FF",
+      "lightGray": "#F8F8F8"
+    },
+    "text": {
+      "primary": "#000000",
+      "secondary": "#444444",
+      "muted": "#6D758F",
+      "white": "#FFFFFF",
+      "whiteAlpha25": "rgba(255,255,255,0.25)",
+      "whiteAlpha40": "rgba(255,255,255,0.40)",
+      "link": "#4262FF"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "space": "Space Grotesk",
+      "pretendard": "Pretendard",
+      "inter": "Inter",
+      "notoSansKR": "Noto Sans KR"
+    },
+    "styles": {
+      "Display/1/Uppercase/SemiBold": {
+        "family": "Inter",
+        "weight": 600,
+        "size": 12,
+        "lineHeight": 18,
+        "letterSpacing": 8
+      },
+      "Display/3/Regular": {
+        "family": "Inter",
+        "weight": 400,
+        "size": 16,
+        "lineHeight": 22,
+        "letterSpacing": 0
+      },
+      "Display/7/SemiBold": {
+        "family": "Inter",
+        "weight": 600,
+        "size": 30,
+        "lineHeight": 36,
+        "letterSpacing": 0
+      },
+      "hero": {
+        "family": "Pretendard",
+        "weight": 900,
+        "size": 56,
+        "lineHeight": 1.1
+      },
+      "sectionTitle": {
+        "family": "Space Grotesk",
+        "weight": 300,
+        "size": 40,
+        "lineHeight": 48
+      },
+      "body": {
+        "family": "Pretendard",
+        "weight": 400,
+        "size": 16,
+        "lineHeight": 1.4
+      },
+      "caption": {
+        "family": "Space Grotesk",
+        "weight": 700,
+        "size": 14,
+        "lineHeight": "normal",
+        "letterSpacing": 1.2
+      }
+    }
+  },
+  "spacing": {
+    "section": {
+      "paddingX": 88,
+      "paddingY": 100,
+      "gap": 120
+    },
+    "container": {
+      "maxWidth": 1440,
+      "innerWidth": 1280
+    }
+  },
+  "effects": {
+    "dropShadow": {
+      "type": "DROP_SHADOW",
+      "color": "rgba(0,0,0,0.15)",
+      "offsetX": 0,
+      "offsetY": 4,
+      "blur": 8,
+      "spread": 0
+    }
+  },
+  "borderRadius": {
+    "button": "50px",
+    "card": "8px",
+    "cardLarge": "12px",
+    "icon": "6px"
+  },
+  "gradients": {
+    "brandButton": "linear-gradient(27.5deg, #4262FF 0%, #03C7FD 50%, #4262FF 100%)"
+  }
+}
