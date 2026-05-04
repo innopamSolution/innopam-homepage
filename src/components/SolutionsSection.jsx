@@ -2,12 +2,13 @@
 // All spacing/padding/border values taken directly from Figma
 import { useState } from "react";
 import SectionLabel from './SectionLabel';
+import { asset } from '../utils/asset';
 
 const solutions = [
   {
     id: 0,
     title: "도시변화 모니터링",
-    image: "/assets/solution-city.jpg",
+    image: asset('assets/solution-city.jpg'),
     description: [
       "위성, 항공, 드론 데이터를 AI로 분석해 도시 변화를 실시간으로 탐지하고 관리합니다. ",
       "도시계획·개발제한구역 관리, 불법건축·개발 감시, 수치지형도 고도화 등 행정 효율화에 활용됩니다.",
@@ -18,7 +19,7 @@ const solutions = [
   {
     id: 1,
     title: "농업 분석",
-    image: "/assets/solution-farm.jpg",
+    image: asset('assets/solution-farm.jpg'),
     description: [
       "드론으로 촬영한 영상을 AI가 분석하여 농작물의 종류를 자동으로 식별하고 작물의 재배면적을 산출합니다.",
       "분석된 데이터를 기반으로 지역별 재배 현황을 파악하고 정책 수립과 수급 조절에 활용할 수 있습니다",
@@ -30,7 +31,7 @@ const solutions = [
   {
     id: 2,
     title: "산림, 해양",
-    image: "/assets/solution-eco.jpg",
+    image: asset('assets/solution-eco.jpg'),
     description: [
       "위성·항공 영상 AI 분석으로 산림 변화를 실시간 탐지하고, 불법 벌채·산사태 위험 구역을 모니터링합니다.",
       "해양 분야에서는 해안선 변화, 적조·녹조 발생, 해양 쓰레기 분포를 공간정보 기반으로 분석하여 해양 환경 보전에 기여합니다.",
@@ -41,7 +42,7 @@ const solutions = [
   {
     id: 3,
     title: "재난 안전",
-    image: "/assets/solution-disaster.jpg",
+    image: asset('assets/solution-disaster.jpg'),
     description: [
       "홍수·산불·지진 등 자연재해 발생 전후의 위성·드론 영상을 AI로 분석해 피해 범위와 규모를 신속하게 파악합니다.",
       "재난 대응 기관에 실시간 공간정보를 제공하고, 복구 우선순위 선정 및 자원 배분 의사결정을 지원합니다.",
@@ -100,7 +101,7 @@ export default function SolutionsSection() {
                     {/* Title row */}
                     <div className="relative flex items-start w-full pl-[39px]">
                       <img
-                        src="/assets/arrow-right02.svg"
+                        src={asset('assets/arrow-right02.svg')}
                         alt=""
                         aria-hidden="true"
                         className="absolute"

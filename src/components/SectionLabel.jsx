@@ -1,5 +1,6 @@
 // Figma: h5:before → arrow01.svg (12×12 icon) + label text
 // Used in all section headings: Solutions, Products, Project, News, Clients
+import { asset } from '../utils/asset';
 
 export default function SectionLabel({ text, light = false }) {
   return (
@@ -10,7 +11,7 @@ export default function SectionLabel({ text, light = false }) {
     >
       {/* Figma arrow01.svg — 12×12px, currentColor */}
       <img
-        src="/assets/arrow01.svg"
+        src={asset('assets/arrow01.svg')}
         alt=""
         aria-hidden="true"
         width={12}

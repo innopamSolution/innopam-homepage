@@ -6,11 +6,12 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 
 // ---- Icon Components (from Figma) ----
+import { asset } from '../utils/asset';
 
 function IconBlurOn() {
   return (
     <img
-      src="/assets/products/icon-blur-on.svg"
+      src={asset('assets/products/icon-blur-on.svg')}
       alt=""
       aria-hidden="true"
       className="w-[30px] h-[30px] shrink-0"
@@ -21,7 +22,7 @@ function IconBlurOn() {
 function IconMdiImage() {
   return (
     <img
-      src="/assets/products/icon-image.svg"
+      src={asset('assets/products/icon-image.svg')}
       alt=""
       aria-hidden="true"
       className="w-[30px] h-[30px] shrink-0"
@@ -32,7 +33,7 @@ function IconMdiImage() {
 function IconStairsOutline() {
   return (
     <img
-      src="/assets/products/icon-stairs-outline.png"
+      src={asset('assets/products/icon-stairs-outline.png')}
       alt=""
       aria-hidden="true"
       className="w-[30px] h-[30px] shrink-0"
@@ -154,7 +155,7 @@ function DemoButton() {
     >
       데모 신청하기
       <img
-        src="/assets/products/icon-arrow-next.svg"
+        src={asset('assets/products/icon-arrow-next.svg')}
         alt=""
         aria-hidden="true"
         className="w-[16px] h-[11px]"
@@ -171,7 +172,7 @@ function HeroSection() {
       {/* Background image */}
       <div className="absolute inset-0 pointer-events-none">
         <img
-          src="/assets/products/hero-bg.png"
+          src={asset('assets/products/hero-bg.png')}
           alt=""
           className="absolute max-w-none object-cover size-full"
         />
@@ -191,7 +192,7 @@ function HeroSection() {
         {/* Section label */}
         <div className="flex items-center gap-[10px]">
           <img
-            src="/assets/products/arrow-group.svg"
+            src={asset('assets/products/arrow-group.svg')}
             alt=""
             aria-hidden="true"
             className="w-[12px] h-[12px]"
@@ -212,7 +213,7 @@ function HeroSection() {
           </p>
           <div className="flex gap-[10px] items-center">
             <img
-              src="/assets/products/geox-logo.svg"
+              src={asset('assets/products/geox-logo.svg')}
               alt="GeoX"
               style={{ width: '136.638px', height: '38.408px' }}
             />
@@ -246,7 +247,7 @@ function GeoXMeaningSection() {
         {/* Title */}
         <div className="flex flex-wrap gap-[4px] items-center justify-center">
           <img
-            src="/assets/products/geox-vector21.svg"
+            src={asset('assets/products/geox-vector21.svg')}
             alt="GeoX"
             style={{ width: '159.526px', height: '44.842px' }}
           />
@@ -263,7 +264,7 @@ function GeoXMeaningSection() {
           {/* Feature 1 */}
           <div className="flex flex-col gap-[24px] md:gap-[40px] items-center">
             <img
-              src="/assets/products/icon-cognition.svg"
+              src={asset('assets/products/icon-cognition.svg')}
               alt=""
               aria-hidden="true"
               className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
@@ -288,7 +289,7 @@ function GeoXMeaningSection() {
           {/* Feature 2 */}
           <div className="flex flex-col gap-[24px] md:gap-[40px] items-center">
             <img
-              src="/assets/products/icon-ai-knowledge.svg"
+              src={asset('assets/products/icon-ai-knowledge.svg')}
               alt=""
               aria-hidden="true"
               className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
@@ -313,7 +314,7 @@ function GeoXMeaningSection() {
           {/* Feature 3 */}
           <div className="flex flex-col gap-[24px] md:gap-[40px] items-center">
             <img
-              src="/assets/products/icon-ambient.svg"
+              src={asset('assets/products/icon-ambient.svg')}
               alt=""
               aria-hidden="true"
               className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
@@ -416,7 +417,7 @@ function GeoXRealMapSection() {
     >
       {/* Product title */}
       <img
-        src="/assets/products/geoxrealmap-title.svg"
+        src={asset('assets/products/geoxrealmap-title.svg')}
         alt="GeoXRealMap"
         className="w-full max-w-[361px]"
         style={{ height: '54px', objectFit: 'contain' }}
@@ -442,9 +443,9 @@ function GeoXRealMapSection() {
 
       {/* Laptop mockup — responsive */}
       <LaptopMockup
-        maskSrc="/assets/products/laptop-mask1.svg"
+        maskSrc={asset('assets/products/laptop-mask1.svg')}
         shadowHeight={458.086}
-        screenSrc="/assets/products/laptop1-screen.png"
+        screenSrc={asset('assets/products/laptop1-screen.png')}
         screenAlt="GeoXRealMap interface screenshot"
       />
 
@@ -472,13 +473,13 @@ function GeoXCityVisionSection() {
       {/* Title area with GS1 mark */}
       <div className="flex flex-wrap gap-[20px] md:gap-[40px] items-center justify-center">
         <img
-          src="/assets/products/geoxcityvision-title.svg"
+          src={asset('assets/products/geoxcityvision-title.svg')}
           alt="GeoX CityVision"
           className="w-full max-w-[396px]"
           style={{ height: '54px', objectFit: 'contain' }}
         />
         <img
-          src="/assets/products/mark-gs1.png"
+          src={asset('assets/products/mark-gs1.png')}
           alt="GS1 certification mark"
           style={{ width: '79px', height: '54px', objectFit: 'cover' }}
         />
@@ -504,9 +505,9 @@ function GeoXCityVisionSection() {
 
       {/* Laptop mockup — responsive */}
       <LaptopMockup
-        maskSrc="/assets/products/laptop-mask2.svg"
+        maskSrc={asset('assets/products/laptop-mask2.svg')}
         shadowHeight={455.491}
-        screenSrc="/assets/products/laptop3-screen.png"
+        screenSrc={asset('assets/products/laptop3-screen.png')}
         screenAlt="GeoX CityVision interface screenshot"
       />
 
@@ -571,9 +572,9 @@ function CrackEyeXSection() {
 
       {/* Laptop mockup — responsive */}
       <LaptopMockup
-        maskSrc="/assets/products/laptop-mask4.svg"
+        maskSrc={asset('assets/products/laptop-mask4.svg')}
         shadowHeight={455.491}
-        screenSrc="/assets/products/laptop5-screen.png"
+        screenSrc={asset('assets/products/laptop5-screen.png')}
         screenAlt="CrackEyeX interface screenshot"
       />
 

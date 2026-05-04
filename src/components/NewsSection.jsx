@@ -1,10 +1,11 @@
 // Figma node: 183:3759 (NEWS section)
 import SectionLabel from './SectionLabel';
-const imgNews1 = "/assets/news1.jpg";
-const imgNews2 = "/assets/news2.jpg";
-const imgCalendar = "/assets/icon-calendar.png";
-const imgTag = "/assets/icon-tag.png";
-const imgExternal = "/assets/icon-external.png";
+import { asset } from '../utils/asset';
+const imgNews1 = asset('assets/news1.jpg');
+const imgNews2 = asset('assets/news2.jpg');
+const imgCalendar = asset('assets/icon-calendar.png');
+const imgTag = asset('assets/icon-tag.png');
+const imgExternal = asset('assets/icon-external.png');
 
 const newsItems = [
   {

@@ -1,4 +1,5 @@
 // Figma node: 159:2380 (footer)
+import { asset } from '../utils/asset';
 
 export default function Footer() {
   return (
@@ -72,7 +73,7 @@ export default function Footer() {
       <div className="relative flex flex-col gap-9 w-full max-w-[1280px]">
         <div className="h-px bg-[rgba(255,255,255,0.1)] w-full" />
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 md:gap-0">
-          <img src="/assets/logo-header.svg" alt="Innopam" className="w-[128px] h-[44px] object-contain" />
+          <img src={asset('assets/logo-header.svg')} alt="Innopam" className="w-[128px] h-[44px] object-contain" />
           <p className="font-space text-[11px] text-[rgba(255,255,255,0.4)] md:text-right leading-[18px]">
             Copyright © Innopam.com All Rights Reserved
           </p>

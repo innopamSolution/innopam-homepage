@@ -1,8 +1,9 @@
 // Figma node: 170:1518 (Products section)
 // GeoX logo 242:2098 — w=136.638px, h=38.408px
 import SectionLabel from './SectionLabel';
+import { asset } from '../utils/asset';
 
-const imgBg = "/assets/products-bg.jpg";
+const imgBg = asset('assets/products-bg.jpg');
 
 export default function ProductsSection() {
   return (
@@ -36,7 +37,7 @@ export default function ProductsSection() {
           <div className="flex items-center gap-2.5">
             {/* GeoX logo */}
             <img
-              src="/assets/geox-logo.svg"
+              src={asset('assets/geox-logo.svg')}
               alt="GeoX"
               style={{ width: "136.64px", height: "38.41px" }}
             />

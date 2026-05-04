@@ -3,6 +3,7 @@
 
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { asset } from '../utils/asset';
 
 export default function Header() {
   const location = useLocation()
@@ -20,7 +21,7 @@ export default function Header() {
       <div className="flex items-center justify-between px-4 md:px-[60px] py-[20px]">
         <Link to="/" className="shrink-0">
           <img
-            src="/assets/logo-header-dark.svg"
+            src={asset('assets/logo-header-dark.svg')}
             alt="Innopam"
             className="object-contain"
             style={{ width: '131px', height: '44px' }}

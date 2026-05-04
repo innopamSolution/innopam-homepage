@@ -1,10 +1,11 @@
 // Figma node: 183:3535 (Clients section)
-const imgLogo1 = "/assets/client-logo1.png";
-const imgLogo2 = "/assets/client-logo2.png";
-const imgLogo3 = "/assets/client-logo3.png";
-const imgKiast = "/assets/client-kiast.png";
-const imgUos = "/assets/client-uos.png";
-const imgNdmri = "/assets/client-ndmri.png";
+import { asset } from '../utils/asset';
+const imgLogo1 = asset('assets/client-logo1.png');
+const imgLogo2 = asset('assets/client-logo2.png');
+const imgLogo3 = asset('assets/client-logo3.png');
+const imgKiast = asset('assets/client-kiast.png');
+const imgUos = asset('assets/client-uos.png');
+const imgNdmri = asset('assets/client-ndmri.png');
 
 const clients = [
   { src: imgLogo1, alt: "Client Logo 1", width: 103 },

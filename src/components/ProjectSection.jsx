@@ -1,8 +1,9 @@
 // Figma node: 180:3372 (Project section — carousel)
 import { useState } from "react";
 import SectionLabel from './SectionLabel';
+import { asset } from '../utils/asset';
 
-const imgProjectMain = "/assets/project-main.jpg";
+const imgProjectMain = asset('assets/project-main.jpg');
 
 const projects = [
   {
@@ -64,7 +65,7 @@ export default function ProjectSection() {
                 <li key={f.title} className="flex items-center gap-[14px] pb-px">
                   <div className="shrink-0 overflow-hidden" style={{ width: "24px", height: "25px" }}>
                     <img
-                      src="/assets/check-icon.svg"
+                      src={asset('assets/check-icon.svg')}
                       alt=""
                       aria-hidden="true"
                       className="w-full h-full"
