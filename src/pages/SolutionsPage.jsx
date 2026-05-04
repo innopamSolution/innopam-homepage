@@ -146,10 +146,10 @@ export default function SolutionsPage() {
             <h3 className="font-pretendard font-bold text-[#3a343b] text-[24px] md:text-[32px] tracking-[-1.2px]">
               주요 기능
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[40px] md:gap-[60px]">
+            <div className="grid gap-[40px] md:gap-[60px]" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(540px, 1fr))' }}>
               {features.map((f) => (
-                <div key={f.title + f.desc} className="flex flex-col gap-[20px]">
-                  <div className="w-full h-[220px] md:h-[333px] overflow-hidden rounded-[4px]">
+                <div key={f.title + f.desc} className="flex flex-col gap-[20px] min-w-[540px]">
+                  <div className="w-full h-[333px] overflow-hidden rounded-[4px]">
                     <img
                       src={f.img}
                       alt={f.title}
@@ -174,10 +174,10 @@ export default function SolutionsPage() {
             <h3 className="font-pretendard font-bold text-[#3a343b] text-[24px] md:text-[32px] tracking-[-1.2px]">
               도입 사례
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[40px] md:gap-[60px]">
+            <div className="grid gap-[40px] md:gap-[60px]" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(540px, 1fr))' }}>
               {cases.map((c) => (
-                <div key={c.title} className="flex flex-col gap-[20px]">
-                  <div className="w-full h-[220px] md:h-[333px] overflow-hidden rounded-[4px]">
+                <div key={c.title} className="flex flex-col gap-[20px] min-w-[540px]">
+                  <div className="w-full h-[333px] overflow-hidden rounded-[4px]">
                     <img
                       src={c.img}
                       alt={c.title}
