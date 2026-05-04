@@ -10,6 +10,7 @@ import NewsSection from './components/NewsSection'
 import Footer from './components/Footer'
 import ProductsPage from './pages/ProductsPage'
 import SolutionsPage from './pages/SolutionsPage'
+import IntroductionPage from './pages/IntroductionPage'
 
 function HomePage() {
   return (
@@ -38,6 +39,7 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/solutions" element={<SolutionsPage />} />
+      <Route path="/company/introduction" element={<IntroductionPage />} />
     </Routes>
   )
 }
