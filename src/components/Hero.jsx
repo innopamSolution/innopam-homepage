@@ -5,13 +5,15 @@
 //   Gap between title and desc: 38px
 // Background: video loop (Sequence 02_2.mp4)
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function Hero() {
   return (
     <section className="relative w-full h-[500px] md:h-[706px] bg-[#1c193f] overflow-hidden">
       {/* Background video — autoplay, muted, loop */}
       <video
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        src="/hero-bg.mp4"
+        src={`${BASE}hero-bg.mp4`}
         autoPlay
         muted
         loop
