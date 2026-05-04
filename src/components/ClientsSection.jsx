@@ -1,8 +1,8 @@
 // Figma node: 183:3535 (Clients section)
 import { asset } from '../utils/asset';
-const imgLogo1 = asset('assets/client-logo1.png');
-const imgLogo2 = asset('assets/client-logo2.png');
-const imgLogo3 = asset('assets/client-logo3.png');
+const imgLogo1 = asset('assets/client-logo1.svg');
+const imgLogo2 = asset('assets/client-logo2.svg');
+const imgLogo3 = asset('assets/client-logo3.svg');
 const imgKiast = asset('assets/client-kiast.png');
 const imgUos = asset('assets/client-uos.png');
 const imgNdmri = asset('assets/client-ndmri.png');

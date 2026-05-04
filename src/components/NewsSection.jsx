@@ -3,9 +3,9 @@ import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
 const imgNews1 = asset('assets/news1.jpg');
 const imgNews2 = asset('assets/news2.jpg');
-const imgCalendar = asset('assets/icon-calendar.png');
-const imgTag = asset('assets/icon-tag.png');
-const imgExternal = asset('assets/icon-external.png');
+const imgCalendar = asset('assets/icon-calendar.svg');
+const imgTag = asset('assets/icon-tag.svg');
+const imgExternal = asset('assets/icon-external.svg');
 
 const newsItems = [
   {
