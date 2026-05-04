@@ -9,6 +9,7 @@ import ClientsSection from './components/ClientsSection'
 import NewsSection from './components/NewsSection'
 import Footer from './components/Footer'
 import ProductsPage from './pages/ProductsPage'
+import SolutionsPage from './pages/SolutionsPage'
 
 function HomePage() {
   return (
@@ -36,6 +37,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/products" element={<ProductsPage />} />
+      <Route path="/solutions" element={<SolutionsPage />} />
     </Routes>
   )
 }
