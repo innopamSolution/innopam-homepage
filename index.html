@@ -17,6 +17,24 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
+    <script>
+      // Restore path from 404.html redirect query param
+      (function() {
+        var redirect = window.location.search.slice(1);
+        if (redirect) {
+          var params = redirect.split('&');
+          var p = params.find(function(s) { return s.startsWith('p=/'); });
+          if (p) {
+            var path = p.slice(2).replace(/~and~/g, '&');
+            var query = params.find(function(s) { return s.startsWith('q='); });
+            var search = query ? '?' + query.slice(2).replace(/~and~/g, '&') : '';
+            window.history.replaceState(null, null,
+              window.location.pathname.replace(/\/$/, '') + path + search + window.location.hash
+            );
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

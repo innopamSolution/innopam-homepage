@@ -3,11 +3,16 @@
 <head>
   <meta charset="utf-8">
   <script>
-    // GitHub Pages SPA redirect
-    var path = window.location.pathname.replace('/innopam-homepage', '');
-    sessionStorage.redirect = path || '/';
+    // GitHub Pages SPA redirect — encode path as query param and redirect to root
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      l.pathname.split('/').slice(0, 2).join('/') +
+      '/?p=/' + l.pathname.slice(l.pathname.indexOf('/', 1) + 1).replace(/&/g, '~and~') +
+      (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
   </script>
-  <meta http-equiv="refresh" content="0;URL='/innopam-homepage/'">
 </head>
 <body></body>
 </html>
