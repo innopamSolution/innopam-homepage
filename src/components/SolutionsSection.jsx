@@ -30,7 +30,7 @@ const solutions = [
   {
     id: 2,
     title: "산림, 해양",
-    image: "https://www.figma.com/api/mcp/asset/12da5877-8f67-446c-95c3-06f67a7cdcf1",
+    image: "/assets/solution-eco.jpg",
     description: [
       "위성·항공 영상 AI 분석으로 산림 변화를 실시간 탐지하고, 불법 벌채·산사태 위험 구역을 모니터링합니다.",
       "해양 분야에서는 해안선 변화, 적조·녹조 발생, 해양 쓰레기 분포를 공간정보 기반으로 분석하여 해양 환경 보전에 기여합니다.",
@@ -41,7 +41,7 @@ const solutions = [
   {
     id: 3,
     title: "재난 안전",
-    image: "https://www.figma.com/api/mcp/asset/eeb4e065-341b-472b-9280-0a9e236f08ac",
+    image: "/assets/solution-disaster.jpg",
     description: [
       "홍수·산불·지진 등 자연재해 발생 전후의 위성·드론 영상을 AI로 분석해 피해 범위와 규모를 신속하게 파악합니다.",
       "재난 대응 기관에 실시간 공간정보를 제공하고, 복구 우선순위 선정 및 자원 배분 의사결정을 지원합니다.",

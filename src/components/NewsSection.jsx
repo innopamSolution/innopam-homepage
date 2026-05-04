@@ -1,10 +1,10 @@
 // Figma node: 183:3759 (NEWS section)
 import SectionLabel from './SectionLabel';
-const imgNews1 = "https://www.figma.com/api/mcp/asset/c5162ceb-1c54-42d2-aaca-ed0629c82536";
-const imgNews2 = "https://www.figma.com/api/mcp/asset/fa40ee7e-9f0c-441e-b2ba-dab0907743bd";
-const imgCalendar = "https://www.figma.com/api/mcp/asset/b632fd57-817f-468b-8c40-a483542396fd";
-const imgTag = "https://www.figma.com/api/mcp/asset/1a58eccb-931d-4a56-95c8-f5cbf53e97e5";
-const imgExternal = "https://www.figma.com/api/mcp/asset/07a994fb-e5ea-48ce-8635-789cbc0efb82";
+const imgNews1 = "/assets/news1.jpg";
+const imgNews2 = "/assets/news2.jpg";
+const imgCalendar = "/assets/icon-calendar.png";
+const imgTag = "/assets/icon-tag.png";
+const imgExternal = "/assets/icon-external.png";
 
 const newsItems = [
   {

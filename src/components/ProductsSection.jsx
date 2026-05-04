@@ -2,7 +2,7 @@
 // GeoX logo 242:2098 — w=136.638px, h=38.408px
 import SectionLabel from './SectionLabel';
 
-const imgBg = "https://www.figma.com/api/mcp/asset/12da5877-8f67-446c-95c3-06f67a7cdcf1";
+const imgBg = "/assets/products-bg.jpg";
 
 export default function ProductsSection() {
   return (

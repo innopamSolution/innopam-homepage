@@ -1,22 +1,8 @@
 // Figma node: 159:2380 (footer)
-// Logo: 242:2096 — saved locally as /assets/logo-footer.svg
-const imgFooterBg = "https://www.figma.com/api/mcp/asset/2181e2e2-9e98-4846-9067-2c5059952670";
 
 export default function Footer() {
   return (
     <footer className="relative bg-black flex flex-col gap-[60px] md:gap-[100px] items-start pb-[60px] pt-[80px] md:pt-[155px] px-6 md:px-[80px]">
-      {/* Background pattern */}
-      <div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
-        aria-hidden="true"
-      >
-        <img
-          src={imgFooterBg}
-          alt=""
-          className="absolute bottom-0 left-0 w-full h-[48.95%] object-cover"
-        />
-      </div>
-
       {/* Main content — stack on mobile, side-by-side on desktop */}
       <div className="relative w-full max-w-[1280px]">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 lg:h-[377px]">

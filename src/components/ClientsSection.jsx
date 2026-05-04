@@ -1,10 +1,10 @@
 // Figma node: 183:3535 (Clients section)
-const imgLogo1 = "https://www.figma.com/api/mcp/asset/f235800c-82ff-4102-a37f-b9453e1463bb";
-const imgLogo2 = "https://www.figma.com/api/mcp/asset/3d1bb66f-5fc1-42b6-9df4-a299640ed4ee";
-const imgLogo3 = "https://www.figma.com/api/mcp/asset/c5befc78-d9ad-4883-887f-4d762c375b61";
-const imgKiast = "https://www.figma.com/api/mcp/asset/0c23fe6e-6e6e-4953-8559-91c372c8d306";
-const imgUos = "https://www.figma.com/api/mcp/asset/d9a9e659-5990-4b56-b1b6-fd129514295b";
-const imgNdmri = "https://www.figma.com/api/mcp/asset/28d33673-48ca-4eb5-8f9a-5a4428b8e016";
+const imgLogo1 = "/assets/client-logo1.png";
+const imgLogo2 = "/assets/client-logo2.png";
+const imgLogo3 = "/assets/client-logo3.png";
+const imgKiast = "/assets/client-kiast.png";
+const imgUos = "/assets/client-uos.png";
+const imgNdmri = "/assets/client-ndmri.png";
 
 const clients = [
   { src: imgLogo1, alt: "Client Logo 1", width: 103 },

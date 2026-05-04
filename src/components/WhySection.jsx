@@ -1,5 +1,5 @@
 // Figma node: 159:2361 (Why Innopam section)
-const imgBg = "https://www.figma.com/api/mcp/asset/1936708d-d3be-405f-a027-6f71c367681d";
+const imgBg = "/assets/why-bg.jpg";
 
 export default function WhySection() {
   return (

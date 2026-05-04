@@ -1,5 +1,5 @@
 // Figma node: 163:2647 (Frame 19 — stats bar)
-const imgBgPattern = "https://www.figma.com/api/mcp/asset/8e23fbeb-88f7-4999-9b58-4472c5ff1acc";
+const imgBgPattern = "/assets/stats-bg-pattern.png";
 
 const stats = [
   { label: "GeoAI 연구", value: "10년+", suffix: "" },
