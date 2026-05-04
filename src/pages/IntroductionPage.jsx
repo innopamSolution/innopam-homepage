@@ -5,14 +5,17 @@ import SectionLabel from '../components/SectionLabel';
 
 const missions = [
   {
+    icon: asset('assets/icon-mission.svg'),
     title: '사회적 문제 해결',
     desc: '혁신적인 기술을 바탕으로\n사회적인 문제 해결 솔루션 제공',
   },
   {
+    icon: asset('assets/icon-innovation.svg'),
     title: '기술 혁신',
     desc: '공간정보·AI·드론 기술로\n산업의 디지털 전환을 선도',
   },
   {
+    icon: asset('assets/icon-growth.svg'),
     title: '지속 가능한 성장',
     desc: '연구·산업·공공을 잇는\n지속 가능한 협력 생태계 구축',
   },
@@ -78,13 +81,11 @@ export default function IntroductionPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px]">
               {missions.map((m) => (
                 <div key={m.title} className="flex flex-col items-center gap-[20px] text-center">
-                  {/* HeadCircuit Icon */}
                   <div className="w-[60px] h-[60px] flex items-center justify-center">
                     <img
-                      src={asset('assets/icon-mission.svg')}
+                      src={m.icon}
                       alt=""
                       className="w-full h-full object-contain"
-                      style={{ filter: 'invert(42%) sepia(80%) saturate(400%) hue-rotate(200deg) brightness(90%)' }}
                     />
                   </div>
                   <p className="font-pretendard font-bold text-[#5871ed] text-[20px] md:text-[28px] leading-[1.35]">
