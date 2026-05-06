@@ -1,90 +1,100 @@
+import { useState } from 'react';
+import { asset } from '../utils/asset';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { CompanyHero } from './IntroductionPage';
 
-const records = [
-  {
-    category: '공간정보 구축',
-    items: [
-      { year: '2024', name: '고정밀 전자지도 구축 챌린지 사업', client: '국토교통부' },
-      { year: '2023', name: '드론 기반 정밀 수치지형도 제작', client: '서울특별시' },
-      { year: '2022', name: 'AI 기반 지도 품질검증 지원 시스템 개발', client: '국토지리정보원' },
-      { year: '2020', name: '3D 공간정보 구축 및 디지털트윈 플랫폼 구축', client: '인천광역시' },
-    ],
-  },
-  {
-    category: '농업·환경 분석',
-    items: [
-      { year: '2023', name: '드론 영상 기반 월동작물 재배면적 산정 서비스', client: '제주특별자치도' },
-      { year: '2022', name: 'GeoAI 영상분석 서비스 (농작물 자동탐지)', client: '농림축산식품부' },
-      { year: '2021', name: '산림 탄소흡수원 모니터링 사업', client: '산림청' },
-      { year: '2020', name: '연안 침식 변화 탐지 시스템 개발', client: '해양수산부' },
-    ],
-  },
-  {
-    category: '재난·안전',
-    items: [
-      { year: '2024', name: '재난 피해 범위 AI 분석 시스템 구축', client: '국립재난안전연구원' },
-      { year: '2023', name: '드론 영상 기반 해양쓰레기·불법건축물 자동탐지', client: '국립공원공단' },
-      { year: '2022', name: '산불 피해 지역 변화탐지 및 복구 지원', client: '산림청' },
-    ],
-  },
-  {
-    category: '시설물 관리',
-    items: [
-      { year: '2023', name: 'AI 기반 도로 균열 탐지 시스템 (CrackEyeX)', client: '한국도로공사' },
-      { year: '2022', name: '교량·터널 외관조사 AI 자동화 시스템 개발', client: '국토안전관리원' },
-      { year: '2021', name: '도심 녹지 및 태양광 패널 자동 탐지', client: '서울특별시' },
-    ],
-  },
+// Figma node: 298:415 — Business Record
+const yearTabs = ['2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018'];
+
+const projects = [
+  { name: '산림청 임업직불제 통합관리시스템 구축', client: '지에스아이티엠', content: '시스템 개발' },
+  { name: '개발제한구역 내 불법개발 건물변화탐지를 통한 인공지능 알고리즘의 효과성 분석 연구 용역', client: '재단법인서울디지털재단', content: 'AI알고리즘 개발' },
+  { name: '도시생태현황지도 기반의 정보플랫폼 구축 정보화 전략계획', client: '㈜올포랜드', content: 'ISP' },
+  { name: '위성영상 AI분석 기반 멀티영상 분석 플랫폼 고도화', client: '제주특별자치도', content: 'AI알고리즘 및 시스템 개발' },
+  { name: '위성영상 AI분석 기반 멀티영상 분석 플랫폼 고도화', client: '제주특별자치도', content: 'AI알고리즘 및 시스템 개발' },
+  { name: '위성영상 AI분석 기반 멀티영상 분석 플랫폼 고도화', client: '제주특별자치도', content: 'AI알고리즘 및 시스템 개발' },
+];
+
+const ipTabs = ['특허', '프로그램 등록', '학술지', '학술대회'];
+
+const patents = [
+  { type: '특허', title: '재배 작물 모니터링 방법 및 시스템', date: '2023.08.31', number: '10-2023-0115473' },
+  { type: '특허', title: '시설물 손상 분석 방법 및 시스템', date: '2024.05.28', number: '10-2024-0069062' },
+  { type: '특허', title: '재배 작물 모니터링 방법 및 시스템', date: '2023.08.31', number: '10-2023-0115473' },
+  { type: '특허', title: '재배 작물 모니터링 방법 및 시스템', date: '2023.08.31', number: '10-2023-0115473' },
+  { type: '특허', title: '재배 작물 모니터링 방법 및 시스템', date: '2023.08.31', number: '10-2023-0115473' },
+  { type: '특허', title: '재배 작물 모니터링 방법 및 시스템', date: '2023.08.31', number: '10-2023-0115473' },
 ];
 
 export default function BusinessRecordPage() {
+  const [activeYear, setActiveYear] = useState(0);
+  const [activeIp, setActiveIp] = useState(0);
+
   return (
     <div className="min-h-screen w-full">
       <Header />
       <main className="pt-[84px]">
-        <CompanyHero subtitle="이노팸이 수행한 주요 사업 실적을 소개합니다" />
+        <CompanyHero subtitle="AI 기반 공간정보 기술로 다양한 산업의 문제를 해결합니다" />
 
-        <section className="w-full px-6 md:px-[88px] py-[60px] md:py-[120px] max-w-[1264px] mx-auto flex flex-col gap-[60px] md:gap-[80px]">
+        <section className="w-full px-6 md:px-[88px] pb-[120px] md:pb-[200px] pt-[60px] md:pt-[120px] flex flex-col gap-[60px] md:gap-[80px] items-center max-w-[1440px] mx-auto">
+
           <h2 className="font-pretendard font-black text-[#3a343b] text-[40px] md:text-[58px] tracking-[-1.2px] text-center">
             Business Record
           </h2>
 
-          {records.map((group) => (
-            <div key={group.category} className="flex flex-col gap-[24px]">
-              <h3 className="font-pretendard font-bold text-[#5871ed] text-[20px] md:text-[28px] tracking-[-0.5px] pb-[16px] border-b-2 border-[#5871ed]">
-                {group.category}
+          <div className="w-full flex flex-col gap-[120px]">
+
+            {/* 주요사업 수행 실적 */}
+            <div className="flex flex-col gap-[40px]">
+              <h3 className="font-pretendard font-bold text-[#3a343b] text-[28px] md:text-[48px] tracking-[-1.2px]">
+                주요사업 수행 실적
               </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[600px]">
+
+              {/* Year tabs */}
+              <div className="flex overflow-x-auto w-full">
+                {yearTabs.map((year, i) => (
+                  <button
+                    key={year}
+                    onClick={() => setActiveYear(i)}
+                    className={`flex-1 min-w-[80px] py-[20px] md:py-[30px] font-pretendard text-[16px] md:text-[22px] text-center transition-colors whitespace-nowrap ${
+                      activeYear === i
+                        ? 'bg-[#5871ed] text-white'
+                        : 'border border-[#e9e9e9] text-[#161c2d]'
+                    }`}
+                  >
+                    {year}
+                  </button>
+                ))}
+              </div>
+
+              {/* Table */}
+              <div className="w-full overflow-x-auto">
+                <table className="w-full min-w-[700px]">
                   <thead>
-                    <tr className="bg-[#f4f7fa]">
-                      <th className="font-pretendard font-bold text-[#3a343b] text-[14px] md:text-[16px] text-left px-[20px] py-[14px] w-[80px]">
-                        연도
+                    <tr className="bg-[#f4f7fa] border-b border-[#e9e9e9]">
+                      <th className="font-pretendard font-bold text-[#5871ed] text-[16px] md:text-[22px] text-left px-[20px] py-[10px] tracking-[-1.2px] leading-[48px] w-[55%]">
+                        과제명
                       </th>
-                      <th className="font-pretendard font-bold text-[#3a343b] text-[14px] md:text-[16px] text-left px-[20px] py-[14px]">
-                        사업명
-                      </th>
-                      <th className="font-pretendard font-bold text-[#3a343b] text-[14px] md:text-[16px] text-left px-[20px] py-[14px] w-[180px]">
+                      <th className="font-pretendard font-bold text-[#5871ed] text-[16px] md:text-[22px] text-left px-[20px] py-[10px] tracking-[-1.2px] leading-[48px] w-[25%]">
                         발주처
+                      </th>
+                      <th className="font-pretendard font-bold text-[#5871ed] text-[16px] md:text-[22px] text-left px-[20px] py-[10px] tracking-[-1.2px] leading-[48px]">
+                        사업내용
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {group.items.map((item, i) => (
-                      <tr
-                        key={item.name}
-                        className={`border-b border-[#e9e9e9] ${i % 2 === 0 ? 'bg-white' : 'bg-[#fafafa]'}`}
-                      >
-                        <td className="font-pretendard text-[#5871ed] font-bold text-[14px] md:text-[16px] px-[20px] py-[16px]">
-                          {item.year}
+                    {projects.map((p, i) => (
+                      <tr key={i} className="border-b border-[#e9e9e9]">
+                        <td className="font-pretendard font-medium text-[#3a343b] text-[14px] md:text-[20px] leading-[1.8] px-[10px] py-[10px]">
+                          {p.name}
                         </td>
-                        <td className="font-pretendard text-[#3a343b] text-[14px] md:text-[16px] px-[20px] py-[16px] leading-[1.5]">
-                          {item.name}
+                        <td className="font-pretendard font-medium text-[#3a343b] text-[14px] md:text-[20px] leading-[1.8] px-[10px] py-[10px]">
+                          {p.client}
                         </td>
-                        <td className="font-pretendard text-[#6d758f] text-[14px] md:text-[16px] px-[20px] py-[16px]">
-                          {item.client}
+                        <td className="font-pretendard font-medium text-[#3a343b] text-[14px] md:text-[20px] leading-[1.8] px-[10px] py-[10px]">
+                          {p.content}
                         </td>
                       </tr>
                     ))}
@@ -92,7 +102,64 @@ export default function BusinessRecordPage() {
                 </table>
               </div>
             </div>
-          ))}
+
+            {/* 지적재산권 */}
+            <div className="flex flex-col gap-[40px]">
+              <h3 className="font-pretendard font-bold text-[#3a343b] text-[28px] md:text-[48px] tracking-[-1.2px]">
+                지적재산권
+              </h3>
+
+              {/* IP tabs */}
+              <div className="flex overflow-x-auto w-full">
+                {ipTabs.map((tab, i) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveIp(i)}
+                    className={`flex-1 min-w-[100px] py-[20px] md:py-[30px] font-pretendard text-[16px] md:text-[22px] text-center transition-colors whitespace-nowrap ${
+                      activeIp === i
+                        ? 'bg-[#5871ed] text-white'
+                        : 'border border-[#e9e9e9] text-[#161c2d]'
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+
+              {/* Patent cards — 2 columns */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[40px]">
+                {patents.map((p, i) => (
+                  <div key={i} className="bg-[#f4f7fa] border border-[#e9e9e9] rounded-[8px] px-[28px] py-[20px] flex flex-col gap-[16px]">
+                    {/* Badge + check */}
+                    <div className="flex items-start justify-between">
+                      <span className="border border-[#5871ed] text-[#5871ed] font-pretendard font-semibold text-[14px] px-[20px] rounded-[4px] leading-[1.8]">
+                        {p.type}
+                      </span>
+                      <img src={asset('assets/icon-offer-check.svg')} alt="" className="w-[24px] h-[24px]" />
+                    </div>
+                    {/* Title */}
+                    <div className="border-b border-[#e9e9e9] pb-[10px]">
+                      <p className="font-pretendard font-medium text-[#3a343b] text-[16px] md:text-[20px] leading-[1.8]">
+                        {p.title}
+                      </p>
+                    </div>
+                    {/* Meta */}
+                    <div className="flex gap-[40px] md:gap-[80px]">
+                      <div className="flex flex-col">
+                        <span className="font-pretendard font-medium text-[#6d758f] text-[12px] leading-[1.8]">등록일</span>
+                        <span className="font-pretendard font-medium text-[#3a343b] text-[16px] md:text-[20px] leading-[1.4]">{p.date}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-pretendard font-medium text-[#6d758f] text-[12px] leading-[1.8]">특허번호</span>
+                        <span className="font-pretendard font-medium text-[#3a343b] text-[16px] md:text-[20px] leading-[1.4]">{p.number}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
         </section>
       </main>
       <Footer />
