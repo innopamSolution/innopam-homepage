@@ -1,9 +1,12 @@
+import { Suspense, lazy } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { CompanyHero } from './IntroductionPage';
 
 // Figma node: 387:149 — Contact
-// Map: 875px height, 실제 지도 API (Google Maps embed)
+// Map: Leaflet + OpenStreetMap, 본사(서울) + 제주지사 마커
+
+const InnopamMap = lazy(() => import('../components/InnopamMap'));
 
 export default function ContactPage() {
   return (
@@ -18,22 +21,19 @@ export default function ContactPage() {
             Contact
           </h2>
 
-          {/* 지도 — Google Maps embed (본사: 서울시 용산구 원효로 146) */}
-          <div className="w-full border border-[#e9e9e9] overflow-hidden" style={{ height: '875px' }}>
-            <iframe
-              title="이노팸 본사 위치"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3163.8!2d126.9638!3d37.5386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c9f14a59cf5b5%3A0x6b9b1b0b0b0b0b0b!2z7ISc7Jq47Yq567OE7IucIOyEseuCqOq1rCDsmrjhtp7roZwgMTQ2!5e0!3m2!1sko!2skr!4v1620000000000!5m2!1sko!2skr"
-            />
+          {/* 지도 — Leaflet + OpenStreetMap, 본사·제주지사 마커 */}
+          <div className="w-full">
+            <Suspense fallback={
+              <div className="w-full border border-[#e9e9e9] bg-[#f4f7fa] flex items-center justify-center" style={{ height: '875px' }}>
+                <p className="font-pretendard text-[#6d758f] text-[18px]">지도를 불러오는 중...</p>
+              </div>
+            }>
+              <InnopamMap />
+            </Suspense>
           </div>
 
           {/* 연락처 정보 */}
-          <div className="w-full flex flex-col gap-[20px] md:gap-[20px] font-pretendard text-[20px] md:text-[28px]">
+          <div className="w-full flex flex-col gap-[20px] font-pretendard text-[20px] md:text-[28px]">
             <div className="flex gap-[20px] items-start">
               <p className="font-bold text-[#5871ed] tracking-[-1.2px] leading-[1.7] w-[80px] md:w-[120px] shrink-0">
                 본사
