@@ -11,6 +11,9 @@ import Footer from './components/Footer'
 import ProductsPage from './pages/ProductsPage'
 import SolutionsPage from './pages/SolutionsPage'
 import IntroductionPage from './pages/IntroductionPage'
+import HistoryPage from './pages/HistoryPage'
+import BusinessRecordPage from './pages/BusinessRecordPage'
+import ContactPage from './pages/ContactPage'
 
 function HomePage() {
   return (
@@ -40,6 +43,9 @@ function App() {
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/solutions" element={<SolutionsPage />} />
       <Route path="/company/introduction" element={<IntroductionPage />} />
+      <Route path="/company/history" element={<HistoryPage />} />
+      <Route path="/company/business-record" element={<BusinessRecordPage />} />
+      <Route path="/company/contact" element={<ContactPage />} />
     </Routes>
   )
 }
