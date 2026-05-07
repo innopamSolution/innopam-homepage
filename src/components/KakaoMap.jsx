@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 // Design: innopam.com/introduction/ 동일
 
 const BASE = import.meta.env.BASE_URL;
-const KAKAO_APP_KEY = '90f5dafdbae17caebd268e8fb311edd3';
+const KAKAO_APP_KEY = '0ba52bd34c4b5acf99b451a8123e3dd7';
 
 const positions = [
   {
