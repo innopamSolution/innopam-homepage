@@ -76,27 +76,62 @@ export default function KakaoMap() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // 이미 로드된 경우
-    if (window.kakao && window.kakao.maps) {
-      window.kakao.maps.load(() => initMap(mapRef.current));
-      return;
-    }
+    let cancelled = false;
 
-    // 스크립트 동적 로드
-    const existing = document.querySelector('script[src*="dapi.kakao.com"]');
-    if (existing) existing.remove();
-
-    const script = document.createElement('script');
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_APP_KEY}&autoload=false`;
-    script.onload = () => {
-      if (window.kakao && window.kakao.maps) {
-        window.kakao.maps.load(() => initMap(mapRef.current));
-      } else {
-        setError(true);
+    const doInit = () => {
+      if (!cancelled && mapRef.current) {
+        initMap(mapRef.current);
       }
     };
-    script.onerror = () => setError(true);
-    document.head.appendChild(script);
+
+    // Case 1: Maps API already fully loaded (Map constructor available)
+    if (window.kakao?.maps?.Map) {
+      doInit();
+      return () => { cancelled = true; };
+    }
+
+    // Case 2: Script loaded but waiting for lazy load (autoload=false)
+    if (window.kakao?.maps?.load) {
+      window.kakao.maps.load(doInit);
+      return () => { cancelled = true; };
+    }
+
+    // Case 3: Script not yet loaded — inject it
+    const SCRIPT_ID = 'kakao-map-sdk';
+    if (!document.getElementById(SCRIPT_ID)) {
+      const script = document.createElement('script');
+      script.id = SCRIPT_ID;
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_APP_KEY}&autoload=false`;
+      script.async = true;
+      script.onload = () => {
+        if (window.kakao?.maps?.load) {
+          window.kakao.maps.load(() => {
+            if (!cancelled && mapRef.current) initMap(mapRef.current);
+          });
+        } else if (!cancelled) {
+          setError(true);
+        }
+      };
+      script.onerror = () => { if (!cancelled) setError(true); };
+      document.head.appendChild(script);
+    } else {
+      // Script tag exists but hasn't finished loading yet — wait for it
+      const existing = document.getElementById(SCRIPT_ID);
+      const onload = () => {
+        if (window.kakao?.maps?.load) {
+          window.kakao.maps.load(doInit);
+        } else if (!cancelled) {
+          setError(true);
+        }
+      };
+      existing.addEventListener('load', onload);
+      return () => {
+        cancelled = true;
+        existing.removeEventListener('load', onload);
+      };
+    }
+
+    return () => { cancelled = true; };
   }, []);
 
   return (
