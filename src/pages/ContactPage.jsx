@@ -1,12 +1,9 @@
-import { Suspense, lazy } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { CompanyHero } from './IntroductionPage';
+import KakaoMap from '../components/KakaoMap';
 
 // Figma node: 387:149 — Contact
-// Map: Leaflet + OpenStreetMap, 본사(서울) + 제주지사 마커
-
-const InnopamMap = lazy(() => import('../components/InnopamMap'));
 
 export default function ContactPage() {
   return (
@@ -21,15 +18,9 @@ export default function ContactPage() {
             Contact
           </h2>
 
-          {/* 지도 — Leaflet + OpenStreetMap, 본사·제주지사 마커 */}
+          {/* 지도 — Kakao Maps, 본사(서울)·제주지사 마커 */}
           <div className="w-full">
-            <Suspense fallback={
-              <div className="w-full border border-[#e9e9e9] bg-[#f4f7fa] flex items-center justify-center" style={{ height: '875px' }}>
-                <p className="font-pretendard text-[#6d758f] text-[18px]">지도를 불러오는 중...</p>
-              </div>
-            }>
-              <InnopamMap />
-            </Suspense>
+            <KakaoMap />
           </div>
 
           {/* 연락처 정보 */}
