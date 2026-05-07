@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
 // Kakao Maps — 이노팸 본사 + 제주지사
-// API key: 90f5dafdbae17caebd268e8fb311edd3
+// SDK: index.html에 <script autoload=false> 로 삽입, 여기서 kakao.maps.load() 호출
 // Design: innopam.com/introduction/ 동일
 
 const BASE = import.meta.env.BASE_URL;
-const KAKAO_APP_KEY = '0ba52bd34c4b5acf99b451a8123e3dd7';
 
 const positions = [
   {
@@ -76,61 +75,16 @@ export default function KakaoMap() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    // Kakao Maps SDK is loaded via <script> in index.html (autoload=false)
+    // kakao.maps.load() triggers lazy initialization then fires the callback
+    if (!window.kakao?.maps?.load) {
+      setError(true);
+      return;
+    }
     let cancelled = false;
-
-    const doInit = () => {
-      if (!cancelled && mapRef.current) {
-        initMap(mapRef.current);
-      }
-    };
-
-    // Case 1: Maps API already fully loaded (Map constructor available)
-    if (window.kakao?.maps?.Map) {
-      doInit();
-      return () => { cancelled = true; };
-    }
-
-    // Case 2: Script loaded but waiting for lazy load (autoload=false)
-    if (window.kakao?.maps?.load) {
-      window.kakao.maps.load(doInit);
-      return () => { cancelled = true; };
-    }
-
-    // Case 3: Script not yet loaded — inject it
-    const SCRIPT_ID = 'kakao-map-sdk';
-    if (!document.getElementById(SCRIPT_ID)) {
-      const script = document.createElement('script');
-      script.id = SCRIPT_ID;
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_APP_KEY}&autoload=false`;
-      script.async = true;
-      script.onload = () => {
-        if (window.kakao?.maps?.load) {
-          window.kakao.maps.load(() => {
-            if (!cancelled && mapRef.current) initMap(mapRef.current);
-          });
-        } else if (!cancelled) {
-          setError(true);
-        }
-      };
-      script.onerror = () => { if (!cancelled) setError(true); };
-      document.head.appendChild(script);
-    } else {
-      // Script tag exists but hasn't finished loading yet — wait for it
-      const existing = document.getElementById(SCRIPT_ID);
-      const onload = () => {
-        if (window.kakao?.maps?.load) {
-          window.kakao.maps.load(doInit);
-        } else if (!cancelled) {
-          setError(true);
-        }
-      };
-      existing.addEventListener('load', onload);
-      return () => {
-        cancelled = true;
-        existing.removeEventListener('load', onload);
-      };
-    }
-
+    window.kakao.maps.load(() => {
+      if (!cancelled && mapRef.current) initMap(mapRef.current);
+    });
     return () => { cancelled = true; };
   }, []);
 
