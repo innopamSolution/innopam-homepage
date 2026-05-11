@@ -92,26 +92,21 @@ export default function KakaoMap() {
           position: relative;
           width: 360px;
           height: 350px;
+          /* 배경 자연 크기(392×350px) 그대로 — 오른쪽 32px만 클립, 높이 완전 일치 */
           background: url('${BASE}assets/map/box_movie.png') no-repeat top left;
-          background-size: 360px auto;
           padding: 15px 10px;
           cursor: default;
           overflow: hidden;
+          box-sizing: border-box;
         }
-        .innopam-overlaybox div,
-        .innopam-overlaybox ul {
-          overflow: hidden;
-          margin: 0;
-          padding: 0;
-        }
-        .innopam-overlaybox li { list-style: none; }
         .innopam-overlaybox .boxtitle {
           color: #fff;
           font-size: 16px;
           font-weight: bold;
           font-family: 'Pretendard Variable', sans-serif;
           background: url('${BASE}assets/map/arrow_white.png') no-repeat right 120px center;
-          margin-bottom: 8px;
+          margin: 0 0 8px 0;
+          padding: 0;
         }
         .innopam-overlaybox img {
           position: relative;
@@ -121,7 +116,12 @@ export default function KakaoMap() {
           display: block;
           margin: 8px 0;
         }
-        .innopam-overlaybox ul { width: 247px; }
+        .innopam-overlaybox ul {
+          list-style: none;
+          width: 247px;
+          margin: 0;
+          padding: 0;
+        }
         .innopam-overlaybox li {
           position: relative;
           margin-bottom: 2px;
@@ -129,6 +129,7 @@ export default function KakaoMap() {
           padding: 5px 10px;
           color: #aaabaf;
           line-height: 1;
+          list-style: none;
         }
         .innopam-overlaybox li a {
           color: #fff;
