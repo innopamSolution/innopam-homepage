@@ -112,13 +112,11 @@ export default function SolutionsPage() {
         </section>
 
         {/* DmapAI Content */}
-        <section className="w-full px-6 md:px-[88px] py-[60px] md:py-[120px] flex flex-col gap-[60px] md:gap-[80px] items-center">
+        <section className="w-full px-6 md:px-[88px] py-[60px] md:py-[120px] flex flex-col gap-[60px] md:gap-[80px] items-center max-w-[1440px] mx-auto">
 
           {/* Title + Description */}
           <div className="flex flex-col items-center gap-[20px] md:gap-[40px] w-full max-w-[840px]">
-            <h2
-              className="font-pretendard font-black text-[#3a343b] text-[40px] md:text-[58px] tracking-[-1.2px]"
-            >
+            <h2 className="font-pretendard font-black text-[#3a343b] text-[40px] md:text-[58px] tracking-[-1.2px]">
               {tabs[activeTab]}
             </h2>
             <div className="flex flex-col gap-[20px] w-full text-center">
@@ -141,20 +139,16 @@ export default function SolutionsPage() {
             />
           </div>
 
-          {/* 주요 기능 */}
-          <div className="w-full flex flex-col gap-[20px]">
+          {/* 주요 기능 — Figma: max-w-[1264px], 2열 고정, justify-between */}
+          <div className="w-full max-w-[1264px] flex flex-col gap-[20px]">
             <h3 className="font-pretendard font-bold text-[#3a343b] text-[24px] md:text-[32px] tracking-[-1.2px]">
               주요 기능
             </h3>
-            <div className="grid gap-[40px] md:gap-[60px]" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(540px, 1fr))' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[40px] md:gap-y-[60px] md:gap-x-[40px] lg:gap-x-[160px]">
               {features.map((f) => (
-                <div key={f.title + f.desc} className="flex flex-col gap-[20px] min-w-[540px]">
-                  <div className="w-full h-[333px] overflow-hidden rounded-[4px]">
-                    <img
-                      src={f.img}
-                      alt={f.title}
-                      className="w-full h-full object-cover"
-                    />
+                <div key={f.title + f.desc} className="flex flex-col gap-[20px]">
+                  <div className="w-full h-[280px] md:h-[333px] overflow-hidden">
+                    <img src={f.img} alt={f.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex flex-col gap-[12px]">
                     <p className="font-pretendard font-bold text-[#161c2d] text-[18px] md:text-[20px] leading-[1.5]">
@@ -169,20 +163,16 @@ export default function SolutionsPage() {
             </div>
           </div>
 
-          {/* 도입 사례 */}
-          <div className="w-full flex flex-col gap-[20px]">
+          {/* 도입 사례 — 동일 구조, 2열 고정 가운데 */}
+          <div className="w-full max-w-[1264px] flex flex-col gap-[20px]">
             <h3 className="font-pretendard font-bold text-[#3a343b] text-[24px] md:text-[32px] tracking-[-1.2px]">
               도입 사례
             </h3>
-            <div className="grid gap-[40px] md:gap-[60px]" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(540px, 1fr))' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[40px] md:gap-y-[60px] md:gap-x-[40px] lg:gap-x-[160px]">
               {cases.map((c) => (
-                <div key={c.title} className="flex flex-col gap-[20px] min-w-[540px]">
-                  <div className="w-full h-[333px] overflow-hidden rounded-[4px]">
-                    <img
-                      src={c.img}
-                      alt={c.title}
-                      className="w-full h-full object-cover"
-                    />
+                <div key={c.title} className="flex flex-col gap-[20px]">
+                  <div className="w-full h-[280px] md:h-[333px] overflow-hidden">
+                    <img src={c.img} alt={c.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex flex-col gap-[12px]">
                     <p className="font-pretendard font-bold text-[#161c2d] text-[18px] md:text-[20px] leading-[1.5]">
