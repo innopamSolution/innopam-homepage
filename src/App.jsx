@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import ScrollToTop from './components/ScrollToTop'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import StatsSection from './components/StatsSection'
@@ -38,7 +39,9 @@ function HomePage() {
 
 function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/solutions" element={<SolutionsPage />} />
@@ -47,6 +50,7 @@ function App() {
       <Route path="/company/business-record" element={<BusinessRecordPage />} />
       <Route path="/company/contact" element={<ContactPage />} />
     </Routes>
+    </>
   )
 }
 
