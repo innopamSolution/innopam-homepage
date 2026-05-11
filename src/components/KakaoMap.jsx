@@ -30,7 +30,7 @@ function initMap(mapContainer) {
   const map = new maps.Map(mapContainer, {
     center: new maps.LatLng(37.583235, 127.010390),
     level: 9,
-    scrollwheel: false,
+    scrollwheel: true,
   });
 
   const zoomControl = new maps.ZoomControl();
