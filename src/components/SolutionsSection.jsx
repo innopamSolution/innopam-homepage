@@ -4,13 +4,14 @@ import { useState } from "react";
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
 
+// ── Figma node 159:2246(도시변화), 176:3308(농업분석) 기준 데이터 ──────────
 const solutions = [
   {
     id: 0,
     title: "도시변화 모니터링",
     image: asset('assets/solution-city.jpg'),
     description: [
-      "위성, 항공, 드론 데이터를 AI로 분석해 도시 변화를 실시간으로 탐지하고 관리합니다. ",
+      "위성, 항공, 드론 데이터를 AI로 분석해 도시 변화를 실시간으로 탐지하고 관리합니다.",
       "도시계획·개발제한구역 관리, 불법건축·개발 감시, 수치지형도 고도화 등 행정 효율화에 활용됩니다.",
     ],
     relatedProduct: { name: "GeoX CityVision", href: "#products" },
@@ -22,8 +23,8 @@ const solutions = [
     image: asset('assets/solution-farm.jpg'),
     description: [
       "드론으로 촬영한 영상을 AI가 분석하여 농작물의 종류를 자동으로 식별하고 작물의 재배면적을 산출합니다.",
-      "분석된 데이터를 기반으로 지역별 재배 현황을 파악하고 정책 수립과 수급 조절에 활용할 수 있습니다",
-      "또한 직불금 관리, 휴경지 관리, 통계 관리 등 농업 행정 전반에 활용됩니다",
+      "분석된 데이터를 기반으로 지역별 재배 현황을 파악하고 정책 수립과 수급 조절에 활용할 수 있습니다.",
+      "또한 직불금 관리, 휴경지 관리, 통계 관리 등 농업 행정 전반에 활용됩니다.",
     ],
     relatedProduct: null,
     projects: ["GeoAI 영상분석 서비스", "드론영상관리 시스템"],
@@ -36,7 +37,7 @@ const solutions = [
       "위성·항공 영상 AI 분석으로 산림 변화를 실시간 탐지하고, 불법 벌채·산사태 위험 구역을 모니터링합니다.",
       "해양 분야에서는 해안선 변화, 적조·녹조 발생, 해양 쓰레기 분포를 공간정보 기반으로 분석하여 해양 환경 보전에 기여합니다.",
     ],
-    relatedProduct: { name: "GeoX EcoWatch", href: "#products" },
+    relatedProduct: null,
     projects: ["산림 탄소흡수원 모니터링 사업", "연안 침식 변화 탐지 시스템"],
   },
   {
@@ -47,7 +48,7 @@ const solutions = [
       "홍수·산불·지진 등 자연재해 발생 전후의 위성·드론 영상을 AI로 분석해 피해 범위와 규모를 신속하게 파악합니다.",
       "재난 대응 기관에 실시간 공간정보를 제공하고, 복구 우선순위 선정 및 자원 배분 의사결정을 지원합니다.",
     ],
-    relatedProduct: { name: "GeoX SafeGuard", href: "#products" },
+    relatedProduct: null,
     projects: ["재난 피해지역 긴급 공간분석 시스템", "AI 기반 산불 확산 예측 플랫폼"],
   },
 ];
