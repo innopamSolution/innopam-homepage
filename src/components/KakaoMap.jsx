@@ -26,33 +26,31 @@ const positions = [
 function initMap(mapContainer) {
   const { maps } = window.kakao;
 
+  // 본사 기준 중심 고정 (innopam.com/introduction/ 동일)
   const map = new maps.Map(mapContainer, {
-    center: new maps.LatLng(36.0, 127.5),
-    level: 10,
+    center: new maps.LatLng(37.583235, 127.010390),
+    level: 9,
     scrollwheel: false,
   });
 
   const zoomControl = new maps.ZoomControl();
   map.addControl(zoomControl, maps.ControlPosition.RIGHT);
 
-  const bounds = new maps.LatLngBounds();
-
   positions.forEach((pos) => {
     const latlng = new maps.LatLng(pos.lat, pos.lng);
-    bounds.extend(latlng);
 
     new maps.Marker({ map, position: latlng });
 
     const content = `
       <div class="innopam-overlaybox">
-        <div class="innopam-boxtitle">${pos.name}</div>
+        <div class="boxtitle">${pos.name}</div>
         <img src="${pos.img}" alt="${pos.name}" />
         <ul>
           <li class="up">
-            <a href="http://map.daum.net/link/map/${encodeURIComponent(pos.name)},${pos.lat},${pos.lng}" target="_blank">큰지도로 보기</a>
+            <a href="http://map.daum.net/link/map/${encodeURIComponent(pos.name)},${pos.lat},${pos.lng}" target="_blank" class="title">큰지도로 보기</a>
           </li>
           <li>
-            <a href="http://map.daum.net/link/to/${encodeURIComponent(pos.name)},${pos.lat},${pos.lng}" target="_blank">길찾기</a>
+            <a href="http://map.daum.net/link/to/${encodeURIComponent(pos.name)},${pos.lat},${pos.lng}" target="_blank" class="title">길찾기</a>
           </li>
         </ul>
         <address>${pos.address}</address>
@@ -66,8 +64,7 @@ function initMap(mapContainer) {
       yAnchor: 0.91,
     });
   });
-
-  map.setBounds(bounds, 120);
+  // setBounds 미사용 — 본사 중심 고정
 }
 
 export default function KakaoMap() {
@@ -93,50 +90,61 @@ export default function KakaoMap() {
       <style>{`
         .innopam-overlaybox {
           position: relative;
-          width: 280px;
+          width: 360px;
+          height: 350px;
           background: url('${BASE}assets/map/box_movie.png') no-repeat top left;
-          background-size: 280px auto;
-          padding: 14px 10px 14px 12px;
+          background-size: 360px auto;
+          padding: 15px 10px;
           cursor: default;
+          overflow: hidden;
         }
-        .innopam-overlaybox .innopam-boxtitle {
-          color: #fff;
-          font-size: 14px;
-          font-weight: 700;
-          font-family: 'Pretendard Variable', sans-serif;
-          margin-bottom: 6px;
-        }
-        .innopam-overlaybox img {
-          width: 195px;
-          height: 108px;
-          object-fit: cover;
-          display: block;
-          margin: 6px 0;
-        }
+        .innopam-overlaybox div,
         .innopam-overlaybox ul {
-          list-style: none;
+          overflow: hidden;
           margin: 0;
           padding: 0;
-          width: 195px;
         }
+        .innopam-overlaybox li { list-style: none; }
+        .innopam-overlaybox .boxtitle {
+          color: #fff;
+          font-size: 16px;
+          font-weight: bold;
+          font-family: 'Pretendard Variable', sans-serif;
+          background: url('${BASE}assets/map/arrow_white.png') no-repeat right 120px center;
+          margin-bottom: 8px;
+        }
+        .innopam-overlaybox img {
+          position: relative;
+          width: 247px;
+          height: 136px;
+          object-fit: cover;
+          display: block;
+          margin: 8px 0;
+        }
+        .innopam-overlaybox ul { width: 247px; }
         .innopam-overlaybox li {
+          position: relative;
+          margin-bottom: 2px;
           background: #2b2d36;
           padding: 5px 10px;
-          margin-bottom: 2px;
+          color: #aaabaf;
+          line-height: 1;
         }
         .innopam-overlaybox li a {
           color: #fff;
-          font-size: 12px;
+          font-size: 13px;
           font-family: 'Pretendard Variable', sans-serif;
           text-decoration: none;
         }
-        .innopam-overlaybox li:hover { background-color: #1057C1; }
+        .innopam-overlaybox li a:hover { color: #fff; }
+        .innopam-overlaybox li:hover { color: #fff; background-color: #1057C1; }
+        .innopam-overlaybox li:active { background-color: #1057C1; transition: all ease .5s; }
         .innopam-overlaybox address {
           color: #00E3FF;
-          width: 195px;
+          width: 247px;
           white-space: pre-line;
-          margin-top: 6px;
-          font-size: 11px;
+          margin-top: 7px;
+          font-size: .92em;
           font-family: 'Pretendard Variable', sans-serif;
           font-style: normal;
           line-height: 1.5;
