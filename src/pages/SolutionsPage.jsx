@@ -99,6 +99,12 @@ export default function SolutionsPage() {
   const [activeTab, setActiveTab] = useState(0);
   const tab = tabData[activeTab];
 
+  const handleTabChange = (i) => {
+    setActiveTab(i);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
   return (
     <div className="min-h-screen w-full">
       <Header />
@@ -137,7 +143,7 @@ export default function SolutionsPage() {
             {tabData.map((t, i) => (
               <button
                 key={t.id}
-                onClick={() => setActiveTab(i)}
+                onClick={() => handleTabChange(i)}
                 className={`flex-1 min-w-[100px] py-[18px] md:py-[30px] text-[16px] md:text-[22px] font-pretendard text-center transition-colors whitespace-nowrap ${
                   activeTab === i
                     ? 'bg-[#5871ed] text-white'
