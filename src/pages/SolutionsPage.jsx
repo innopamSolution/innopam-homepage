@@ -11,7 +11,7 @@ const tabData = [
     label: 'DmapAI',
     subtitle: 'Drone Mapping DmapAI',
     desc: '드론 영상을 업로드하면 정사영상(Orthophoto), 포인트클라우드(PointCloud), 3차원모델(3D Mesh), DSM(Digital Surface Model)을 생성하는 솔루션',
-    hero: asset('assets/solutions/dmapai/hero.gif'),
+    hero: asset('assets/solutions/dmapai/hero.jpg'),
     features: [
       { img: asset('assets/solutions/dmapai/feature-1.png'), title: '정사 영상 제작 기능', desc: '사용자가 업로드한 드론영상을 활용해, 영상매칭과 사진측량 기술을 이용해 정사영상을 제작하는 기능' },
       { img: asset('assets/solutions/dmapai/feature-2.png'), title: 'Point Cloud/3DMesh 제작 기능', desc: '사용자가 업로드한 드론영상으로 영상 매칭과 사진측량 기술을 이용해 3차원 Point Cloud와 Mesh를 제작하는 기능' },
@@ -30,7 +30,7 @@ const tabData = [
     label: 'LDMapAI',
     subtitle: 'LiveDroneMapAI',
     desc: '드론에서 전송되는 영상에서 자동으로 객체를 식별하고 실시간으로 위치를 결정하는 솔루션',
-    hero: asset('assets/solutions/ldmapai/hero.gif'),
+    hero: asset('assets/solutions/ldmapai/hero.jpg'),
     features: [
       { img: asset('assets/solutions/ldmapai/feature-1.png'), title: '재난재해 모니터링', desc: '드론 실시간 영상으로 재난재해 현장을 신속하게 모니터링' },
       { img: asset('assets/solutions/ldmapai/feature-2.png'), title: '실시간 객체 탐지 및 위치 결정', desc: '드론에서 전송되는 영상을 통해 객체를 자동 식별하고 실시간으로 정확한 위치 산출' },
@@ -45,7 +45,7 @@ const tabData = [
     label: 'MS-AI-PS',
     subtitle: 'Multi-Sensor AI platform service',
     desc: '멀티센서(위성, 항공, 드론)영상 기반의 GeoAI 분석 플랫폼 서비스',
-    hero: asset('assets/solutions/msaips/hero.gif'),
+    hero: asset('assets/solutions/msaips/hero.jpg'),
     features: [
       { img: asset('assets/solutions/msaips/data-get-save.png'), title: '데이터 수집 · 저장', desc: '위성 · 항공 · 드론 영상의 계층적 정보 취득 및 활용' },
       { img: asset('assets/solutions/msaips/GEO-AI.png'), title: 'GEO-AI 모델 개발', desc: '모델 앙상블 적용을 통한 AI모델 객체 탐지 정확도 제고' },
