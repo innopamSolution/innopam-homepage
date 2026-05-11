@@ -33,6 +33,9 @@ function initMap(mapContainer) {
     scrollwheel: true,
   });
 
+  // 생성자 옵션만으로 안 될 때를 대비해 API 메서드로 명시 활성화
+  map.setZoomable(true);
+
   const zoomControl = new maps.ZoomControl();
   map.addControl(zoomControl, maps.ControlPosition.RIGHT);
 
