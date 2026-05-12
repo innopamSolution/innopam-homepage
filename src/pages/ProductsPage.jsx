@@ -262,13 +262,15 @@ function GeoXMeaningSection() {
         {/* Features grid — 1 column on mobile, 3 columns on desktop */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full">
           {/* Feature 1 */}
-          <div className="flex flex-col gap-[24px] md:gap-[40px] items-center">
-            <img
-              src={asset('assets/products/icon-cognition.svg')}
-              alt=""
-              aria-hidden="true"
-              className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
-            />
+          <div className="flex flex-col gap-[40px] items-center">
+            <div className="w-[100px] h-[100px] flex items-center justify-center shrink-0">
+              <img
+                src={asset('assets/products/icon-cognition.svg')}
+                alt=""
+                aria-hidden="true"
+                className="w-full h-full object-contain"
+              />
+            </div>
             <div className="flex flex-col gap-[12px] md:gap-[16px] items-start text-[#161c2d] w-full">
               <div
                 className="font-pretendard font-bold text-[20px] md:text-[21px] text-center tracking-[-0.5px] w-full"
@@ -287,13 +289,15 @@ function GeoXMeaningSection() {
           </div>
 
           {/* Feature 2 */}
-          <div className="flex flex-col gap-[24px] md:gap-[40px] items-center">
-            <img
-              src={asset('assets/products/icon-ai-knowledge.svg')}
-              alt=""
-              aria-hidden="true"
-              className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
-            />
+          <div className="flex flex-col gap-[40px] items-center">
+            <div className="w-[100px] h-[100px] flex items-center justify-center shrink-0">
+              <img
+                src={asset('assets/products/icon-ai-knowledge.svg')}
+                alt=""
+                aria-hidden="true"
+                className="w-full h-full object-contain"
+              />
+            </div>
             <div className="flex flex-col gap-[12px] md:gap-[16px] items-start text-[#161c2d] w-full">
               <div
                 className="font-pretendard font-bold text-[20px] md:text-[21px] text-center tracking-[-0.5px] w-full"
@@ -312,13 +316,15 @@ function GeoXMeaningSection() {
           </div>
 
           {/* Feature 3 */}
-          <div className="flex flex-col gap-[24px] md:gap-[40px] items-center">
-            <img
-              src={asset('assets/products/icon-ambient.svg')}
-              alt=""
-              aria-hidden="true"
-              className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
-            />
+          <div className="flex flex-col gap-[40px] items-center">
+            <div className="w-[100px] h-[100px] flex items-center justify-center shrink-0">
+              <img
+                src={asset('assets/products/icon-ambient.svg')}
+                alt=""
+                aria-hidden="true"
+                className="w-full h-full object-contain"
+              />
+            </div>
             <div className="flex flex-col gap-[12px] md:gap-[16px] items-start text-[#161c2d] w-full">
               <div
                 className="font-pretendard font-bold text-[20px] md:text-[21px] text-center tracking-[-0.5px] w-full"
