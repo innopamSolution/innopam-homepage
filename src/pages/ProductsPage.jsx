@@ -350,11 +350,14 @@ function LaptopMockup({ screenSrc, screenAlt }) {
       className="w-full max-w-[816px] mx-auto"
       style={{ filter: 'drop-shadow(0px 32px 44px rgba(1,23,48,0.18))' }}
     >
-      <div className="w-full overflow-hidden rounded-[8px] bg-[#94a2b6]">
+      <div
+        className="relative w-full overflow-hidden rounded-[8px] bg-[#94a2b6]"
+        style={{ paddingBottom: '58.3%' }}
+      >
         <img
           src={screenSrc}
           alt={screenAlt}
-          className="w-full h-auto block"
+          className="absolute inset-0 w-full h-full object-cover object-left-top"
         />
       </div>
     </div>
