@@ -79,8 +79,8 @@ const tabData = [
 function FeatureCard({ img, title, desc }) {
   return (
     <div className="flex flex-col gap-[20px]">
-      <div className="w-full h-[280px] md:h-[333px] overflow-hidden">
-        <img src={img} alt={title} className="w-full h-full object-cover" />
+      <div className="w-full overflow-hidden rounded-[4px]">
+        <img src={img} alt={title} className="w-full h-auto block" />
       </div>
       <div className="flex flex-col gap-[12px]">
         <p className="font-pretendard font-bold text-[#161c2d] text-[18px] md:text-[20px] leading-[1.5]">
@@ -179,7 +179,7 @@ export default function SolutionsPage() {
             <img
               src={tab.hero}
               alt={`${tab.label} 화면`}
-              className="w-full h-auto object-cover"
+              className="w-full h-auto block"
             />
           </div>
 

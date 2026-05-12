@@ -343,23 +343,18 @@ function GeoXMeaningSection() {
 
 // ---- Laptop Mockup (reusable) ----
 
-// drop-shadow는 filter로 외부에 적용 → overflow-hidden에 잘리지 않음
-// rounded-[8px] + overflow-hidden으로 이미지를 정확히 크롭
+// 좌측 상단 기준, 이미지 전체 표시 (크롭 없음)
 function LaptopMockup({ screenSrc, screenAlt }) {
   return (
     <div
       className="w-full max-w-[816px] mx-auto"
       style={{ filter: 'drop-shadow(0px 32px 44px rgba(1,23,48,0.18))' }}
     >
-      {/* 라운드 스퀘어 — overflow-hidden이 이미지를 정확히 크롭 */}
-      <div
-        className="relative w-full overflow-hidden rounded-[8px] bg-[#94a2b6]"
-        style={{ paddingBottom: '58.3%' }}
-      >
+      <div className="w-full overflow-hidden rounded-[8px] bg-[#94a2b6]">
         <img
           src={screenSrc}
           alt={screenAlt}
-          className="absolute top-0 left-0 w-full h-full object-cover"
+          className="w-full h-auto block"
         />
       </div>
     </div>
