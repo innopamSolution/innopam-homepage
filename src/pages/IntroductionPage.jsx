@@ -28,6 +28,7 @@ export function CompanyHero({ subtitle }) {
         src={asset('assets/company-hero-bg.jpg')}
         alt=""
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ transform: 'scale(1.3)', transformOrigin: 'center center' }}
       />
       {/* Dark overlays matching Figma 272:482 */}
       <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.5)' }} />
