@@ -263,13 +263,11 @@ function GeoXMeaningSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full">
           {/* Feature 1 */}
           <div className="flex flex-col gap-[40px] items-center">
-            <div className="w-[100px] h-[100px] flex items-center justify-center shrink-0">
-              <img
-                src={asset('assets/products/icon-cognition.svg')}
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-contain"
-              />
+            {/* Figma node 242:4692 — inset: 7.03% 17.97% 5.47% 14.84% */}
+            <div className="overflow-hidden relative w-[100px] h-[100px] shrink-0">
+              <div className="absolute" style={{ inset: '7.03% 17.97% 5.47% 14.84%' }}>
+                <img src={asset('assets/products/icon-cognition.svg')} alt="" aria-hidden="true" className="block w-full h-full" />
+              </div>
             </div>
             <div className="flex flex-col gap-[12px] md:gap-[16px] items-start text-[#161c2d] w-full">
               <div
@@ -290,13 +288,11 @@ function GeoXMeaningSection() {
 
           {/* Feature 2 */}
           <div className="flex flex-col gap-[40px] items-center">
-            <div className="w-[100px] h-[100px] flex items-center justify-center shrink-0">
-              <img
-                src={asset('assets/products/icon-ai-knowledge.svg')}
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-contain"
-              />
+            {/* Figma node 242:4727 — inset: 8.59% 5.47% 9.38% 5.47% */}
+            <div className="overflow-hidden relative w-[100px] h-[100px] shrink-0">
+              <div className="absolute" style={{ inset: '8.59% 5.47% 9.38% 5.47%' }}>
+                <img src={asset('assets/products/icon-ai-knowledge.svg')} alt="" aria-hidden="true" className="block w-full h-full" />
+              </div>
             </div>
             <div className="flex flex-col gap-[12px] md:gap-[16px] items-start text-[#161c2d] w-full">
               <div
@@ -317,13 +313,11 @@ function GeoXMeaningSection() {
 
           {/* Feature 3 */}
           <div className="flex flex-col gap-[40px] items-center">
-            <div className="w-[100px] h-[100px] flex items-center justify-center shrink-0">
-              <img
-                src={asset('assets/products/icon-ambient.svg')}
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-contain"
-              />
+            {/* Figma node 242:4748 — inset: 5.47% 11.72% 5.47% 11.72% */}
+            <div className="overflow-hidden relative w-[100px] h-[100px] shrink-0">
+              <div className="absolute" style={{ inset: '5.47% 11.72%' }}>
+                <img src={asset('assets/products/icon-ambient.svg')} alt="" aria-hidden="true" className="block w-full h-full" />
+              </div>
             </div>
             <div className="flex flex-col gap-[12px] md:gap-[16px] items-start text-[#161c2d] w-full">
               <div
