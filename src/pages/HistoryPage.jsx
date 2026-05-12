@@ -6,6 +6,20 @@ import { CompanyHero } from './IntroductionPage';
 // Data source: https://innopam.com/introduction/
 const historyData = [
   {
+    year: '2025',
+    items: [
+      { month: '—', text: '실감정사영상, AI변화탐지 솔루션 - 품질경영시스템 인증(ISO 9001)' },
+      { month: '—', text: '지상기준점 자동 매칭을 이용한 정사영상 생성 방법 및 시스템 특허 등록' },
+      { month: '—', text: '변화탐지 솔루션 GS (1등급) 인증' },
+    ],
+  },
+  {
+    year: '2024',
+    items: [
+      { month: '—', text: '공간영상도화업 등록(측량업)' },
+    ],
+  },
+  {
     year: '2021',
     items: [
       { month: '06', text: '기업부설연구소 인정(과학기술정보통신부)' },
