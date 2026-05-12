@@ -24,15 +24,12 @@ const missions = [
 export function CompanyHero({ subtitle }) {
   return (
     <section className="relative w-full h-[500px] md:h-[638px] overflow-hidden flex items-center justify-center bg-[#0b1225]">
-      {/* Figma 431:251 — exact crop positioning */}
-      <div className="absolute inset-0 overflow-hidden">
-        <img
-          src={asset('assets/company-hero-bg.jpg')}
-          alt=""
-          className="absolute max-w-none pointer-events-none"
-          style={{ height: '253.52%', width: '101.8%', top: '-53.09%', left: '-0.9%' }}
-        />
-      </div>
+      <img
+        src={asset('assets/company-hero-bg.jpg')}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ objectPosition: '50% 41%' }}
+      />
       <div className="absolute inset-0" style={{ background: 'rgba(20,26,54,0.5)' }} />
       <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
         <SectionLabel text="Company" light />
