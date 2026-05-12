@@ -15,7 +15,7 @@ const newsItems = [
     title:
       "[건설기술] 도시계획 재난·안전 개발제한구역 '모니터링' 신속 정확한 공간정보 분석 기대",
     image: imgNews1,
-    link: "#",
+    link: "https://www.ctman.kr/31971",
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const newsItems = [
     title:
       "[매일건설신문] AI 분석'으로 문제 해결… '플랫폼 솔루션 서비스 기업' 될 것",
     image: imgNews2,
-    link: "#",
+    link: "https://mcnews.co.kr/77976",
   },
 ];
 
