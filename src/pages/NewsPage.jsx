@@ -124,7 +124,7 @@ export default function NewsPage() {
             }}
           />
           <div className="relative z-10 flex flex-col items-center text-center gap-[20px] px-6">
-            <SectionLabel text="Project" light />
+            <SectionLabel text="News" light />
             <h1 className="font-space font-light text-white text-[36px] md:text-[56px] tracking-[2px] uppercase">
               NEWS
             </h1>
