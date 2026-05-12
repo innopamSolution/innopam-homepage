@@ -20,14 +20,6 @@ export default function Hero() {
         playsInline
       />
 
-      {/* Dark overlay gradient */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 50%, rgba(11,18,37,0.75) 0%, rgba(10,24,61,0.65) 39%, rgba(10,30,86,0.55) 78%, rgba(12,21,46,0.85) 100%)",
-        }}
-      />
 
       {/* Text content — responsive: centered on mobile, centered on all */}
       <div className="absolute z-10 flex flex-col items-center text-center text-white inset-0 justify-center px-6 md:px-[120px]">
