@@ -15,6 +15,7 @@ import IntroductionPage from './pages/IntroductionPage'
 import HistoryPage from './pages/HistoryPage'
 import BusinessRecordPage from './pages/BusinessRecordPage'
 import ContactPage from './pages/ContactPage'
+import NewsPage from './pages/NewsPage'
 
 function HomePage() {
   return (
@@ -49,6 +50,7 @@ function App() {
       <Route path="/company/history" element={<HistoryPage />} />
       <Route path="/company/business-record" element={<BusinessRecordPage />} />
       <Route path="/company/contact" element={<ContactPage />} />
+      <Route path="/news" element={<NewsPage />} />
     </Routes>
     </>
   )
