@@ -343,42 +343,24 @@ function GeoXMeaningSection() {
 
 // ---- Laptop Mockup (reusable) ----
 
-function LaptopMockup({ maskSrc, maskWidth, maskHeight, maskPosX, maskPosY, shadowHeight, screenSrc, screenAlt }) {
+// drop-shadow는 filter로 외부에 적용 → overflow-hidden에 잘리지 않음
+// rounded-[8px] + overflow-hidden으로 이미지를 정확히 크롭
+function LaptopMockup({ screenSrc, screenAlt }) {
   return (
-    <div className="w-full max-w-[816px] mx-auto">
-      {/* Aspect-ratio wrapper for responsive scaling */}
-      <div className="relative w-full" style={{ paddingBottom: '58.3%' }}>
-        {/* Base shadow card */}
-        <div
-          className="absolute bg-[#94a2b6] rounded-[8px]"
-          style={{
-            top: '0.16%',
-            left: '0.3%',
-            width: '98%',
-            height: `${(shadowHeight / 475.373) * 100}%`,
-            boxShadow: '0px 42px 44px -10px rgba(1,23,48,0.12)',
-          }}
+    <div
+      className="w-full max-w-[816px] mx-auto"
+      style={{ filter: 'drop-shadow(0px 32px 44px rgba(1,23,48,0.18))' }}
+    >
+      {/* 라운드 스퀘어 — overflow-hidden이 이미지를 정확히 크롭 */}
+      <div
+        className="relative w-full overflow-hidden rounded-[8px] bg-[#94a2b6]"
+        style={{ paddingBottom: '58.3%' }}
+      >
+        <img
+          src={screenSrc}
+          alt={screenAlt}
+          className="absolute top-0 left-0 w-full h-full object-cover"
         />
-        {/* Screen image (clipped to laptop shape) */}
-        <div
-          className="absolute inset-0 overflow-hidden"
-          style={{
-            WebkitMaskImage: `url('${maskSrc}')`,
-            maskImage: `url('${maskSrc}')`,
-            WebkitMaskSize: '106.4% 112.4%',
-            maskSize: '106.4% 112.4%',
-            WebkitMaskPosition: '-3.87% 0.16%',
-            maskPosition: '-3.87% 0.16%',
-            WebkitMaskRepeat: 'no-repeat',
-            maskRepeat: 'no-repeat',
-          }}
-        >
-          <img
-            src={screenSrc}
-            alt={screenAlt}
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          />
-        </div>
       </div>
     </div>
   )
@@ -443,8 +425,6 @@ function GeoXRealMapSection() {
 
       {/* Laptop mockup — responsive */}
       <LaptopMockup
-        maskSrc={asset('assets/products/laptop-mask1.svg')}
-        shadowHeight={458.086}
         screenSrc={asset('assets/products/laptop1-screen.png')}
         screenAlt="GeoXRealMap interface screenshot"
       />
@@ -505,8 +485,6 @@ function GeoXCityVisionSection() {
 
       {/* Laptop mockup — responsive */}
       <LaptopMockup
-        maskSrc={asset('assets/products/laptop-mask2.svg')}
-        shadowHeight={455.491}
         screenSrc={asset('assets/products/laptop3-screen.png')}
         screenAlt="GeoX CityVision interface screenshot"
       />
@@ -572,8 +550,6 @@ function CrackEyeXSection() {
 
       {/* Laptop mockup — responsive */}
       <LaptopMockup
-        maskSrc={asset('assets/products/laptop-mask4.svg')}
-        shadowHeight={455.491}
         screenSrc={asset('assets/products/laptop5-screen.png')}
         screenAlt="CrackEyeX interface screenshot"
       />
