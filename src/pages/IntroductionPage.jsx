@@ -27,7 +27,7 @@ export function CompanyHero({ subtitle }) {
       <img
         src={asset('assets/company-hero-bg.jpg')}
         alt=""
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
       />
       <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
         <SectionLabel text="Company" light />
