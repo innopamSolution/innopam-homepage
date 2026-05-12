@@ -58,17 +58,6 @@ const solutions = [
 
 export default function SolutionsSection() {
   const [active, setActive] = useState(0);
-  const [imgVisible, setImgVisible] = useState(true);
-
-  const handleSelect = (id) => {
-    if (id === active) return;
-    // 이미지 페이드 아웃 → 변경 → 페이드 인
-    setImgVisible(false);
-    setTimeout(() => {
-      setActive(id);
-      setImgVisible(true);
-    }, 250);
-  };
 
   return (
     <section id="solutions" className="bg-white flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
@@ -85,110 +74,109 @@ export default function SolutionsSection() {
       {/* Content */}
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-[80px] items-start lg:items-center w-full max-w-[1264px]">
 
-        {/* 이미지 — 페이드 전환 */}
+        {/* 이미지 */}
         <div className="w-full h-[300px] md:h-[400px] lg:w-[600px] lg:h-[600px] shrink-0 overflow-hidden">
           <img
             src={solutions[active].image}
             alt={solutions[active].title}
             className="w-full h-full object-cover object-left-top"
-            style={{
-              opacity: imgVisible ? 1 : 0,
-              transition: 'opacity 250ms ease',
-            }}
+            style={{ transition: 'opacity 300ms ease' }}
           />
         </div>
 
-        {/* 아코디언 리스트 */}
+        {/* 아코디언 — grid-template-rows 트릭으로 실제 높이 기반 자연스러운 애니메이션 */}
         <ul className="flex flex-col items-start flex-1 min-w-0 w-full">
           {solutions.map((sol) => {
             const isActive = sol.id === active;
             return (
               <li key={sol.id} className="border-b border-[#e9e9e9] w-full">
 
-                {/* 타이틀 — 항상 표시, 클릭 시 토글 */}
+                {/* 타이틀 버튼 */}
                 <button
-                  className="w-full text-left py-[14px] flex items-center gap-[12px] group"
-                  onClick={() => handleSelect(sol.id)}
+                  className="w-full text-left py-[14px] flex items-center gap-[10px] group"
+                  onClick={() => setActive(sol.id)}
                   aria-expanded={isActive}
                 >
-                  {/* 화살표 아이콘 */}
                   <img
                     src={asset('assets/arrow-right02.svg')}
                     alt=""
                     aria-hidden="true"
                     style={{
-                      width: '29px', height: '19px', flexShrink: 0,
+                      width: '24px', height: '16px', flexShrink: 0,
                       opacity: isActive ? 1 : 0,
-                      transform: isActive ? 'translateX(0)' : 'translateX(-8px)',
-                      transition: 'opacity 300ms ease, transform 300ms ease',
+                      transform: isActive ? 'translateX(0)' : 'translateX(-6px)',
+                      transition: 'opacity 250ms ease, transform 250ms ease',
                     }}
                   />
-                  <span
-                    style={{
-                      transition: 'color 200ms ease, font-weight 200ms ease',
-                    }}
-                    className={`font-space tracking-[0.5px] uppercase leading-[31.5px] whitespace-nowrap
-                      ${isActive
-                        ? 'font-bold text-[22px] md:text-[30px] text-black'
-                        : 'font-normal text-[20px] md:text-[28px] text-black group-hover:text-[#4262ff]'
-                      }`}
+                  <span className={`font-space tracking-[0.5px] uppercase whitespace-nowrap
+                    transition-colors duration-200
+                    ${isActive
+                      ? 'font-bold text-[22px] md:text-[30px] text-black leading-[31.5px]'
+                      : 'font-normal text-[20px] md:text-[28px] text-black group-hover:text-[#4262ff] leading-[31.5px]'
+                    }`}
                   >
                     {sol.title}
                   </span>
                 </button>
 
-                {/* 펼쳐지는 콘텐츠 — max-height transition */}
+                {/* 콘텐츠 — grid-template-rows: 0fr ↔ 1fr */}
                 <div
                   style={{
-                    maxHeight: isActive ? '500px' : '0px',
-                    opacity: isActive ? 1 : 0,
-                    overflow: 'hidden',
-                    transition: 'max-height 420ms cubic-bezier(0.4,0,0.2,1), opacity 350ms ease',
+                    display: 'grid',
+                    gridTemplateRows: isActive ? '1fr' : '0fr',
+                    transition: 'grid-template-rows 350ms ease',
                   }}
                 >
-                  <div className="flex flex-col gap-[20px] items-start px-[23px] pb-[30px] w-full lg:w-[487px]">
-
-                    {/* 설명 */}
-                    <div className="flex flex-col font-pretendard font-normal text-[16px] text-[#444] leading-[1.4] w-full">
-                      {sol.description.map((line, i) => (
-                        <p key={i} className={i < sol.description.length - 1 ? "mb-0" : ""}>{line}</p>
-                      ))}
-                    </div>
-
-                    {/* 관련 제품 */}
-                    {sol.relatedProduct && (
-                      <div className="flex flex-col gap-[4px] items-start w-full">
-                        <p className="font-pretendard font-bold text-[14px] text-[#040000] leading-[1.4]">관련 제품</p>
-                        <a href={sol.relatedProduct.href} className="flex items-end gap-[5px]">
-                          <span className="font-pretendard font-normal text-[14px] text-[#4262ff] leading-[24px] border-b border-[#4262ff] whitespace-nowrap">
-                            {sol.relatedProduct.name}
-                          </span>
-                          <span className="font-inter font-normal text-[18px] text-[#4262ff] leading-none">→</span>
-                        </a>
+                  <div style={{ overflow: 'hidden' }}>
+                    <div
+                      className="flex flex-col gap-[20px] items-start px-[23px] pb-[28px] w-full lg:w-[487px]"
+                      style={{
+                        opacity: isActive ? 1 : 0,
+                        transition: 'opacity 300ms ease',
+                      }}
+                    >
+                      {/* 설명 */}
+                      <div className="flex flex-col font-pretendard font-normal text-[16px] text-[#444] leading-[1.4] w-full">
+                        {sol.description.map((line, i) => (
+                          <p key={i} className={i < sol.description.length - 1 ? 'mb-0' : ''}>{line}</p>
+                        ))}
                       </div>
-                    )}
 
-                    {/* 프로젝트 사례 */}
-                    {sol.projects.length > 0 && (
-                      <div className="flex flex-col gap-[4px] items-start w-full">
-                        <p className="font-pretendard font-bold text-[14px] text-[#040000] leading-[1.4]">프로젝트 사례</p>
-                        <div className="flex flex-wrap items-start gap-[4px]">
-                          {sol.projects.map((p, i) => (
-                            <a
-                              key={p}
-                              href="#"
-                              className={`font-pretendard font-medium text-[14px] text-[#444] leading-[1.2] py-[4px] ${
-                                i < sol.projects.length - 1
-                                  ? 'border-r border-[rgba(4,0,0,0.15)] pr-[10px]'
-                                  : 'pl-[10px]'
-                              }`}
-                            >
-                              {p}
-                            </a>
-                          ))}
+                      {/* 관련 제품 */}
+                      {sol.relatedProduct && (
+                        <div className="flex flex-col gap-[4px] items-start w-full">
+                          <p className="font-pretendard font-bold text-[14px] text-[#040000] leading-[1.4]">관련 제품</p>
+                          <a href={sol.relatedProduct.href} className="flex items-end gap-[5px]">
+                            <span className="font-pretendard font-normal text-[14px] text-[#4262ff] leading-[24px] border-b border-[#4262ff] whitespace-nowrap">
+                              {sol.relatedProduct.name}
+                            </span>
+                            <span className="font-inter font-normal text-[18px] text-[#4262ff] leading-none">→</span>
+                          </a>
                         </div>
-                      </div>
-                    )}
+                      )}
+
+                      {/* 프로젝트 사례 */}
+                      {sol.projects.length > 0 && (
+                        <div className="flex flex-col gap-[4px] items-start w-full">
+                          <p className="font-pretendard font-bold text-[14px] text-[#040000] leading-[1.4]">프로젝트 사례</p>
+                          <div className="flex flex-wrap items-start gap-[4px]">
+                            {sol.projects.map((p, i) => (
+                              <a
+                                key={p}
+                                href="#"
+                                className={`font-pretendard font-medium text-[14px] text-[#444] leading-[1.2] py-[4px] ${
+                                  i < sol.projects.length - 1
+                                    ? 'border-r border-[rgba(4,0,0,0.15)] pr-[10px]'
+                                    : 'pl-[10px]'
+                                }`}
+                              >
+                                {p}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </li>
