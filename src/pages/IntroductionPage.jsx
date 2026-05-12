@@ -29,7 +29,6 @@ export function CompanyHero({ subtitle }) {
         alt=""
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
       />
-      <div className="absolute inset-0 bg-black/40" />
       <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
         <SectionLabel text="Company" light />
         <h1 className="font-pretendard font-bold text-[#5871ed] text-[34px] md:text-[48px] tracking-[-2px] leading-[1.35]">
