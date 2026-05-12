@@ -20,6 +20,7 @@ export default function Hero() {
         playsInline
       />
 
+      <div className="absolute inset-0 bg-black/20" />
 
       {/* Text content — responsive: centered on mobile, centered on all */}
       <div className="absolute z-10 flex flex-col items-center text-center text-white inset-0 justify-center px-6 md:px-[120px]">
