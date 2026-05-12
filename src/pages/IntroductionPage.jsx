@@ -27,14 +27,17 @@ export function CompanyHero({ subtitle }) {
       <img
         src={asset('assets/company-hero-bg.jpg')}
         alt=""
-        className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
       />
+      {/* Dark overlays matching Figma 272:482 */}
+      <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.5)' }} />
+      <div className="absolute inset-0" style={{ background: 'rgba(20,26,54,0.5)' }} />
       <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
         <SectionLabel text="Company" light />
-        <h1 className="font-pretendard font-bold text-[#5871ed] text-[34px] md:text-[48px] tracking-[-2px] leading-[1.35]">
+        <h1 className="font-pretendard font-bold text-white text-[34px] md:text-[48px] tracking-[-2px]" style={{ lineHeight: '65px' }}>
           About Innopam
         </h1>
-        <p className="font-pretendard font-normal text-[#5871ed] text-[16px] md:text-[20px] leading-[1.4]">
+        <p className="font-pretendard font-normal text-white text-[16px] md:text-[20px] leading-[1.4]">
           {subtitle}
         </p>
       </div>
