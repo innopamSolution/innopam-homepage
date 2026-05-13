@@ -1,6 +1,6 @@
 // Figma node: 159:2246 (Solutions) + 176:3308 (농업 분석 state)
 // All spacing/padding/border values taken directly from Figma
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
 
@@ -58,6 +58,31 @@ const solutions = [
 
 export default function SolutionsSection() {
   const [active, setActive] = useState(0);
+  const hoveredRef = useRef(null); // 현재 호버 중인 탭 id (null이면 자동 순환)
+  const timerRef = useRef(null);
+
+  // 타이머 시작: 20초마다 다음 탭으로 이동
+  const startTimer = () => {
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      if (hoveredRef.current !== null) return; // 호버 중이면 건너뜀
+      setActive((prev) => (prev + 1) % solutions.length);
+    }, 20000);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => clearInterval(timerRef.current);
+  }, []);
+
+  const handleMouseEnter = (id) => {
+    hoveredRef.current = id;
+    setActive(id);
+  };
+
+  const handleMouseLeave = () => {
+    hoveredRef.current = null;
+  };
 
   return (
     <section id="solutions" className="bg-white flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
@@ -89,7 +114,12 @@ export default function SolutionsSection() {
           {solutions.map((sol) => {
             const isActive = sol.id === active;
             return (
-              <li key={sol.id} className="border-b border-[#e9e9e9] w-full">
+              <li
+                key={sol.id}
+                className="border-b border-[#e9e9e9] w-full"
+                onMouseEnter={() => handleMouseEnter(sol.id)}
+                onMouseLeave={handleMouseLeave}
+              >
 
                 {/* 타이틀 버튼 */}
                 <button
