@@ -1,10 +1,11 @@
 // News Page — Figma node 183:3759 / 434:146
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import NewsHero from '../components/NewsHero';
-import { newsItems } from '../data/news';
+import { fetchNews } from '../lib/supabase';
+import { newsItems as localNewsItems } from '../data/news';
 
 const TABS = ['All', '이노팸 소식', '언론보도'];
 const PER_PAGE = 10;
@@ -133,6 +134,15 @@ function NewsCard({ item }) {
 export default function NewsPage() {
   const [activeTab, setActiveTab] = useState('All');
   const [page, setPage] = useState(1);
+  const [newsItems, setNewsItems] = useState(localNewsItems);
+  const [dbLoaded, setDbLoaded] = useState(false);
+
+  // Supabase에서 뉴스 로드 (실패시 로컬 데이터 fallback)
+  useEffect(() => {
+    fetchNews()
+      .then(data => { if (data?.length) { setNewsItems(data); setDbLoaded(true); } })
+      .catch(() => {}); // 실패시 로컬 데이터 유지
+  }, []);
 
   const filtered = activeTab === 'All'
     ? newsItems

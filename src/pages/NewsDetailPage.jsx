@@ -1,9 +1,11 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import NewsHero from '../components/NewsHero';
 import { asset } from '../utils/asset';
-import { newsItems } from '../data/news';
+import { fetchNewsById, fetchNews } from '../lib/supabase';
+import { newsItems as localNewsItems } from '../data/news';
 
 function IconBack() {
   return (
@@ -24,7 +26,45 @@ function IconNext() {
 export default function NewsDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const item = newsItems.find(n => n.id === Number(id));
+  const [item, setItem] = useState(null);
+  const [prevItem, setPrevItem] = useState(null);
+  const [nextItem, setNextItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const numId = Number(id);
+    // Supabase 시도, 실패시 로컬 fallback
+    fetchNewsById(numId)
+      .then(async data => {
+        setItem(data);
+        // 이전/다음 글
+        const all = await fetchNews().catch(() => localNewsItems);
+        const same = all.filter(n => n.category === '이노팸 소식');
+        const idx = same.findIndex(n => n.id === data.id);
+        setPrevItem(idx > 0 ? same[idx - 1] : null);
+        setNextItem(idx < same.length - 1 ? same[idx + 1] : null);
+      })
+      .catch(() => {
+        // 로컬 fallback
+        const local = localNewsItems.find(n => n.id === numId);
+        setItem(local || null);
+        if (local) {
+          const same = localNewsItems.filter(n => n.category === '이노팸 소식');
+          const idx = same.findIndex(n => n.id === numId);
+          setPrevItem(idx > 0 ? same[idx - 1] : null);
+          setNextItem(idx < same.length - 1 ? same[idx + 1] : null);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="font-pretendard text-[#6d758f]">불러오는 중...</p>
+      </div>
+    );
+  }
 
   if (!item || item.category !== '이노팸 소식') {
     return (
@@ -33,11 +73,6 @@ export default function NewsDetailPage() {
       </div>
     );
   }
-
-  const sameCategory = newsItems.filter(n => n.category === '이노팸 소식');
-  const idx = sameCategory.findIndex(n => n.id === item.id);
-  const prevItem = idx > 0 ? sameCategory[idx - 1] : null;
-  const nextItem = idx < sameCategory.length - 1 ? sameCategory[idx + 1] : null;
 
   return (
     <div className="min-h-screen w-full bg-white">
@@ -95,17 +130,17 @@ export default function NewsDetailPage() {
                 );
               }
               if (block.type === 'image') {
+                const imgSrc = block.src || block.image_url || '';
                 return (
-                  <div
-                    key={i}
-                    className="w-full flex flex-col items-center gap-4"
-                  >
-                    <img
-                      src={block.src}
-                      alt={block.alt}
-                      className="w-full object-cover rounded-[4px]"
-                      style={{ maxWidth: '1000px', maxHeight: '750px' }}
-                    />
+                  <div key={i} className="w-full flex flex-col items-center gap-4">
+                    {imgSrc && (
+                      <img
+                        src={imgSrc}
+                        alt={block.alt || ''}
+                        className="w-full object-cover rounded-[4px]"
+                        style={{ maxWidth: '1000px', maxHeight: '750px' }}
+                      />
+                    )}
                     {block.caption && (
                       <p className="font-pretendard text-[#6d758f] text-[14px] text-center">
                         {block.caption}
