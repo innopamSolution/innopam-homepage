@@ -16,6 +16,7 @@ import HistoryPage from './pages/HistoryPage'
 import BusinessRecordPage from './pages/BusinessRecordPage'
 import ContactPage from './pages/ContactPage'
 import NewsPage from './pages/NewsPage'
+import NewsDetailPage from './pages/NewsDetailPage'
 
 function HomePage() {
   return (
@@ -51,6 +52,7 @@ function App() {
       <Route path="/company/business-record" element={<BusinessRecordPage />} />
       <Route path="/company/contact" element={<ContactPage />} />
       <Route path="/news" element={<NewsPage />} />
+      <Route path="/news/:id" element={<NewsDetailPage />} />
     </Routes>
     </>
   )
