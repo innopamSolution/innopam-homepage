@@ -3,12 +3,12 @@ import { asset } from '../utils/asset';
 
 export default function Footer() {
   return (
-    <footer className="relative bg-black flex flex-col gap-[60px] md:gap-[100px] items-start pb-[60px] pt-[80px] md:pt-[155px] px-6 md:px-[80px]">
+    <footer className="relative bg-black flex flex-col gap-[60px] md:gap-[100px] items-center pb-[60px] pt-[80px] md:pt-[155px] px-6 md:px-[80px]">
       {/* Main content — stack on mobile, side-by-side on desktop */}
       <div className="relative w-full max-w-[1280px]">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 lg:h-[377px]">
           {/* Left: CTA */}
-          <div className="lg:absolute lg:left-10 lg:top-0 lg:right-[640px] lg:h-[352px]">
+          <div className="lg:absolute lg:left-10 lg:top-0 lg:right-[640px] lg:h-[352px] text-center lg:text-left">
             <p
               className="font-pretendard font-normal text-white mb-10 text-[18px] md:text-[24px]"
               style={{ lineHeight: "1.8", letterSpacing: "-0.48px" }}
@@ -28,7 +28,7 @@ export default function Footer() {
           </div>
 
           {/* Right: Contact info */}
-          <div className="lg:absolute lg:left-[640px] lg:top-0 lg:right-0 flex flex-col gap-8 lg:gap-0 lg:h-[345px] lg:justify-between">
+          <div className="lg:absolute lg:left-[640px] lg:top-0 lg:right-0 flex flex-col gap-8 lg:gap-0 lg:h-[345px] lg:justify-between text-center lg:text-left items-center lg:items-start">
             {/* Address */}
             <div>
               <p className="font-space font-bold text-[11px] text-[rgba(255,255,255,0.25)] tracking-[1.2px] uppercase mb-3">
@@ -73,7 +73,7 @@ export default function Footer() {
       <div className="relative flex flex-col gap-9 w-full max-w-[1280px]">
         <div className="h-px bg-[rgba(255,255,255,0.1)] w-full" />
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 md:gap-0">
-          <img src={asset('assets/logo-header.svg')} alt="Innopam" className="w-[128px] h-[44px] object-contain" />
+          <img src={asset('assets/logo-footer-new.svg')} alt="Innopam" className="w-[128px] h-[44px] object-contain" />
           <p className="font-space text-[11px] text-[rgba(255,255,255,0.4)] md:text-right leading-[18px]">
             Copyright © Innopam.com All Rights Reserved
           </p>
