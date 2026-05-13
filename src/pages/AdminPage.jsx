@@ -14,6 +14,56 @@ const emptyForm = {
   published: true,
 };
 
+// ── 블록 내 이미지 업로드 ─────────────────────────────────────────
+function BlockImageUpload({ src, onSrc }) {
+  const ref = useRef();
+  const [uploading, setUploading] = useState(false);
+
+  const handleFile = async (file) => {
+    if (!file || !file.type.startsWith('image/')) return;
+    setUploading(true);
+    try {
+      const url = await uploadImage(file);
+      onSrc(url);
+    } catch (e) {
+      alert('업로드 실패: ' + e.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div>
+      <div
+        onClick={() => !uploading && ref.current?.click()}
+        onDragOver={e => e.preventDefault()}
+        onDrop={e => { e.preventDefault(); handleFile(e.dataTransfer.files[0]); }}
+        className={`border-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer transition-colors
+          ${uploading ? 'border-blue-300 bg-blue-50' : 'border-gray-300 hover:border-[#45469A] hover:bg-gray-50'}
+          ${src ? 'p-1' : 'py-6'}`}
+      >
+        {uploading ? (
+          <div className="py-4 flex items-center gap-2 text-blue-500 text-sm">
+            <div className="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+            업로드 중...
+          </div>
+        ) : src ? (
+          <div className="relative w-full">
+            <img src={src} alt="" className="w-full max-h-40 object-cover rounded" />
+            <button onClick={e => { e.stopPropagation(); onSrc(''); }} className="absolute top-1 right-1 w-6 h-6 bg-black/50 text-white rounded-full text-xs flex items-center justify-center">✕</button>
+          </div>
+        ) : (
+          <p className="text-xs text-gray-400">클릭 또는 드래그로 이미지 업로드</p>
+        )}
+      </div>
+      <input ref={ref} type="file" accept="image/*" className="hidden"
+        onChange={e => handleFile(e.target.files[0])} />
+      <input className="w-full border border-gray-200 rounded p-1.5 text-xs text-gray-400 mt-1 bg-gray-50"
+        placeholder="또는 URL 직접 입력" value={src} onChange={e => onSrc(e.target.value)} />
+    </div>
+  );
+}
+
 // ── 본문 블록 에디터 ──────────────────────────────────────────────
 function BlockEditor({ blocks, onChange }) {
   const addText = () => onChange([...blocks, { type: 'text', value: '' }]);
@@ -42,10 +92,12 @@ function BlockEditor({ blocks, onChange }) {
           )}
           {block.type === 'image' && (
             <div className="flex flex-col gap-2">
-              <input className="border border-gray-300 rounded p-2 text-sm" placeholder="이미지 URL" value={block.src} onChange={e => update(i, 'src', e.target.value)} />
+              <BlockImageUpload
+                src={block.src}
+                onSrc={val => update(i, 'src', val)}
+              />
               <input className="border border-gray-300 rounded p-2 text-sm" placeholder="alt 텍스트" value={block.alt} onChange={e => update(i, 'alt', e.target.value)} />
               <input className="border border-gray-300 rounded p-2 text-sm" placeholder="캡션 (선택)" value={block.caption} onChange={e => update(i, 'caption', e.target.value)} />
-              {block.src && <img src={block.src} alt="" className="h-32 object-cover rounded mt-1" />}
             </div>
           )}
         </div>
@@ -386,25 +438,56 @@ export default function AdminPage() {
             {/* 대표 이미지 */}
             <div>
               <label className="block text-sm font-semibold text-gray-600 mb-1.5">대표 이미지</label>
-              <div className="flex gap-2 items-start">
+              {/* 드래그앤드롭 / 클릭 업로드 영역 */}
+              <div
+                onClick={() => !uploading && fileRef.current?.click()}
+                onDragOver={e => e.preventDefault()}
+                onDrop={async e => {
+                  e.preventDefault();
+                  const file = e.dataTransfer.files[0];
+                  if (file && file.type.startsWith('image/')) {
+                    const syntheticEvent = { target: { files: [file] } };
+                    await handleImageUpload(syntheticEvent);
+                  }
+                }}
+                className={`relative border-2 border-dashed rounded-xl flex flex-col items-center justify-center cursor-pointer transition-colors
+                  ${uploading ? 'border-blue-300 bg-blue-50 cursor-wait' : 'border-gray-300 hover:border-[#45469A] hover:bg-gray-50'}
+                  ${form.image_url ? 'p-2' : 'py-10'}`}
+              >
+                {uploading ? (
+                  <div className="flex flex-col items-center gap-2 py-6">
+                    <div className="w-8 h-8 border-4 border-[#45469A] border-t-transparent rounded-full animate-spin" />
+                    <p className="text-sm text-blue-500 font-medium">업로드 중...</p>
+                  </div>
+                ) : form.image_url ? (
+                  <div className="relative w-full">
+                    <img src={form.image_url} alt="" className="w-full max-h-48 object-cover rounded-lg" />
+                    <button
+                      onClick={e => { e.stopPropagation(); setField('image_url', ''); }}
+                      className="absolute top-2 right-2 w-7 h-7 bg-black/50 text-white rounded-full flex items-center justify-center text-sm hover:bg-black/70"
+                    >✕</button>
+                    <p className="text-xs text-gray-400 text-center mt-2">클릭하여 이미지 변경</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-gray-400 pointer-events-none">
+                    <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <p className="text-sm font-medium text-gray-500">클릭하거나 파일을 여기에 드래그하세요</p>
+                    <p className="text-xs text-gray-400">PNG, JPG, GIF, WEBP 지원</p>
+                  </div>
+                )}
+              </div>
+              <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+              {/* URL 직접 입력 */}
+              <div className="mt-2">
                 <input
-                  className="flex-1 border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#45469A]"
-                  placeholder="이미지 URL 직접 입력 또는 업로드"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-500 focus:outline-none focus:border-[#45469A] bg-gray-50"
+                  placeholder="또는 이미지 URL 직접 입력"
                   value={form.image_url}
                   onChange={e => setField('image_url', e.target.value)}
                 />
-                <button
-                  onClick={() => fileRef.current?.click()}
-                  disabled={uploading}
-                  className="px-4 py-2.5 bg-gray-100 border border-gray-300 rounded-lg text-sm hover:bg-gray-200 whitespace-nowrap disabled:opacity-50"
-                >
-                  {uploading ? '업로드 중...' : '파일 업로드'}
-                </button>
-                <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
               </div>
-              {form.image_url && (
-                <img src={form.image_url} alt="" className="mt-2 h-32 object-cover rounded-lg border border-gray-200" />
-              )}
             </div>
 
             {/* 언론보도 - 외부 링크 */}
