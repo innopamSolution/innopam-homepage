@@ -3,6 +3,22 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { newsItems } from '../data/news';
 
+function IconBack() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M15.5 5L8.5 12L15.5 19" stroke="#3a343b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function IconNext() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M8.5 5L15.5 12L8.5 19" stroke="#3a343b" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
 export default function NewsDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -25,105 +41,109 @@ export default function NewsDetailPage() {
     <div className="min-h-screen w-full bg-white">
       <Header />
       <main className="pt-[84px]">
+        <div className="flex flex-col gap-[80px] items-center px-6 md:px-[88px] pt-[120px] pb-[200px]">
 
-        {/* 상단 히어로 */}
-        <section className="w-full bg-[#f4f7fa] px-6 md:px-[88px] py-[60px] md:py-[80px]">
-          <div className="max-w-[860px] mx-auto flex flex-col gap-5">
-            <span className="inline-flex items-center gap-2 font-pretendard font-bold text-[13px] text-[#4262ff] tracking-[1px] uppercase">
+          {/* 목록 버튼 */}
+          <div className="w-full max-w-[1264px]">
+            <button
+              onClick={() => navigate('/news')}
+              className="flex items-center gap-[6px] hover:opacity-70 transition-opacity"
+            >
+              <IconBack />
+              <span className="font-pretendard font-bold text-[#3a343b] text-[20px] tracking-[-1.2px]">
+                목록
+              </span>
+            </button>
+          </div>
+
+          {/* 제목 헤더 영역 */}
+          <div className="w-full max-w-[1264px] flex flex-col items-start pb-[40px] border-b border-[#e9e9e9]">
+            {/* 카테고리 */}
+            <span className="font-pretendard font-bold text-[#4262ff] text-[14px] leading-[24px] mb-1">
               이노팸 소식
             </span>
+            {/* 제목 */}
             <h1
-              className="font-pretendard font-bold text-[#1a1a2e] text-[28px] md:text-[38px] tracking-[-1px]"
-              style={{ lineHeight: 1.4 }}
+              className="font-inter font-semibold text-[#3a343b] text-[30px] w-full mb-8"
+              style={{ lineHeight: '36px' }}
             >
               {item.title}
             </h1>
-            <p className="font-inter text-[#6d758f] text-[15px]">{item.date}</p>
+            {/* 날짜 */}
+            <p className="font-inter font-normal text-[#6d758f] text-[16px]" style={{ lineHeight: '22px' }}>
+              {item.date}
+            </p>
           </div>
-        </section>
 
-        {/* 대표 이미지 */}
-        <div className="w-full max-w-[860px] mx-auto px-6 md:px-0 mt-[48px]">
-          <img
-            src={item.image}
-            alt={item.title}
-            className="w-full rounded-[8px] object-cover"
-            style={{ maxHeight: '480px', objectPosition: 'center' }}
-          />
+          {/* 본문 콘텐츠 */}
+          <div className="w-full max-w-[1264px] flex flex-col gap-[50px] items-center pb-[40px] border-b border-[#e9e9e9]">
+            {item.content.map((block, i) => {
+              if (block.type === 'text') {
+                return (
+                  <p
+                    key={i}
+                    className="font-pretendard text-[#3a343b] text-[20px] w-full"
+                    style={{ fontWeight: 500, lineHeight: '36px' }}
+                  >
+                    {block.value}
+                  </p>
+                );
+              }
+              if (block.type === 'image') {
+                return (
+                  <div
+                    key={i}
+                    className="w-full flex flex-col items-center gap-4"
+                  >
+                    <img
+                      src={block.src}
+                      alt={block.alt}
+                      className="w-full object-cover rounded-[4px]"
+                      style={{ maxWidth: '1000px', maxHeight: '750px' }}
+                    />
+                    {block.caption && (
+                      <p className="font-pretendard text-[#6d758f] text-[14px] text-center">
+                        {block.caption}
+                      </p>
+                    )}
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
+
+          {/* 이전 / 다음 네비게이션 */}
+          <div className="w-full max-w-[1264px] flex items-center justify-between h-[58px]">
+            {prevItem ? (
+              <Link
+                to={`/news/${prevItem.id}`}
+                className="flex items-center gap-[10px] hover:opacity-70 transition-opacity"
+              >
+                <IconBack />
+                <span className="font-pretendard font-bold text-[#3a343b] text-[20px] tracking-[-1.2px]">
+                  이전
+                </span>
+              </Link>
+            ) : (
+              <div />
+            )}
+            {nextItem ? (
+              <Link
+                to={`/news/${nextItem.id}`}
+                className="flex items-center gap-[10px] hover:opacity-70 transition-opacity"
+              >
+                <span className="font-pretendard font-bold text-[#3a343b] text-[20px] tracking-[-1.2px]">
+                  다음
+                </span>
+                <IconNext />
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
+
         </div>
-
-        {/* 본문 */}
-        <article className="w-full max-w-[860px] mx-auto px-6 md:px-0 py-[60px] flex flex-col gap-8">
-          {item.content.map((block, i) => {
-            if (block.type === 'text') {
-              return (
-                <p
-                  key={i}
-                  className="font-pretendard font-normal text-[#3a343b] text-[17px] md:text-[18px]"
-                  style={{ lineHeight: 1.9 }}
-                >
-                  {block.value}
-                </p>
-              );
-            }
-            if (block.type === 'image') {
-              return (
-                <figure key={i} className="flex flex-col gap-3">
-                  <img
-                    src={block.src}
-                    alt={block.alt}
-                    className="w-full rounded-[8px] object-cover"
-                    style={{ maxHeight: '400px' }}
-                  />
-                  {block.caption && (
-                    <figcaption className="font-pretendard text-[#6d758f] text-[14px] text-center">
-                      {block.caption}
-                    </figcaption>
-                  )}
-                </figure>
-              );
-            }
-            return null;
-          })}
-        </article>
-
-        {/* 구분선 */}
-        <div className="w-full max-w-[860px] mx-auto px-6 md:px-0">
-          <div className="h-px bg-[#e9e9e9]" />
-        </div>
-
-        {/* 이전글 / 다음글 */}
-        <nav className="w-full max-w-[860px] mx-auto px-6 md:px-0 py-[40px] flex flex-col gap-0">
-          {nextItem && (
-            <Link
-              to={`/news/${nextItem.id}`}
-              className="flex items-start gap-4 py-5 border-b border-[#e9e9e9] hover:bg-[#f9f9fb] transition-colors px-4 -mx-4 rounded-[4px]"
-            >
-              <span className="font-pretendard font-bold text-[13px] text-[#4262ff] shrink-0 mt-0.5 w-12">다음글</span>
-              <span className="font-pretendard text-[16px] text-[#3a343b] leading-[1.5]">{nextItem.title}</span>
-            </Link>
-          )}
-          {prevItem && (
-            <Link
-              to={`/news/${prevItem.id}`}
-              className="flex items-start gap-4 py-5 border-b border-[#e9e9e9] hover:bg-[#f9f9fb] transition-colors px-4 -mx-4 rounded-[4px]"
-            >
-              <span className="font-pretendard font-bold text-[13px] text-[#6d758f] shrink-0 mt-0.5 w-12">이전글</span>
-              <span className="font-pretendard text-[16px] text-[#3a343b] leading-[1.5]">{prevItem.title}</span>
-            </Link>
-          )}
-        </nav>
-
-        {/* 목록 버튼 */}
-        <div className="w-full max-w-[860px] mx-auto px-6 md:px-0 pb-[120px] flex justify-center">
-          <button
-            onClick={() => navigate('/news')}
-            className="font-pretendard font-bold text-[14px] text-[#3a343b] border border-[#d0d0d8] px-[40px] py-[14px] rounded-full hover:border-[#4262ff] hover:text-[#4262ff] transition-colors"
-          >
-            목록으로
-          </button>
-        </div>
-
       </main>
       <Footer />
     </div>
