@@ -111,28 +111,22 @@ export default function SolutionsPage() {
       <main className="pt-[84px]">
 
         {/* Hero */}
-        <section
-          className="relative w-full h-[400px] overflow-hidden flex items-center justify-center"
-          style={{ background: '#0b1225' }}
-        >
+        <section className="relative w-full h-[400px] overflow-hidden flex items-center justify-center">
           <img
             src={asset('assets/solutions-hero-bg.jpg')}
             alt=""
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-            style={{ filter: 'blur(2px)', transform: 'scale(1.05)' }}
+            style={{ filter: 'blur(3px)', transform: 'scale(1.1)' }}
           />
-          <div
-            className="absolute inset-0"
-            style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(44,41,86,0.85) 0%, rgba(9,33,65,0.9) 100%)' }}
-          />
+          <div className="absolute inset-0 bg-[rgba(41,42,105,0.6)]" />
           <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
             <SectionLabel text="Solutions" light />
-            <h1 className="font-pretendard font-bold text-white text-[34px] md:text-[48px] tracking-[-2px] leading-[1.35]">
+            <h1 className="font-pretendard font-bold text-white text-[48px] tracking-[-2px] leading-[65px]">
               Mapping &amp; AI Solutions
             </h1>
-            <p className="font-pretendard font-normal text-white text-[16px] md:text-[20px] leading-[1.4] opacity-90">
-              위성·항공·드론 데이터를 기반으로 변화 탐지, 객체 분석, 디지털트윈 구축까지<br className="hidden md:block" />
-              {' '}다양한 산업의 문제 해결을 지원합니다
+            <p className="font-pretendard font-normal text-white text-[20px] leading-[1.4]">
+              위성·항공·드론 데이터를 기반으로 변화 탐지, 객체 분석, 디지털트윈 구축까지<br />
+              다양한 산업의 문제 해결을 지원합니다
             </p>
           </div>
         </section>
