@@ -145,7 +145,7 @@ export default function NewsDetailPage() {
               >
                 <IconBack />
                 <span className="font-pretendard font-bold text-[#3a343b] text-[20px] tracking-[-1.2px]">
-                  이전
+                  이전글
                 </span>
               </Link>
             ) : (
@@ -157,7 +157,7 @@ export default function NewsDetailPage() {
                 className="flex items-center gap-[10px] hover:opacity-70 transition-opacity"
               >
                 <span className="font-pretendard font-bold text-[#3a343b] text-[20px] tracking-[-1.2px]">
-                  다음
+                  다음글
                 </span>
                 <IconNext />
               </Link>
