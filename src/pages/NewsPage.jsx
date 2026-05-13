@@ -121,9 +121,9 @@ export default function NewsPage() {
           />
           <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.5)' }} />
           <div className="relative z-10 flex flex-col items-center text-center gap-[20px] px-6">
-            <SectionLabel text="COMPANY" light />
-            <h1 className="font-space font-light text-white text-[36px] md:text-[56px] tracking-[2px] uppercase">
-              NEWS
+            <SectionLabel text="News" light />
+            <h1 className="font-pretendard font-bold text-white text-[36px] md:text-[48px] tracking-[-2px]" style={{ lineHeight: '65px' }}>
+              News
             </h1>
             <p className="font-pretendard font-normal text-white text-[15px] md:text-[18px] leading-[1.6] opacity-80 max-w-[600px]">
               이노팸의 주요 소식과 언론보도 내용을 전합니다.
