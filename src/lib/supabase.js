@@ -60,7 +60,23 @@ export async function deleteNews(id) {
   if (error) throw error;
 }
 
-// 이미지 업로드
+// ── 인증 ─────────────────────────────────────────────────────────
+export async function signIn(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) throw error;
+  return data.session;
+}
+
+export async function signOut() {
+  await supabase.auth.signOut();
+}
+
+export async function getSession() {
+  const { data } = await supabase.auth.getSession();
+  return data.session;
+}
+
+// ── 이미지 업로드 ─────────────────────────────────────────────────
 export async function uploadImage(file) {
   const ext = file.name.split('.').pop();
   const name = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { fetchNews, saveNews, deleteNews, uploadImage } from '../lib/supabase';
+import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession } from '../lib/supabase';
 
 const CATEGORIES = ['이노팸 소식', '언론보도'];
 
@@ -58,8 +58,78 @@ function BlockEditor({ blocks, onChange }) {
   );
 }
 
+// ── 로그인 화면 ───────────────────────────────────────────────────
+function LoginScreen({ onLogin }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(''); setLoading(true);
+    try {
+      await signIn(email, password);
+      onLogin();
+    } catch (err) {
+      setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="w-full max-w-[400px]">
+        <div className="text-center mb-8">
+          <span className="font-bold text-[#45469A] text-2xl tracking-tight">INNOPAM</span>
+          <p className="text-gray-500 text-sm mt-1">관리자 로그인</p>
+        </div>
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col gap-4 shadow-sm">
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-3">
+              {error}
+            </div>
+          )}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600 mb-1.5">이메일</label>
+            <input
+              type="email"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#45469A]"
+              placeholder="admin@example.com"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              autoFocus
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-600 mb-1.5">비밀번호</label>
+            <input
+              type="password"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#45469A]"
+              placeholder="••••••••"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-[#45469A] text-white rounded-lg font-bold text-sm hover:bg-[#3535a0] disabled:opacity-50 transition-colors mt-2"
+          >
+            {loading ? '로그인 중...' : '로그인'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 // ── 메인 관리자 페이지 ────────────────────────────────────────────
 export default function AdminPage() {
+  const [session, setSession] = useState(undefined); // undefined=loading, null=없음
   const [newsList, setNewsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(emptyForm);
@@ -69,6 +139,11 @@ export default function AdminPage() {
   const [uploading, setUploading] = useState(false);
   const [tab, setTab] = useState('list'); // 'list' | 'form'
   const fileRef = useRef();
+
+  // 세션 확인
+  useEffect(() => {
+    getSession().then(s => setSession(s ?? null));
+  }, []);
 
   const load = async () => {
     setLoading(true);
@@ -82,7 +157,22 @@ export default function AdminPage() {
     }
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { if (session) load(); }, [session]);
+
+  const handleLogout = async () => {
+    await signOut();
+    setSession(null);
+  };
+
+  // 세션 로딩 중
+  if (session === undefined) {
+    return <div className="min-h-screen flex items-center justify-center text-gray-400">...</div>;
+  }
+
+  // 미로그인
+  if (!session) {
+    return <LoginScreen onLogin={() => getSession().then(s => setSession(s))} />;
+  }
 
   const setField = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
@@ -171,7 +261,11 @@ export default function AdminPage() {
           <span className="text-gray-400">|</span>
           <span className="font-semibold text-gray-700">뉴스 관리</span>
         </div>
-        <a href="/innopam-homepage/news" target="_blank" className="text-sm text-blue-500 hover:underline">사이트 보기 →</a>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-gray-400 hidden md:block">{session?.user?.email}</span>
+          <a href="/innopam-homepage/news" target="_blank" className="text-sm text-blue-500 hover:underline">사이트 보기 →</a>
+          <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-red-500 transition-colors">로그아웃</button>
+        </div>
       </header>
 
       <div className="max-w-[900px] mx-auto px-6 py-8">
