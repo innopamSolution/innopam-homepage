@@ -4,6 +4,7 @@
 import SectionLabel from '../components/SectionLabel'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import { useFadeUp } from '../utils/useFadeUp';
 
 // ---- Icon Components (from Figma) ----
 import { asset } from '../utils/asset';
@@ -227,8 +228,9 @@ function HeroSection() {
 // ---- GeoX Symbolic Meaning Section ----
 
 function GeoXMeaningSection() {
+  const ref = useFadeUp();
   return (
-    <section className="bg-white flex flex-col items-center overflow-hidden px-4 md:px-[88px] py-[60px] md:py-[120px] w-full">
+    <section ref={ref} className="fade-up bg-white flex flex-col items-center overflow-hidden px-4 md:px-[88px] py-[60px] md:py-[120px] w-full">
       <div className="flex flex-col gap-[60px] md:gap-[100px] items-center max-w-[1264px] w-full">
         {/* Title */}
         <div className="flex flex-wrap gap-[4px] items-center justify-center">
@@ -376,9 +378,11 @@ function FeatureItem({ icon, title, children }) {
 // ---- GeoXRealMap Section (Content 01) ----
 
 function GeoXRealMapSection() {
+  const ref = useFadeUp();
   return (
     <section
-      className="flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full"
+      ref={ref}
+      className="fade-up flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full"
       style={{ background: 'linear-gradient(to right, #eef1ff, #eef1ff)' }}
     >
       {/* Product title */}
@@ -432,8 +436,9 @@ function GeoXRealMapSection() {
 // ---- GeoX CityVision Section (Content 2) ----
 
 function GeoXCityVisionSection() {
+  const ref = useFadeUp();
   return (
-    <section className="bg-[#f4f7fa] flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full">
+    <section ref={ref} className="fade-up bg-[#f4f7fa] flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full">
       {/* Title area with GS1 mark */}
       <div className="flex flex-wrap gap-[20px] md:gap-[40px] items-center justify-center">
         <img
@@ -501,9 +506,11 @@ function GeoXCityVisionSection() {
 // ---- CrackEyeX Section (Content 3) ----
 
 function CrackEyeXSection() {
+  const ref = useFadeUp();
   return (
     <section
-      className="flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full"
+      ref={ref}
+      className="fade-up flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full"
       style={{ background: 'linear-gradient(to right, #eef1ff, #eef1ff)' }}
     >
       {/* Product name */}
