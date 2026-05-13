@@ -67,7 +67,7 @@ export default function SolutionsSection() {
     timerRef.current = setInterval(() => {
       if (hoveredRef.current !== null) return; // 호버 중이면 건너뜀
       setActive((prev) => (prev + 1) % solutions.length);
-    }, 20000);
+    }, 10000);
   };
 
   useEffect(() => {
