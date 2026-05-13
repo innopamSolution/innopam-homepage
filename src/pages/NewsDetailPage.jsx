@@ -87,13 +87,13 @@ export default function NewsDetailPage() {
             </span>
             {/* 제목 */}
             <h1
-              className="font-inter font-semibold text-[#3a343b] text-[30px] w-full mb-8"
+              className="font-pretendard font-semibold text-[#3a343b] text-[30px] w-full mb-8"
               style={{ lineHeight: '36px' }}
             >
               {item.title}
             </h1>
             {/* 날짜 */}
-            <p className="font-inter font-normal text-[#6d758f] text-[16px]" style={{ lineHeight: '22px' }}>
+            <p className="font-pretendard font-normal text-[#6d758f] text-[16px]" style={{ lineHeight: '22px' }}>
               {item.date}
             </p>
           </div>

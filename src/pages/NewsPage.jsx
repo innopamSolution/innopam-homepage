@@ -98,12 +98,12 @@ function NewsCard({ item }) {
 
   const titleEl = isInternal ? (
     <Link to={`/news/${item.id}`} className="hover:text-[#4262ff] transition-colors">
-      <h2 className="font-inter font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
+      <h2 className="font-pretendard font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
         {item.title}
       </h2>
     </Link>
   ) : (
-    <h2 className="font-inter font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
+    <h2 className="font-pretendard font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
       {item.title}
     </h2>
   );
@@ -113,12 +113,12 @@ function NewsCard({ item }) {
       {thumbnail}
       <div className="flex flex-col items-start w-full md:w-[697px]">
         <div className="flex items-center gap-[18px] mb-6">
-          <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-inter">
+          <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
             <IconCalendar />
             <span>{item.date}</span>
           </div>
           <span className="w-[23px] h-px bg-[#6d758f] shrink-0" />
-          <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-inter">
+          <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
             <IconTag />
             <span>{item.category}</span>
           </div>
