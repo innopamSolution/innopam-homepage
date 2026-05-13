@@ -99,14 +99,20 @@ export default function SolutionsSection() {
       {/* Content */}
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-[80px] items-start lg:items-center w-full max-w-[1264px]">
 
-        {/* 이미지 */}
-        <div className="w-full h-[300px] md:h-[400px] lg:w-[600px] lg:h-[600px] shrink-0 overflow-hidden">
-          <img
-            src={solutions[active].image}
-            alt={solutions[active].title}
-            className="w-full h-full object-cover object-left-top"
-            style={{ transition: 'opacity 300ms ease' }}
-          />
+        {/* 이미지 — 크로스페이드 */}
+        <div className="relative w-full h-[300px] md:h-[400px] lg:w-[600px] lg:h-[600px] shrink-0 overflow-hidden">
+          {solutions.map((sol) => (
+            <img
+              key={sol.id}
+              src={sol.image}
+              alt={sol.title}
+              className="absolute inset-0 w-full h-full object-cover object-left-top"
+              style={{
+                opacity: sol.id === active ? 1 : 0,
+                transition: 'opacity 700ms ease-in-out',
+              }}
+            />
+          ))}
         </div>
 
         {/* 아코디언 — grid-template-rows 트릭으로 실제 높이 기반 자연스러운 애니메이션 */}
