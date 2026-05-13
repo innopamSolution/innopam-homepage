@@ -135,7 +135,7 @@ export default function SolutionsSection() {
                       width: '24px', height: '16px', flexShrink: 0,
                       opacity: isActive ? 1 : 0,
                       transform: isActive ? 'translateX(0)' : 'translateX(-6px)',
-                      transition: 'opacity 120ms ease, transform 120ms ease',
+                      transition: 'opacity 250ms ease, transform 250ms ease',
                     }}
                   />
                   <span className={`font-space tracking-[0.5px] uppercase whitespace-nowrap
@@ -149,13 +149,12 @@ export default function SolutionsSection() {
                   </span>
                 </button>
 
-                {/* 콘텐츠 — grid-template-rows + opacity (GPU 가속) */}
+                {/* 콘텐츠 — grid-template-rows: 0fr ↔ 1fr */}
                 <div
                   style={{
                     display: 'grid',
                     gridTemplateRows: isActive ? '1fr' : '0fr',
-                    transition: 'grid-template-rows 180ms cubic-bezier(0.4,0,0.2,1)',
-                    willChange: 'grid-template-rows',
+                    transition: 'grid-template-rows 350ms ease',
                   }}
                 >
                   <div style={{ overflow: 'hidden' }}>
@@ -163,9 +162,7 @@ export default function SolutionsSection() {
                       className="flex flex-col gap-[20px] items-start px-[23px] pb-[28px] w-full lg:w-[487px]"
                       style={{
                         opacity: isActive ? 1 : 0,
-                        transform: isActive ? 'translateY(0)' : 'translateY(-6px)',
-                        transition: 'opacity 150ms ease, transform 150ms ease',
-                        willChange: 'opacity, transform',
+                        transition: 'opacity 300ms ease',
                       }}
                     >
                       {/* 설명 */}
