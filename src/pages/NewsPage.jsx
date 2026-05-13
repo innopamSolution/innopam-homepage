@@ -111,18 +111,15 @@ export default function NewsPage() {
       <Header />
       <main className="pt-[84px]">
 
-        {/* Hero */}
-        <section
-          className="relative w-full h-[400px] overflow-hidden flex items-center justify-center"
-          style={{ background: '#0b1225' }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(ellipse at 50% 60%, rgba(44,41,86,0.85) 0%, rgba(9,33,65,0.95) 100%)',
-            }}
+        {/* Hero — Figma node 434:254 */}
+        <section className="relative w-full h-[320px] md:h-[440px] overflow-hidden flex items-center justify-center bg-[#1a1008]">
+          <img
+            src={asset('assets/news-hero-bg.jpg')}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            style={{ objectPosition: '50% 63%' }}
           />
+          <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.5)' }} />
           <div className="relative z-10 flex flex-col items-center text-center gap-[20px] px-6">
             <SectionLabel text="News" light />
             <h1 className="font-space font-light text-white text-[36px] md:text-[56px] tracking-[2px] uppercase">
