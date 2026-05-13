@@ -113,7 +113,7 @@ export default function NewsPage() {
 
         {/* Hero */}
         <section
-          className="relative w-full h-[320px] md:h-[440px] overflow-hidden flex items-center justify-center"
+          className="relative w-full h-[400px] overflow-hidden flex items-center justify-center"
           style={{ background: '#0b1225' }}
         >
           <div

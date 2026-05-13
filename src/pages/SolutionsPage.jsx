@@ -112,7 +112,7 @@ export default function SolutionsPage() {
 
         {/* Hero */}
         <section
-          className="relative w-full h-[500px] md:h-[638px] overflow-hidden flex items-center justify-center"
+          className="relative w-full h-[400px] overflow-hidden flex items-center justify-center"
           style={{ background: '#0b1225' }}
         >
           <img

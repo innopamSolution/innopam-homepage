@@ -168,31 +168,23 @@ function DemoButton() {
 
 function HeroSection() {
   return (
-    <section className="relative w-full h-[400px] md:h-[638px] overflow-hidden">
+    <section className="relative w-full h-[400px] overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 pointer-events-none">
         <img
-          src={asset('assets/products/hero-bg.png')}
+          src={asset('assets/products/hero-bg-new.jpg')}
           alt=""
           className="absolute max-w-none object-cover size-full"
         />
-        {/* Dark radial overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(ellipse 76px 34px at 50% 44.9%, rgba(11,18,37,1) 0%, rgba(10,24,61,1) 39%, rgba(10,30,86,1) 78%, rgba(12,21,46,1) 100%)',
-            opacity: 0.5,
-          }}
-        />
+        <div className="absolute inset-0 bg-[rgba(18,33,75,0.6)]" />
       </div>
 
-      {/* Content — centered on all screen sizes */}
-      <div className="absolute inset-0 flex flex-col gap-[24px] md:gap-[38px] items-center justify-center px-4 md:px-[88px] text-center">
+      {/* Content — centered */}
+      <div className="absolute inset-0 flex flex-col gap-[38px] items-center justify-center px-4 md:px-[88px] text-center">
         {/* Section label */}
         <div className="flex items-center gap-[10px]">
           <img
-            src={asset('assets/products/arrow-group.svg')}
+            src={asset('assets/arrow01.svg')}
             alt=""
             aria-hidden="true"
             className="w-[12px] h-[12px]"
@@ -203,23 +195,17 @@ function HeroSection() {
           </p>
         </div>
 
-        {/* Heading */}
+        {/* Heading: GeoX logo + Series */}
         <div className="flex flex-col gap-[4px] items-center w-full max-w-[794px]">
-          <p
-            className="font-pretendard font-bold text-[32px] md:text-[48px] text-center text-white tracking-[-2px] w-full"
-            style={{ lineHeight: '1.2' }}
-          >
-            공간정보 기술과 인공지능의 융합
-          </p>
           <div className="flex gap-[10px] items-center">
             <img
-              src={asset('assets/products/geox-logo.svg')}
+              src={asset('assets/geox-logo-white.svg')}
               alt="GeoX"
               style={{ width: '136.638px', height: '38.408px' }}
             />
             <p
-              className="font-pretendard font-black text-[32px] md:text-[48px] text-white tracking-[-2px]"
-              style={{ lineHeight: '1.2' }}
+              className="font-pretendard font-black text-[48px] text-white tracking-[-2px]"
+              style={{ lineHeight: '65px' }}
             >
               Series
             </p>
@@ -228,7 +214,7 @@ function HeroSection() {
 
         {/* Description */}
         <p
-          className="font-pretendard font-normal text-[16px] md:text-[20px] text-center text-white w-full max-w-[794px]"
+          className="font-pretendard font-normal text-[20px] text-center text-white w-full max-w-[794px]"
           style={{ lineHeight: '1.4' }}
         >
           GeoX는 &lsquo;공간(Geo)&rsquo;과 &lsquo;확장(eXpansion)&rsquo;의 의미를 담고 있으며, 이노팸이 개발한 공간지능정보(GeoAI) 기반의 &lsquo;차세대 미래지향 GeoX 플랫폼 솔루션 서비스&rsquo; 시리즈입니다.

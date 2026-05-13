@@ -23,7 +23,7 @@ const missions = [
 
 export function CompanyHero({ subtitle }) {
   return (
-    <section className="relative w-full h-[500px] md:h-[638px] overflow-hidden flex items-center justify-center bg-[#0b1225]">
+    <section className="relative w-full h-[400px] overflow-hidden flex items-center justify-center bg-[#0b1225]">
       <img
         src={asset('assets/company-hero-bg.jpg')}
         alt=""
