@@ -1,7 +1,11 @@
 // Figma node: 159:2380 (footer)
+import { useState } from 'react';
 import { asset } from '../utils/asset';
+import DemoModal from './DemoModal';
 
 export default function Footer() {
+  const [contactOpen, setContactOpen] = useState(false);
+
   return (
     <footer className="relative bg-black flex flex-col gap-[60px] md:gap-[100px] items-center pb-[60px] pt-[80px] md:pt-[155px] px-6 md:px-[80px]">
       {/* Main content — stack on mobile, side-by-side on desktop */}
@@ -19,12 +23,12 @@ export default function Footer() {
               <br />
               다양한 분야의 문제 해결을 지원합니다
             </p>
-            <a
-              href="mailto:innopam@innopam.com"
+            <button
+              onClick={() => setContactOpen(true)}
               className="brand-gradient inline-flex items-center text-white font-space font-bold text-[12px] tracking-[1.3px] uppercase px-[54px] py-[15px] rounded-full hover:opacity-90 transition-opacity"
             >
               문의하기
-            </a>
+            </button>
           </div>
 
           {/* Right: Contact info */}
@@ -79,6 +83,13 @@ export default function Footer() {
           </p>
         </div>
       </div>
+      <DemoModal
+        open={contactOpen}
+        onClose={() => setContactOpen(false)}
+        title="문의하기"
+        subtitle="이노팸에 문의사항을 남겨주시면 빠르게 연락드리겠습니다."
+        submitLabel="문의하기"
+      />
     </footer>
   );
 }

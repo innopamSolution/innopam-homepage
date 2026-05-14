@@ -29,7 +29,13 @@ const EMPTY = {
   agreed: false,
 };
 
-export default function DemoModal({ open, onClose }) {
+export default function DemoModal({
+  open,
+  onClose,
+  title = '데모 신청',
+  subtitle = '이노팸 솔루션 데모를 신청해 주시면 빠르게 연락드리겠습니다.',
+  submitLabel = '데모 신청하기',
+}) {
   const [form, setForm] = useState(EMPTY);
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
@@ -106,9 +112,9 @@ export default function DemoModal({ open, onClose }) {
         {/* 헤더 */}
         <div className="flex items-center justify-between px-8 py-5 border-b border-gray-100 shrink-0">
           <div>
-            <h2 className="font-pretendard font-bold text-[20px] text-[#1a1a2e]">데모 신청</h2>
+            <h2 className="font-pretendard font-bold text-[20px] text-[#1a1a2e]">{title}</h2>
             <p className="font-pretendard text-[14px] text-[#6d758f] mt-0.5">
-              이노팸 솔루션 데모를 신청해 주시면 빠르게 연락드리겠습니다.
+              {subtitle}
             </p>
           </div>
           <button
@@ -239,7 +245,7 @@ export default function DemoModal({ open, onClose }) {
               disabled={sending}
               className="w-full py-4 brand-gradient text-white font-pretendard font-bold text-[15px] rounded-full hover:opacity-90 disabled:opacity-50 transition-opacity"
             >
-              {sending ? '전송 중...' : '데모 신청하기'}
+              {sending ? '전송 중...' : submitLabel}
             </button>
           </form>
         )}
