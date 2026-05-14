@@ -127,6 +127,68 @@ export async function deleteHistory(id) {
   if (error) throw error;
 }
 
+// ── 주요사업 수행 실적 ────────────────────────────────────────────
+export async function fetchBusinessRecords() {
+  const { data, error } = await supabase
+    .from('business_records')
+    .select('*')
+    .order('sort_order', { ascending: true });
+  if (error) throw error;
+  return data;
+}
+
+export async function saveBusinessRecord(item) {
+  if (item.id) {
+    const { data, error } = await supabase.from('business_records')
+      .update({ year: item.year, name: item.name, client: item.client, content: item.content, sort_order: item.sort_order })
+      .eq('id', item.id).select().single();
+    if (error) throw error;
+    return data;
+  } else {
+    const { data, error } = await supabase.from('business_records')
+      .insert({ year: item.year, name: item.name, client: item.client, content: item.content, sort_order: item.sort_order })
+      .select().single();
+    if (error) throw error;
+    return data;
+  }
+}
+
+export async function deleteBusinessRecord(id) {
+  const { error } = await supabase.from('business_records').delete().eq('id', id);
+  if (error) throw error;
+}
+
+// ── 지적재산권 ────────────────────────────────────────────────────
+export async function fetchIpRights() {
+  const { data, error } = await supabase
+    .from('ip_rights')
+    .select('*')
+    .order('sort_order', { ascending: true });
+  if (error) throw error;
+  return data;
+}
+
+export async function saveIpRight(item) {
+  if (item.id) {
+    const { data, error } = await supabase.from('ip_rights')
+      .update({ type: item.type, title: item.title, date: item.date, number: item.number, sort_order: item.sort_order })
+      .eq('id', item.id).select().single();
+    if (error) throw error;
+    return data;
+  } else {
+    const { data, error } = await supabase.from('ip_rights')
+      .insert({ type: item.type, title: item.title, date: item.date, number: item.number, sort_order: item.sort_order })
+      .select().single();
+    if (error) throw error;
+    return data;
+  }
+}
+
+export async function deleteIpRight(id) {
+  const { error } = await supabase.from('ip_rights').delete().eq('id', id);
+  if (error) throw error;
+}
+
 // ── 인증 ─────────────────────────────────────────────────────────
 export async function signIn(email, password) {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });

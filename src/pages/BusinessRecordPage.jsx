@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { asset } from '../utils/asset';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { CompanyHero } from './IntroductionPage';
+import { fetchBusinessRecords, fetchIpRights } from '../lib/supabase';
 
 // Figma node: 298:415 — Business Record
-// Data source: https://innopam.com/business-record/
-
-const projectsByYear = {
+// 로컬 fallback 데이터
+const localProjectsByYear = {
   '2024': [
     { name: '산림청 임업직불제 통합관리시스템 구축', client: '지에스아이티엠', content: '시스템 개발' },
     { name: '개발제한구역 내 불법개발 건물변화탐지를 통한 인공지능 알고리즘의 효과성 분석 연구 용역', client: '재단법인서울디지털재단', content: 'AI알고리즘 개발' },
@@ -72,9 +72,9 @@ const projectsByYear = {
   ],
 };
 
-const yearTabs = ['2024', '2023', '2022', '2021', '2020', '2019', '2018'];
+const localYearTabs = ['2024', '2023', '2022', '2021', '2020', '2019', '2018'];
 
-const ipData = {
+const localIpData = {
   '특허': [
     { type: '특허', title: '재배 작물 모니터링 방법 및 시스템', date: '2023.08.31', number: '10-2023-0115473' },
     { type: '특허', title: '시설물 손상 분석 방법 및 시스템', date: '2024.05.28', number: '10-2024-0069062' },
@@ -131,14 +131,44 @@ const ipData = {
   ],
 };
 
-const ipTabs = ['특허', '프로그램 등록', '학술지', '학술대회'];
+const IP_TABS = ['특허', '프로그램 등록', '학술지', '학술대회'];
+
+function groupProjects(rows) {
+  const map = {};
+  rows.forEach(r => { if (!map[r.year]) map[r.year] = []; map[r.year].push(r); });
+  return map;
+}
+
+function groupIp(rows) {
+  const map = {};
+  rows.forEach(r => { if (!map[r.type]) map[r.type] = []; map[r.type].push(r); });
+  return map;
+}
 
 export default function BusinessRecordPage() {
   const [activeYear, setActiveYear] = useState(0);
   const [activeIp, setActiveIp] = useState(0);
+  const [projectsByYear, setProjectsByYear] = useState(localProjectsByYear);
+  const [yearTabs, setYearTabs] = useState(localYearTabs);
+  const [ipData, setIpData] = useState(localIpData);
+
+  useEffect(() => {
+    fetchBusinessRecords()
+      .then(data => {
+        if (data?.length) {
+          const grouped = groupProjects(data);
+          setProjectsByYear(grouped);
+          setYearTabs(Object.keys(grouped).sort((a, b) => Number(b) - Number(a)));
+        }
+      }).catch(() => {});
+    fetchIpRights()
+      .then(data => {
+        if (data?.length) setIpData(groupIp(data));
+      }).catch(() => {});
+  }, []);
 
   const currentProjects = projectsByYear[yearTabs[activeYear]] || [];
-  const currentIp = ipData[ipTabs[activeIp]] || [];
+  const currentIp = ipData[IP_TABS[activeIp]] || [];
 
   return (
     <div className="min-h-screen w-full">
@@ -220,7 +250,7 @@ export default function BusinessRecordPage() {
 
               {/* IP tabs */}
               <div className="flex w-full overflow-x-auto">
-                {ipTabs.map((tab, i) => (
+                {IP_TABS.map((tab, i) => (
                   <button
                     key={tab}
                     onClick={() => setActiveIp(i)}

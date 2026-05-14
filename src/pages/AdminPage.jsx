@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession, fetchDemoRequests, updateDemoStatus, deleteDemoRequest, fetchHistory, saveHistory, deleteHistory } from '../lib/supabase';
+import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession, fetchDemoRequests, updateDemoStatus, deleteDemoRequest, fetchHistory, saveHistory, deleteHistory, fetchBusinessRecords, saveBusinessRecord, deleteBusinessRecord, fetchIpRights, saveIpRight, deleteIpRight } from '../lib/supabase';
 
 const CATEGORIES = ['이노팸 소식', '언론보도'];
 
@@ -250,6 +250,20 @@ export default function AdminPage() {
   const [selectedReq, setSelectedReq] = useState(null);
   const fileRef = useRef();
 
+  // ── 실적 state ──
+  const [bizRecords, setBizRecords] = useState([]);
+  const [bizLoading, setBizLoading] = useState(false);
+  const [bizForm, setBizForm] = useState({ id: null, year: '', name: '', client: '', content: '', sort_order: 0 });
+  const [bizEditing, setBizEditing] = useState(false);
+  const [bizSaving, setBizSaving] = useState(false);
+  const [bizMsg, setBizMsg] = useState('');
+  const [bizSubTab, setBizSubTab] = useState('records'); // 'records' | 'ip'
+  const [ipList, setIpList] = useState([]);
+  const [ipForm, setIpForm] = useState({ id: null, type: '특허', title: '', date: '', number: '', sort_order: 0 });
+  const [ipEditing, setIpEditing] = useState(false);
+  const [ipSaving, setIpSaving] = useState(false);
+  const [ipMsg, setIpMsg] = useState('');
+
   // ── 연혁 state ──
   const [historyList, setHistoryList] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(false);
@@ -280,6 +294,45 @@ export default function AdminPage() {
     try { setRequests(await fetchDemoRequests()); }
     catch (e) { console.error('demo_requests 로드 실패:', e); }
     finally { setReqLoading(false); }
+  };
+
+  // ── 실적 함수 ──
+  const loadBiz = async () => {
+    setBizLoading(true);
+    try {
+      const [rec, ip] = await Promise.all([fetchBusinessRecords(), fetchIpRights()]);
+      setBizRecords(rec);
+      setIpList(ip);
+    } catch (e) { setBizMsg('❌ ' + e.message); }
+    finally { setBizLoading(false); }
+  };
+
+  const handleBizSubmit = async (e) => {
+    e.preventDefault();
+    if (!bizForm.year || !bizForm.name) return setBizMsg('연도와 과제명을 입력하세요.');
+    setBizSaving(true);
+    try {
+      await saveBusinessRecord(bizForm);
+      await loadBiz();
+      setBizForm({ id: null, year: '', name: '', client: '', content: '', sort_order: bizRecords.length + 1 });
+      setBizEditing(false);
+      setBizMsg('✅ 저장 완료');
+    } catch (e) { setBizMsg('❌ ' + e.message); }
+    finally { setBizSaving(false); }
+  };
+
+  const handleIpSubmit = async (e) => {
+    e.preventDefault();
+    if (!ipForm.title || !ipForm.date) return setIpMsg('제목과 등록일을 입력하세요.');
+    setIpSaving(true);
+    try {
+      await saveIpRight(ipForm);
+      await loadBiz();
+      setIpForm({ id: null, type: '특허', title: '', date: '', number: '', sort_order: ipList.length + 1 });
+      setIpEditing(false);
+      setIpMsg('✅ 저장 완료');
+    } catch (e) { setIpMsg('❌ ' + e.message); }
+    finally { setIpSaving(false); }
   };
 
   // ── 연혁 함수 ──
@@ -474,6 +527,12 @@ export default function AdminPage() {
             className={`pb-3 text-sm font-bold border-b-2 transition-colors ${tab === 'history' ? 'border-[#45469A] text-[#45469A]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
           >
             연혁 관리
+          </button>
+          <button
+            onClick={() => { setTab('biz'); loadBiz(); }}
+            className={`pb-3 text-sm font-bold border-b-2 transition-colors ${tab === 'biz' ? 'border-[#45469A] text-[#45469A]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+          >
+            실적 관리
           </button>
         </div>
       </header>
@@ -914,6 +973,156 @@ export default function AdminPage() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* ── 실적 관리 탭 ── */}
+        {tab === 'biz' && (
+          <div className="flex flex-col gap-6">
+            <h2 className="font-bold text-lg text-gray-800">실적 관리</h2>
+
+            {/* 서브탭 */}
+            <div className="flex gap-2">
+              {[{key:'records', label:'주요사업 수행 실적'}, {key:'ip', label:'지적재산권'}].map(s => (
+                <button key={s.key} onClick={() => setBizSubTab(s.key)}
+                  className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${bizSubTab === s.key ? 'bg-[#45469A] text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
+            {bizLoading ? <p className="text-sm text-gray-400 text-center py-8">불러오는 중...</p> : (<>
+
+            {/* ── 주요사업 수행 실적 ── */}
+            {bizSubTab === 'records' && (<>
+              {bizMsg && <p className={`text-sm px-4 py-2 rounded-lg ${bizMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}>{bizMsg}</p>}
+              <form onSubmit={handleBizSubmit} className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-3 border border-gray-100">
+                <p className="text-sm font-bold text-gray-700">{bizEditing ? '✏️ 수정 중' : '➕ 새 실적 추가'}</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">연도 *</label>
+                    <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" placeholder="예) 2024"
+                      value={bizForm.year} onChange={e => setBizForm(f => ({ ...f, year: e.target.value }))} required />
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">발주처</label>
+                    <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" placeholder="예) 제주특별자치도"
+                      value={bizForm.client} onChange={e => setBizForm(f => ({ ...f, client: e.target.value }))} />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1 block">과제명 *</label>
+                  <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" placeholder="과제명을 입력하세요"
+                    value={bizForm.name} onChange={e => setBizForm(f => ({ ...f, name: e.target.value }))} required />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">사업내용</label>
+                    <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" placeholder="예) AI알고리즘 개발"
+                      value={bizForm.content} onChange={e => setBizForm(f => ({ ...f, content: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">정렬 순서</label>
+                    <input type="number" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                      value={bizForm.sort_order} onChange={e => setBizForm(f => ({ ...f, sort_order: Number(e.target.value) }))} />
+                  </div>
+                </div>
+                <div className="flex gap-2 pt-1">
+                  <button type="submit" disabled={bizSaving}
+                    className="px-5 py-2 bg-[#45469A] text-white text-sm font-bold rounded-lg hover:bg-[#3535a0] transition-colors disabled:opacity-50">
+                    {bizSaving ? '저장 중...' : bizEditing ? '수정 완료' : '추가'}
+                  </button>
+                  {bizEditing && (
+                    <button type="button" onClick={() => { setBizForm({ id: null, year: '', name: '', client: '', content: '', sort_order: 0 }); setBizEditing(false); setBizMsg(''); }}
+                      className="px-5 py-2 border border-gray-200 text-gray-500 text-sm font-bold rounded-lg hover:bg-gray-100 transition-colors">취소</button>
+                  )}
+                </div>
+              </form>
+              <div className="flex flex-col gap-2">
+                {bizRecords.map(item => (
+                  <div key={item.id} className="flex items-center justify-between gap-4 bg-white border border-gray-100 rounded-xl px-4 py-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="font-bold text-[#45469A] text-sm w-[40px] shrink-0">{item.year}</span>
+                      <span className="text-gray-700 text-sm truncate flex-1">{item.name}</span>
+                      <span className="text-gray-400 text-xs shrink-0 hidden md:block">{item.client}</span>
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <button onClick={() => { setBizForm(item); setBizEditing(true); setBizMsg(''); }}
+                        className="px-3 py-1 text-xs font-bold border border-[#45469A] text-[#45469A] rounded-lg hover:bg-[#45469A] hover:text-white transition-colors">수정</button>
+                      <button onClick={async () => { if (!confirm('삭제하시겠습니까?')) return; await deleteBusinessRecord(item.id); await loadBiz(); }}
+                        className="px-3 py-1 text-xs font-bold border border-red-200 text-red-400 rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors">삭제</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>)}
+
+            {/* ── 지적재산권 ── */}
+            {bizSubTab === 'ip' && (<>
+              {ipMsg && <p className={`text-sm px-4 py-2 rounded-lg ${ipMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}>{ipMsg}</p>}
+              <form onSubmit={handleIpSubmit} className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-3 border border-gray-100">
+                <p className="text-sm font-bold text-gray-700">{ipEditing ? '✏️ 수정 중' : '➕ 새 지재권 추가'}</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">유형 *</label>
+                    <select className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                      value={ipForm.type} onChange={e => setIpForm(f => ({ ...f, type: e.target.value }))}>
+                      {['특허','프로그램 등록','학술지','학술대회'].map(t => <option key={t}>{t}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">등록일 *</label>
+                    <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" placeholder="예) 2024.05.28"
+                      value={ipForm.date} onChange={e => setIpForm(f => ({ ...f, date: e.target.value }))} required />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1 block">제목 *</label>
+                  <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" placeholder="제목을 입력하세요"
+                    value={ipForm.title} onChange={e => setIpForm(f => ({ ...f, title: e.target.value }))} required />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">등록번호</label>
+                    <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" placeholder="예) 10-2024-0069062"
+                      value={ipForm.number} onChange={e => setIpForm(f => ({ ...f, number: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 mb-1 block">정렬 순서</label>
+                    <input type="number" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                      value={ipForm.sort_order} onChange={e => setIpForm(f => ({ ...f, sort_order: Number(e.target.value) }))} />
+                  </div>
+                </div>
+                <div className="flex gap-2 pt-1">
+                  <button type="submit" disabled={ipSaving}
+                    className="px-5 py-2 bg-[#45469A] text-white text-sm font-bold rounded-lg hover:bg-[#3535a0] transition-colors disabled:opacity-50">
+                    {ipSaving ? '저장 중...' : ipEditing ? '수정 완료' : '추가'}
+                  </button>
+                  {ipEditing && (
+                    <button type="button" onClick={() => { setIpForm({ id: null, type: '특허', title: '', date: '', number: '', sort_order: 0 }); setIpEditing(false); setIpMsg(''); }}
+                      className="px-5 py-2 border border-gray-200 text-gray-500 text-sm font-bold rounded-lg hover:bg-gray-100 transition-colors">취소</button>
+                  )}
+                </div>
+              </form>
+              <div className="flex flex-col gap-2">
+                {ipList.map(item => (
+                  <div key={item.id} className="flex items-center justify-between gap-4 bg-white border border-gray-100 rounded-xl px-4 py-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 shrink-0">{item.type}</span>
+                      <span className="text-gray-700 text-sm truncate flex-1">{item.title}</span>
+                      <span className="text-gray-400 text-xs shrink-0 hidden md:block">{item.date}</span>
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <button onClick={() => { setIpForm(item); setIpEditing(true); setIpMsg(''); }}
+                        className="px-3 py-1 text-xs font-bold border border-[#45469A] text-[#45469A] rounded-lg hover:bg-[#45469A] hover:text-white transition-colors">수정</button>
+                      <button onClick={async () => { if (!confirm('삭제하시겠습니까?')) return; await deleteIpRight(item.id); await loadBiz(); }}
+                        className="px-3 py-1 text-xs font-bold border border-red-200 text-red-400 rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors">삭제</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>)}
+            </>)}
           </div>
         )}
       </div>
