@@ -325,7 +325,7 @@ export default function IndustriesPage() {
         </div>
 
         {/* 탭 내비게이션 */}
-        <div className="w-full px-4 md:px-[88px] py-[28px] flex justify-center border-b border-[#e9e9e9]">
+        <div className="w-full px-4 md:px-[88px] py-[28px] flex justify-center">
           <div className="flex w-full max-w-[1264px]">
             {industries.map((ind) => (
               <button
