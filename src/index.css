@@ -10,6 +10,23 @@
   animation: fadeIn 0.35s ease forwards;
 }
 
+/* Industries 스캔 라인 */
+@keyframes scanLine {
+  0%   { top: -10%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 110%; opacity: 0; }
+}
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(88,113,237,0.8), transparent);
+  animation: scanLine 3s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(88,113,237,0.6);
+}
+
 * {
   margin: 0;
   padding: 0;

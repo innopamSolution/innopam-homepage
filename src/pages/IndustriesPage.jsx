@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionLabel from '../components/SectionLabel';
 import { asset } from '../utils/asset';
 
-// ── 아이콘 ─────────────────────────────────────────────────────────
+// ── 체크 아이콘 ────────────────────────────────────────────────────
 function CheckIcon() {
   return (
     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" className="shrink-0">
@@ -15,7 +14,101 @@ function CheckIcon() {
   );
 }
 
-// ── 데이터 ─────────────────────────────────────────────────────────
+// ── 인터랙티브 원형 이미지 ─────────────────────────────────────────
+function InteractiveCircle({ image, alt, markers }) {
+  const [hoveredId, setHoveredId] = useState(null);
+
+  return (
+    <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] shrink-0 mx-auto lg:mx-0">
+      {/* 원형 이미지 */}
+      <div className="w-full h-full rounded-full overflow-hidden" style={{ boxShadow: '0px 4px 32px rgba(0,0,0,0.18)' }}>
+        <img src={image} alt={alt} className="w-full h-full object-cover" />
+      </div>
+
+      {/* 스캔 라인 */}
+      <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+        <div className="scan-line" />
+      </div>
+
+      {/* 그리드 오버레이 */}
+      <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none opacity-10"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(88,113,237,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(88,113,237,0.6) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }}
+      />
+
+      {/* AI 마커들 */}
+      {markers.map((m) => (
+        <div
+          key={m.id}
+          className="absolute"
+          style={{ top: m.top, left: m.left, transform: 'translate(-50%, -50%)' }}
+          onMouseEnter={() => setHoveredId(m.id)}
+          onMouseLeave={() => setHoveredId(null)}
+        >
+          {/* 감지 박스 */}
+          {m.box && (
+            <div
+              className="absolute border border-dashed pointer-events-none"
+              style={{
+                width: m.box.w,
+                height: m.box.h,
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                borderColor: m.color || '#5871ed',
+                opacity: 0.85,
+              }}
+            >
+              <span
+                className="absolute -top-5 left-0 text-[9px] font-bold px-1 py-0.5 whitespace-nowrap"
+                style={{ background: m.color || '#5871ed', color: '#fff' }}
+              >
+                {m.label}
+              </span>
+            </div>
+          )}
+
+          {/* 펄스 도트 */}
+          <div className="relative cursor-pointer">
+            <span className="absolute inline-flex rounded-full opacity-60 animate-ping"
+              style={{ width: 20, height: 20, top: -10, left: -10, background: m.color || '#5871ed' }} />
+            <span className="relative flex items-center justify-center w-5 h-5 rounded-full border-2 border-white"
+              style={{ background: m.color || '#5871ed', boxShadow: `0 0 0 3px ${m.color || '#5871ed'}40` }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+            </span>
+          </div>
+
+          {/* 툴팁 */}
+          {hoveredId === m.id && (
+            <div
+              className="absolute z-20 bg-white rounded-xl px-3 py-2 shadow-xl border border-gray-100 whitespace-nowrap animate-fadeIn"
+              style={{
+                bottom: 28,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                minWidth: 130,
+              }}
+            >
+              <p className="text-[11px] font-bold text-[#5871ed] mb-0.5">{m.label}</p>
+              <p className="text-[11px] text-gray-600 leading-tight">{m.desc}</p>
+              <div className="absolute left-1/2 -translate-x-1/2 bottom-[-6px] w-3 h-3 bg-white border-b border-r border-gray-100 rotate-45" />
+            </div>
+          )}
+        </div>
+      ))}
+
+      {/* 우측 하단 AI 뱃지 */}
+      <div className="absolute bottom-3 right-3 md:bottom-5 md:right-5 bg-[#5871ed] text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-lg">
+        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+        AI 분석 중
+      </div>
+    </div>
+  );
+}
+
+// ── 산업별 데이터 ──────────────────────────────────────────────────
 const industries = [
   {
     id: 'urban',
@@ -25,7 +118,12 @@ const industries = [
       '위성, 항공, 드론 데이터를 AI로 분석해 도시 변화를 실시간으로 탐지하고 관리합니다.',
       '도시계획·개발제한구역 관리, 불법건축·개발 감시, 수치지형도 고도화 등 행정 효율화에 활용됩니다.',
     ],
-    circleImage: asset('assets/industries-city-circle.jpg'),
+    circleImage: asset('assets/solution-city.jpg'),
+    markers: [
+      { id: 1, top: '30%', left: '38%', color: '#ef4444', label: '불법 건축 의심', desc: '신규 구조물 탐지 · 신뢰도 94%', box: { w: 52, h: 44 } },
+      { id: 2, top: '55%', left: '62%', color: '#5871ed', label: '도로 변화 탐지', desc: '도로 신설 / 확장 감지', box: { w: 64, h: 28 } },
+      { id: 3, top: '72%', left: '35%', color: '#f59e0b', label: '건물 변화', desc: '증축 탐지 · 면적 +128㎡', box: { w: 44, h: 40 } },
+    ],
     cases: [
       {
         id: 'geoai',
@@ -64,6 +162,11 @@ const industries = [
       '분석된 데이터를 기반으로 직불금 관리, 휴경지 관리, 통계 관리 등 농업 행정 전반에 활용됩니다.',
     ],
     circleImage: asset('assets/solution-farm.jpg'),
+    markers: [
+      { id: 1, top: '35%', left: '40%', color: '#16a34a', label: '벼 재배지', desc: '재배면적 2.4ha · 생육 양호', box: { w: 60, h: 50 } },
+      { id: 2, top: '60%', left: '65%', color: '#f59e0b', label: '휴경지 탐지', desc: '미경작 확인 · 직불금 제외', box: { w: 54, h: 42 } },
+      { id: 3, top: '45%', left: '25%', color: '#5871ed', label: '밭작물', desc: '고추 재배 추정 · 0.8ha', box: { w: 46, h: 38 } },
+    ],
     cases: [
       {
         id: 'geoai-farm',
@@ -102,6 +205,11 @@ const industries = [
       '불법 산림 훼손 감시, 복구지 관리, 해양 쓰레기 탐지 등 환경 행정 전반에 활용됩니다.',
     ],
     circleImage: asset('assets/solution-eco.jpg'),
+    markers: [
+      { id: 1, top: '32%', left: '55%', color: '#ef4444', label: '산림 훼손 탐지', desc: '훼손 면적 0.6ha · 신규 감지', box: { w: 56, h: 48 } },
+      { id: 2, top: '62%', left: '38%', color: '#f59e0b', label: '불법 벌채 의심', desc: '수목 소실 구역 확인', box: { w: 50, h: 44 } },
+      { id: 3, top: '48%', left: '70%', color: '#06b6d4', label: '해안선 변화', desc: '침식 2.1m 후퇴 감지', box: { w: 44, h: 36 } },
+    ],
     cases: [
       {
         id: 'forest',
@@ -140,6 +248,11 @@ const industries = [
       '분석 결과를 기반으로 외관조사망도를 자동 생성하고 시설물 안전 점검·유지보수 계획 수립에 활용됩니다.',
     ],
     circleImage: asset('assets/solution-disaster.jpg'),
+    markers: [
+      { id: 1, top: '38%', left: '45%', color: '#ef4444', label: '균열 탐지 (D등급)', desc: '폭 0.8mm · 즉시 보수 필요', box: { w: 50, h: 30 } },
+      { id: 2, top: '58%', left: '30%', color: '#f59e0b', label: '손상 탐지 (C등급)', desc: '박리 면적 0.12㎡ 감지', box: { w: 46, h: 36 } },
+      { id: 3, top: '30%', left: '65%', color: '#5871ed', label: '정상 구간', desc: '이상 없음 · A등급', box: { w: 42, h: 32 } },
+    ],
     cases: [
       {
         id: 'crackeye',
@@ -171,7 +284,7 @@ const industries = [
   },
 ];
 
-// ── 메인 컴포넌트 ──────────────────────────────────────────────────
+// ── 메인 페이지 ────────────────────────────────────────────────────
 export default function IndustriesPage() {
   const [activeIndustryId, setActiveIndustryId] = useState('urban');
   const [activeCaseId, setActiveCaseId] = useState('geoai');
@@ -212,13 +325,13 @@ export default function IndustriesPage() {
         </div>
 
         {/* 탭 내비게이션 */}
-        <div className="w-full px-[88px] py-[28px] flex justify-center border-b border-[#e9e9e9]">
+        <div className="w-full px-4 md:px-[88px] py-[28px] flex justify-center border-b border-[#e9e9e9]">
           <div className="flex w-full max-w-[1264px]">
             {industries.map((ind) => (
               <button
                 key={ind.id}
                 onClick={() => handleIndustryChange(ind.id)}
-                className={`flex-1 py-[30px] text-[22px] font-pretendard text-center transition-colors ${
+                className={`flex-1 py-[22px] md:py-[30px] text-[16px] md:text-[22px] font-pretendard text-center transition-colors ${
                   activeIndustryId === ind.id
                     ? 'bg-[#5871ed] text-white'
                     : 'bg-white text-[#161c2d] border border-[#e9e9e9] hover:bg-gray-50'
@@ -230,44 +343,39 @@ export default function IndustriesPage() {
           </div>
         </div>
 
-        {/* 콘텐츠 영역 */}
+        {/* 콘텐츠 */}
         {activeIndustry && (
           <div className="w-full px-4 md:px-[88px] py-[80px] md:py-[120px] flex flex-col gap-[60px] md:gap-[80px] items-center">
             <div className="w-full max-w-[1264px] flex flex-col gap-[60px] md:gap-[80px]">
 
-              {/* 산업 개요: 제목+설명(좌) + 원형이미지(우) */}
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 lg:gap-0">
-                <div className="flex flex-col gap-[40px] lg:w-[640px]">
+              {/* 산업 개요: 설명(좌) + 인터랙티브 원형 이미지(우) */}
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-0">
+                <div className="flex flex-col gap-[40px] lg:w-[580px]">
                   <h2 className="font-pretendard font-black text-[36px] md:text-[48px] text-[#3a343b] tracking-[-1.2px] leading-tight">
                     {activeIndustry.title}
                   </h2>
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-4">
                     {activeIndustry.description.map((p, i) => (
-                      <p key={i} className="font-pretendard text-[18px] md:text-[22px] text-[#161c2d] leading-[1.7] tracking-[-0.5px]">
+                      <p key={i} className="font-pretendard text-[17px] md:text-[20px] text-[#161c2d] leading-[1.75] tracking-[-0.3px]">
                         {p}
                       </p>
                     ))}
                   </div>
                 </div>
-                <div
-                  className="w-[280px] h-[280px] md:w-[400px] md:h-[400px] rounded-full overflow-hidden shrink-0 mx-auto lg:mx-0"
-                  style={{ boxShadow: '0px 4px 32px rgba(0,0,0,0.15)' }}
-                >
-                  <img
-                    src={activeIndustry.circleImage}
-                    alt={activeIndustry.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <InteractiveCircle
+                  image={activeIndustry.circleImage}
+                  alt={activeIndustry.title}
+                  markers={activeIndustry.markers}
+                />
               </div>
 
               {/* 프로젝트 필터 탭 */}
-              <div className="flex flex-wrap gap-2 md:gap-[8px]">
+              <div className="flex flex-wrap gap-2">
                 {activeIndustry.cases.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => setActiveCaseId(c.id)}
-                    className={`px-[28px] md:px-[36px] py-[14px] md:py-[16px] rounded-full text-[15px] md:text-[18px] font-pretendard transition-colors ${
+                    className={`px-[24px] md:px-[36px] py-[12px] md:py-[16px] rounded-full text-[14px] md:text-[18px] font-pretendard transition-colors ${
                       activeCaseId === c.id
                         ? 'bg-[#f1f3fd] border border-[#5871ed] text-[#161c2d] font-bold'
                         : 'bg-white border border-[#d4d4d4] text-[#3a343b] font-semibold hover:border-[#5871ed]'
@@ -278,28 +386,27 @@ export default function IndustriesPage() {
                 ))}
               </div>
 
-              {/* 도입사례 상세: 피처리스트(좌) + 스크린샷(우) */}
+              {/* 도입사례 상세 */}
               {activeCase && (
                 <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-[60px] animate-fadeIn">
-                  {/* 좌: 텍스트 */}
                   <div className="flex flex-col gap-[26px] lg:flex-1 min-w-0">
                     <div className="flex flex-col gap-2">
-                      <h3 className="font-pretendard font-bold text-[26px] md:text-[32px] text-black tracking-[-2px] leading-[1.5]">
+                      <h3 className="font-pretendard font-bold text-[24px] md:text-[32px] text-black tracking-[-1.5px] leading-[1.4]">
                         {activeCase.title}
                       </h3>
-                      <p className="font-pretendard font-medium text-[15px] md:text-[16px] text-[#444] leading-[1.4]">
+                      <p className="font-pretendard font-medium text-[14px] md:text-[16px] text-[#444] leading-[1.4]">
                         {activeCase.subtitle}
                       </p>
                     </div>
-                    <div className="flex flex-col gap-[20px] md:gap-[26px]">
+                    <div className="flex flex-col gap-[18px] md:gap-[26px]">
                       {activeCase.features.map((f, i) => (
                         <div key={i} className="flex gap-[14px] items-start">
                           <CheckIcon />
                           <div className="flex flex-col gap-[2px]">
-                            <p className="font-pretendard text-[16px] md:text-[18px] font-bold text-[#050038] leading-[1.5]">
+                            <p className="font-pretendard text-[15px] md:text-[18px] font-bold text-[#050038] leading-[1.5]">
                               {f.title}
                             </p>
-                            <p className="font-pretendard text-[14px] md:text-[16px] text-[#050038] leading-[1.5]">
+                            <p className="font-pretendard text-[13px] md:text-[16px] text-[#555] leading-[1.5]">
                               {f.desc}
                             </p>
                           </div>
@@ -307,11 +414,9 @@ export default function IndustriesPage() {
                       ))}
                     </div>
                   </div>
-
-                  {/* 우: 스크린샷 */}
                   <div
-                    className="w-full lg:w-[580px] xl:w-[613px] h-[280px] md:h-[380px] lg:h-[447px] rounded-xl overflow-hidden shrink-0"
-                    style={{ boxShadow: '0px 4px 4px rgba(0,0,0,0.15)' }}
+                    className="w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl overflow-hidden shrink-0"
+                    style={{ boxShadow: '0px 4px 20px rgba(0,0,0,0.12)' }}
                   >
                     <img
                       src={activeCase.caseImage}
