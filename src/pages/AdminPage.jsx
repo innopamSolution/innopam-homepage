@@ -1075,20 +1075,6 @@ export default function AdminPage() {
             {bizSubTab === 'records' && (<>
               {bizMsg && <p className={`text-sm px-4 py-2 rounded-lg ${bizMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : bizMsg.startsWith('📤') ? 'bg-blue-50 text-blue-600' : 'bg-red-50 text-red-600'}`}>{bizMsg}</p>}
 
-              {/* 엑셀 다운로드/업로드 */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <button onClick={downloadBizExcel}
-                  className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition-colors">
-                  📥 엑셀 다운로드
-                </button>
-                <button onClick={() => bizXlsxRef.current?.click()}
-                  className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 text-white text-sm font-bold rounded-lg hover:bg-orange-600 transition-colors">
-                  📤 엑셀 업로드
-                </button>
-                <input ref={bizXlsxRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={uploadBizExcel} />
-                <span className="text-xs text-gray-400">※ 업로드 시 기존 데이터에 추가됩니다</span>
-              </div>
-
               <form onSubmit={handleBizSubmit} className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-3 border border-gray-100">
                 <p className="text-sm font-bold text-gray-700">{bizEditing ? '✏️ 수정 중' : '➕ 새 실적 추가'}</p>
                 <div className="grid grid-cols-2 gap-3">
@@ -1131,6 +1117,20 @@ export default function AdminPage() {
                   )}
                 </div>
               </form>
+              {/* 엑셀 다운로드/업로드 */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button onClick={downloadBizExcel}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition-colors">
+                  📥 엑셀 다운로드
+                </button>
+                <button onClick={() => bizXlsxRef.current?.click()}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 text-white text-sm font-bold rounded-lg hover:bg-orange-600 transition-colors">
+                  📤 엑셀 업로드
+                </button>
+                <input ref={bizXlsxRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={uploadBizExcel} />
+                <span className="text-xs text-gray-400">※ 업로드 시 기존 데이터에 추가됩니다</span>
+              </div>
+
               <div className="flex flex-col gap-2">
                 {bizRecords.map(item => (
                   <div key={item.id} className="flex items-center justify-between gap-4 bg-white border border-gray-100 rounded-xl px-4 py-3">
@@ -1153,20 +1153,6 @@ export default function AdminPage() {
             {/* ── 지적재산권 ── */}
             {bizSubTab === 'ip' && (<>
               {ipMsg && <p className={`text-sm px-4 py-2 rounded-lg ${ipMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : ipMsg.startsWith('📤') ? 'bg-blue-50 text-blue-600' : 'bg-red-50 text-red-600'}`}>{ipMsg}</p>}
-
-              {/* 엑셀 다운로드/업로드 */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <button onClick={downloadIpExcel}
-                  className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition-colors">
-                  📥 엑셀 다운로드
-                </button>
-                <button onClick={() => ipXlsxRef.current?.click()}
-                  className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 text-white text-sm font-bold rounded-lg hover:bg-orange-600 transition-colors">
-                  📤 엑셀 업로드
-                </button>
-                <input ref={ipXlsxRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={uploadIpExcel} />
-                <span className="text-xs text-gray-400">※ 업로드 시 기존 데이터에 추가됩니다</span>
-              </div>
 
               <form onSubmit={handleIpSubmit} className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-3 border border-gray-100">
                 <p className="text-sm font-bold text-gray-700">{ipEditing ? '✏️ 수정 중' : '➕ 새 지재권 추가'}</p>
@@ -1212,6 +1198,20 @@ export default function AdminPage() {
                   )}
                 </div>
               </form>
+              {/* 엑셀 다운로드/업로드 */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button onClick={downloadIpExcel}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition-colors">
+                  📥 엑셀 다운로드
+                </button>
+                <button onClick={() => ipXlsxRef.current?.click()}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 text-white text-sm font-bold rounded-lg hover:bg-orange-600 transition-colors">
+                  📤 엑셀 업로드
+                </button>
+                <input ref={ipXlsxRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={uploadIpExcel} />
+                <span className="text-xs text-gray-400">※ 업로드 시 기존 데이터에 추가됩니다</span>
+              </div>
+
               <div className="flex flex-col gap-2">
                 {ipList.map(item => (
                   <div key={item.id} className="flex items-center justify-between gap-4 bg-white border border-gray-100 rounded-xl px-4 py-3">
