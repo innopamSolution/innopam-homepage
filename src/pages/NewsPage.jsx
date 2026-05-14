@@ -50,84 +50,89 @@ function IconArrow() {
 
 function NewsCard({ item }) {
   const isInternal = item.category === '이노팸 소식';
+  const imgSrc = item.image_url || item.image;
 
-  const thumbnail = isInternal ? (
-    <Link
-      to={`/news/${item.id}`}
-      className="shrink-0 w-full md:w-[461px] md:h-[286px] rounded-[8px] overflow-hidden block"
-      style={{ boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' }}
-    >
-      <img
-        src={item.image_url || item.image}
-        alt={item.title}
-        className="w-full h-full object-cover object-left-top hover:scale-105 transition-transform duration-300"
-      />
-    </Link>
-  ) : (
-    <a
-      href={item.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="shrink-0 w-full md:w-[461px] md:h-[286px] rounded-[8px] overflow-hidden block"
-      style={{ boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' }}
-    >
-      <img
-        src={item.image_url || item.image}
-        alt={item.title}
-        className="w-full h-full object-cover object-left-top hover:scale-105 transition-transform duration-300"
-      />
-    </a>
-  );
+  const WrapperLink = ({ children, className }) => isInternal
+    ? <Link to={`/news/${item.id}`} className={className}>{children}</Link>
+    : <a href={item.link} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>;
 
   const linkEl = isInternal ? (
-    <Link
-      to={`/news/${item.id}`}
-      className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
-    >
+    <Link to={`/news/${item.id}`} className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity mt-auto pt-4">
       자세히 보기 <IconArrow />
     </Link>
   ) : (
-    <a
-      href={item.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
-    >
+    <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity mt-auto pt-4">
       기사 보기 <IconExternal />
     </a>
   );
 
-  const titleEl = isInternal ? (
-    <Link to={`/news/${item.id}`} className="hover:text-[#4262ff] transition-colors">
-      <h2 className="font-pretendard font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
-        {item.title}
-      </h2>
-    </Link>
-  ) : (
-    <h2 className="font-pretendard font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
-      {item.title}
-    </h2>
-  );
-
   return (
-    <article className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-0 w-full">
-      {thumbnail}
-      <div className="flex flex-col items-start w-full md:w-[697px]">
-        <div className="flex items-center gap-[18px] mb-6">
-          <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
-            <IconCalendar />
-            <span>{item.date}</span>
+    <>
+      {/* ── 모바일 카드 ── */}
+      <article className="md:hidden bg-white rounded-2xl overflow-hidden border border-gray-100"
+        style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.07)' }}>
+        <WrapperLink className="block">
+          <div className="w-full overflow-hidden" style={{ aspectRatio: '16/9' }}>
+            <img
+              src={imgSrc}
+              alt={item.title}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            />
           </div>
-          <span className="w-[23px] h-px bg-[#6d758f] shrink-0" />
-          <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
-            <IconTag />
-            <span>{item.category}</span>
+        </WrapperLink>
+        <div className="flex flex-col p-5 gap-3">
+          <div className="flex items-center gap-3">
+            <span className={`text-[11px] font-pretendard font-bold px-2 py-0.5 rounded-full ${isInternal ? 'bg-blue-50 text-[#4262ff]' : 'bg-gray-100 text-[#6d758f]'}`}>
+              {item.category}
+            </span>
+            <span className="text-[#6d758f] text-[13px] font-pretendard">{item.date}</span>
           </div>
+          <WrapperLink className="block">
+            <h2 className="font-pretendard font-semibold text-[#3a343b] text-[17px] leading-[1.5] line-clamp-3">
+              {item.title}
+            </h2>
+          </WrapperLink>
+          {linkEl}
         </div>
-        {titleEl}
-        {linkEl}
-      </div>
-    </article>
+      </article>
+
+      {/* ── 데스크탑 가로형 ── */}
+      <article className="hidden md:flex flex-row items-center justify-between gap-0 w-full">
+        <WrapperLink className="shrink-0 w-[461px] h-[286px] rounded-[8px] overflow-hidden block"
+          style={{ boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' }}>
+          <img
+            src={imgSrc}
+            alt={item.title}
+            className="w-full h-full object-cover object-left-top hover:scale-105 transition-transform duration-300"
+          />
+        </WrapperLink>
+        <div className="flex flex-col items-start w-[697px]">
+          <div className="flex items-center gap-[18px] mb-6">
+            <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
+              <IconCalendar />
+              <span>{item.date}</span>
+            </div>
+            <span className="w-[23px] h-px bg-[#6d758f] shrink-0" />
+            <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
+              <IconTag />
+              <span>{item.category}</span>
+            </div>
+          </div>
+          {isInternal ? (
+            <Link to={`/news/${item.id}`} className="hover:text-[#4262ff] transition-colors">
+              <h2 className="font-pretendard font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
+                {item.title}
+              </h2>
+            </Link>
+          ) : (
+            <h2 className="font-pretendard font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
+              {item.title}
+            </h2>
+          )}
+          {linkEl}
+        </div>
+      </article>
+    </>
   );
 }
 
@@ -182,7 +187,7 @@ export default function NewsPage() {
             </div>
 
             {/* Articles */}
-            <div className="flex flex-col gap-[50px] w-full">
+            <div className="flex flex-col gap-5 md:gap-[50px] w-full">
               {paged.length === 0 ? (
                 <p className="font-pretendard text-[#6d758f] text-[18px] text-center py-20">
                   해당 카테고리의 소식이 없습니다.
