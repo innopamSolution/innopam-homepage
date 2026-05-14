@@ -66,45 +66,100 @@ function BlockImageUpload({ src, onSrc }) {
 
 // ── 본문 블록 에디터 ──────────────────────────────────────────────
 function BlockEditor({ blocks, onChange }) {
-  const addText = () => onChange([...blocks, { type: 'text', value: '' }]);
+  const addText  = () => onChange([...blocks, { type: 'text', value: '' }]);
   const addImage = () => onChange([...blocks, { type: 'image', src: '', alt: '', caption: '' }]);
-  const remove = (i) => onChange(blocks.filter((_, idx) => idx !== i));
-  const update = (i, key, val) => {
-    const next = blocks.map((b, idx) => idx === i ? { ...b, [key]: val } : b);
+  const remove   = (i) => onChange(blocks.filter((_, idx) => idx !== i));
+  const update   = (i, key, val) => onChange(blocks.map((b, idx) => idx === i ? { ...b, [key]: val } : b));
+
+  const moveUp   = (i) => {
+    if (i === 0) return;
+    const next = [...blocks];
+    [next[i - 1], next[i]] = [next[i], next[i - 1]];
+    onChange(next);
+  };
+  const moveDown = (i) => {
+    if (i === blocks.length - 1) return;
+    const next = [...blocks];
+    [next[i], next[i + 1]] = [next[i + 1], next[i]];
     onChange(next);
   };
 
   return (
     <div className="flex flex-col gap-3">
       {blocks.map((block, i) => (
-        <div key={i} className="border border-gray-200 rounded-lg p-3 bg-gray-50">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-xs font-bold text-gray-500 uppercase">{block.type}</span>
-            <button onClick={() => remove(i)} className="text-red-400 hover:text-red-600 text-sm">✕ 삭제</button>
-          </div>
-          {block.type === 'text' && (
-            <textarea
-              className="w-full border border-gray-300 rounded p-2 text-sm resize-y min-h-[80px]"
-              placeholder="본문 텍스트"
-              value={block.value}
-              onChange={e => update(i, 'value', e.target.value)}
-            />
-          )}
-          {block.type === 'image' && (
-            <div className="flex flex-col gap-2">
-              <BlockImageUpload
-                src={block.src}
-                onSrc={val => update(i, 'src', val)}
-              />
-              <input className="border border-gray-300 rounded p-2 text-sm" placeholder="alt 텍스트" value={block.alt} onChange={e => update(i, 'alt', e.target.value)} />
-              <input className="border border-gray-300 rounded p-2 text-sm" placeholder="캡션 (선택)" value={block.caption} onChange={e => update(i, 'caption', e.target.value)} />
+        <div key={i} className="border border-gray-200 rounded-xl bg-gray-50 overflow-hidden">
+          {/* 블록 헤더 */}
+          <div className="flex items-center justify-between px-3 py-2 bg-white border-b border-gray-200">
+            <div className="flex items-center gap-2">
+              {/* 순서 이동 버튼 */}
+              <div className="flex flex-col gap-0.5">
+                <button
+                  onClick={() => moveUp(i)}
+                  disabled={i === 0}
+                  className="w-6 h-5 flex items-center justify-center rounded text-gray-400 hover:bg-gray-100 hover:text-gray-700 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                  title="위로"
+                >
+                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                    <path d="M5 1L1 7h8L5 1z" fill="currentColor"/>
+                  </svg>
+                </button>
+                <button
+                  onClick={() => moveDown(i)}
+                  disabled={i === blocks.length - 1}
+                  className="w-6 h-5 flex items-center justify-center rounded text-gray-400 hover:bg-gray-100 hover:text-gray-700 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+                  title="아래로"
+                >
+                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                    <path d="M5 7L9 1H1l4 6z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+              {/* 블록 번호 + 타입 */}
+              <span className="text-xs text-gray-400 font-mono">{i + 1}</span>
+              <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                block.type === 'text'
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'bg-purple-50 text-purple-600'
+              }`}>
+                {block.type === 'text' ? '텍스트' : '이미지'}
+              </span>
             </div>
-          )}
+            <button
+              onClick={() => remove(i)}
+              className="text-xs text-red-400 hover:text-red-600 hover:bg-red-50 px-2 py-1 rounded transition-colors"
+            >
+              삭제
+            </button>
+          </div>
+
+          {/* 블록 내용 */}
+          <div className="p-3">
+            {block.type === 'text' && (
+              <textarea
+                className="w-full border border-gray-300 rounded-lg p-2.5 text-sm resize-y min-h-[100px] focus:outline-none focus:border-[#45469A]"
+                placeholder="본문 텍스트를 입력하세요"
+                value={block.value}
+                onChange={e => update(i, 'value', e.target.value)}
+              />
+            )}
+            {block.type === 'image' && (
+              <div className="flex flex-col gap-2">
+                <BlockImageUpload src={block.src} onSrc={val => update(i, 'src', val)} />
+                <input className="border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:border-[#45469A]" placeholder="alt 텍스트 (접근성)" value={block.alt} onChange={e => update(i, 'alt', e.target.value)} />
+                <input className="border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:border-[#45469A]" placeholder="캡션 (선택)" value={block.caption} onChange={e => update(i, 'caption', e.target.value)} />
+              </div>
+            )}
+          </div>
         </div>
       ))}
-      <div className="flex gap-2">
-        <button onClick={addText} className="flex-1 border-2 border-dashed border-gray-300 rounded-lg py-2 text-sm text-gray-500 hover:border-blue-400 hover:text-blue-500 transition-colors">+ 텍스트 블록</button>
-        <button onClick={addImage} className="flex-1 border-2 border-dashed border-gray-300 rounded-lg py-2 text-sm text-gray-500 hover:border-blue-400 hover:text-blue-500 transition-colors">+ 이미지 블록</button>
+
+      <div className="flex gap-2 mt-1">
+        <button onClick={addText}  className="flex-1 border-2 border-dashed border-gray-300 rounded-xl py-3 text-sm text-gray-500 hover:border-blue-400 hover:text-blue-500 hover:bg-blue-50 transition-colors font-medium">
+          + 텍스트 블록
+        </button>
+        <button onClick={addImage} className="flex-1 border-2 border-dashed border-gray-300 rounded-xl py-3 text-sm text-gray-500 hover:border-purple-400 hover:text-purple-500 hover:bg-purple-50 transition-colors font-medium">
+          + 이미지 블록
+        </button>
       </div>
     </div>
   );
