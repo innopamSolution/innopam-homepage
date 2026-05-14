@@ -286,10 +286,12 @@ export default function AdminPage() {
     if (!confirm('이 신청을 삭제하시겠습니까?')) return;
     try {
       await deleteDemoRequest(id);
+      // DB 삭제 성공 후에만 UI 업데이트
       setRequests(r => r.filter(req => req.id !== id));
       if (selectedReq?.id === id) setSelectedReq(null);
+      setMsg('✅ 삭제 완료');
     } catch (e) {
-      alert('삭제 실패: ' + e.message);
+      setMsg('❌ 삭제 실패: ' + e.message);
     }
   };
 
