@@ -401,7 +401,7 @@ export default function AdminPage() {
         </div>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-400 hidden md:block">{session?.user?.email}</span>
-          <a href="/innopam-homepage/news" target="_blank" className="text-sm text-blue-500 hover:underline">사이트 보기 →</a>
+          <a href="#/news" target="_blank" className="text-sm text-blue-500 hover:underline">사이트 보기 →</a>
           <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-red-500 transition-colors">로그아웃</button>
         </div>
       </header>
