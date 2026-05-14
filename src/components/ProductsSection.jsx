@@ -1,5 +1,6 @@
 // Figma node: 170:1518 (Products section)
 // GeoX logo 242:2098 — w=136.638px, h=38.408px
+import { Link } from 'react-router-dom';
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
 
@@ -41,12 +42,12 @@ export default function ProductsSection() {
           '차세대 미래지향 GeoX 플랫폼 솔루션 서비스' 시리즈입니다.
         </p>
 
-        <a
-          href="/innopam-homepage/products"
+        <Link
+          to="/products"
           className="brand-gradient inline-flex items-center text-white font-pretendard font-bold text-[14px] tracking-[1.3px] px-[54px] py-[15px] rounded-full hover:opacity-90 transition-opacity"
         >
           자세히보기
-        </a>
+        </Link>
       </div>
     </section>
   );

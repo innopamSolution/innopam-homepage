@@ -1,6 +1,7 @@
 // Figma node: 159:2246 (Solutions) + 176:3308 (농업 분석 state)
 // All spacing/padding/border values taken directly from Figma
 import { useState, useEffect, useRef } from "react";
+import { Link } from 'react-router-dom';
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
 
@@ -14,7 +15,7 @@ const solutions = [
       "위성, 항공, 드론 데이터를 AI로 분석해 도시 변화를 실시간으로 탐지하고 관리합니다.",
       "도시계획·개발제한구역 관리, 불법건축·개발 감시, 수치지형도 고도화 등 행정 효율화에 활용됩니다.",
     ],
-    relatedProduct: { name: "GeoX CityVision", href: "#products" },
+    relatedProduct: { name: "GeoX CityVision", href: "/products" },
     projects: ["고정밀 전자지도 구축 챌린지 사업", "AI 기반 품질검증 지원 시스템 개발"],
   },
   {
@@ -51,7 +52,7 @@ const solutions = [
       "분석 결과를 기반으로 시설물 상태를 한눈에 확인하고 외관조사망도를 자동 생성하여 효율적인 점검과 관리에 활용할 수 있습니다.",
       "시설물 안전 점검 관리, 점검 결과 보고 및 이력 관리, 유지보수 계획 수립, 공공 안전 모니터링, 데이터 기반 행정 운영에 활용됩니다.",
     ],
-    relatedProduct: { name: "CrackEye X", href: "#products" },
+    relatedProduct: { name: "CrackEye X", href: "/products" },
     projects: ["기반시설 첨단관리(TotalCare) 기술개발", "고정밀 전자지도 구축 챌린지 사업"],
   },
 ];
@@ -182,12 +183,12 @@ export default function SolutionsSection() {
                       {sol.relatedProduct && (
                         <div className="flex flex-col gap-[4px] items-start w-full">
                           <p className="font-pretendard font-bold text-[14px] text-[#040000] leading-[1.4]">관련 제품</p>
-                          <a href={sol.relatedProduct.href} className="flex items-end gap-[5px]">
+                          <Link to={sol.relatedProduct.href} className="flex items-end gap-[5px]">
                             <span className="font-pretendard font-normal text-[14px] text-[#4262ff] leading-[24px] border-b border-[#4262ff] whitespace-nowrap">
                               {sol.relatedProduct.name}
                             </span>
                             <span className="font-inter font-normal text-[18px] text-[#4262ff] leading-none">→</span>
-                          </a>
+                          </Link>
                         </div>
                       )}
 
