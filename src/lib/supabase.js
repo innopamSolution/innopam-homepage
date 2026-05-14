@@ -83,6 +83,14 @@ export async function updateDemoStatus(id, status) {
   if (error) throw error;
 }
 
+export async function deleteDemoRequest(id) {
+  const { error } = await supabase
+    .from('demo_requests')
+    .delete()
+    .eq('id', id);
+  if (error) throw error;
+}
+
 // ── 인증 ─────────────────────────────────────────────────────────
 export async function signIn(email, password) {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession, fetchDemoRequests, updateDemoStatus } from '../lib/supabase';
+import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession, fetchDemoRequests, updateDemoStatus, deleteDemoRequest } from '../lib/supabase';
 
 const CATEGORIES = ['이노팸 소식', '언론보도'];
 
@@ -280,6 +280,17 @@ export default function AdminPage() {
       setRequests(r => r.map(req => req.id === id ? { ...req, status } : req));
       setSelectedReq(prev => prev?.id === id ? { ...prev, status } : prev);
     } catch (e) { console.error(e); }
+  };
+
+  const handleDeleteRequest = async (id) => {
+    if (!confirm('이 신청을 삭제하시겠습니까?')) return;
+    try {
+      await deleteDemoRequest(id);
+      setRequests(r => r.filter(req => req.id !== id));
+      if (selectedReq?.id === id) setSelectedReq(null);
+    } catch (e) {
+      alert('삭제 실패: ' + e.message);
+    }
   };
 
   useEffect(() => {
@@ -637,28 +648,41 @@ export default function AdminPage() {
               ) : (
                 <div className="divide-y divide-gray-100">
                   {requests.map(req => (
-                    <button
+                    <div
                       key={req.id}
-                      onClick={() => setSelectedReq(req)}
-                      className={`w-full text-left px-5 py-4 hover:bg-gray-50 transition-colors flex items-start gap-3 ${selectedReq?.id === req.id ? 'bg-blue-50' : ''}`}
+                      className={`flex items-start gap-3 px-5 py-4 hover:bg-gray-50 transition-colors ${selectedReq?.id === req.id ? 'bg-blue-50' : ''}`}
                     >
-                      <span className={`shrink-0 mt-0.5 w-2 h-2 rounded-full ${req.status === 'new' ? 'bg-red-400' : req.status === 'replied' ? 'bg-green-400' : 'bg-gray-300'}`} />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <span className="font-semibold text-sm text-gray-800 truncate">{req.name}</span>
-                          {req.company && <span className="text-xs text-gray-400 truncate">{req.company}</span>}
+                      <button
+                        onClick={() => setSelectedReq(req)}
+                        className="flex-1 text-left flex items-start gap-3 min-w-0"
+                      >
+                        <span className={`shrink-0 mt-0.5 w-2 h-2 rounded-full ${req.status === 'new' ? 'bg-red-400' : req.status === 'replied' ? 'bg-green-400' : 'bg-gray-300'}`} />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <span className="font-semibold text-sm text-gray-800 truncate">{req.name}</span>
+                            {req.company && <span className="text-xs text-gray-400 truncate">{req.company}</span>}
+                          </div>
+                          <p className="text-xs text-gray-500 truncate">{req.product || req.inquiry_type || '문의'}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">{req.created_at?.slice(0,10)}</p>
                         </div>
-                        <p className="text-xs text-gray-500 truncate">{req.product || req.inquiry_type || '문의'}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">{req.created_at?.slice(0,10)}</p>
-                      </div>
-                      <span className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        req.status === 'new' ? 'bg-red-50 text-red-500' :
-                        req.status === 'replied' ? 'bg-green-50 text-green-600' :
-                        'bg-gray-100 text-gray-500'
-                      }`}>
-                        {req.status === 'new' ? '신규' : req.status === 'checked' ? '확인' : '답변완료'}
-                      </span>
-                    </button>
+                        <span className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                          req.status === 'new' ? 'bg-red-50 text-red-500' :
+                          req.status === 'replied' ? 'bg-green-50 text-green-600' :
+                          'bg-gray-100 text-gray-500'
+                        }`}>
+                          {req.status === 'new' ? '신규' : req.status === 'checked' ? '확인' : '답변완료'}
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => handleDeleteRequest(req.id)}
+                        className="shrink-0 w-7 h-7 flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 rounded-lg transition-colors"
+                        title="삭제"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <path d="M1.75 3.5h10.5M5.25 3.5V2.333a.583.583 0 01.583-.583h2.334a.583.583 0 01.583.583V3.5M11.083 3.5l-.583 7.583a.583.583 0 01-.583.584H4.083a.583.583 0 01-.583-.584L2.917 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                    </div>
                   ))}
                 </div>
               )}
@@ -716,6 +740,14 @@ export default function AdminPage() {
                     ✉ 이메일 답변하기
                   </a>
                 )}
+
+                {/* 삭제 */}
+                <button
+                  onClick={() => handleDeleteRequest(selectedReq.id)}
+                  className="w-full py-2.5 border border-red-200 text-red-400 text-sm font-bold rounded-xl text-center hover:bg-red-50 hover:text-red-600 transition-colors"
+                >
+                  🗑 신청 삭제
+                </button>
               </div>
             )}
           </div>
