@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession, fetchDemoRequests, updateDemoStatus, deleteDemoRequest } from '../lib/supabase';
+import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession, fetchDemoRequests, updateDemoStatus, deleteDemoRequest, fetchHistory, saveHistory, deleteHistory } from '../lib/supabase';
 
 const CATEGORIES = ['이노팸 소식', '언론보도'];
 
@@ -244,11 +244,19 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [tab, setTab] = useState('list'); // 'list' | 'form' | 'requests'
+  const [tab, setTab] = useState('list'); // 'list' | 'form' | 'requests' | 'history'
   const [requests, setRequests] = useState([]);
   const [reqLoading, setReqLoading] = useState(false);
   const [selectedReq, setSelectedReq] = useState(null);
   const fileRef = useRef();
+
+  // ── 연혁 state ──
+  const [historyList, setHistoryList] = useState([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyForm, setHistoryForm] = useState({ id: null, year: '', month: '', text: '', sort_order: 0 });
+  const [historyEditing, setHistoryEditing] = useState(false);
+  const [historySaving, setHistorySaving] = useState(false);
+  const [historyMsg, setHistoryMsg] = useState('');
 
   // 세션 확인
   useEffect(() => {
@@ -272,6 +280,40 @@ export default function AdminPage() {
     try { setRequests(await fetchDemoRequests()); }
     catch (e) { console.error('demo_requests 로드 실패:', e); }
     finally { setReqLoading(false); }
+  };
+
+  // ── 연혁 함수 ──
+  const loadHistory = async () => {
+    setHistoryLoading(true);
+    try { setHistoryList(await fetchHistory()); }
+    catch (e) { setHistoryMsg('❌ ' + e.message); }
+    finally { setHistoryLoading(false); }
+  };
+
+  const handleHistorySubmit = async (e) => {
+    e.preventDefault();
+    if (!historyForm.year || !historyForm.text) return setHistoryMsg('연도와 내용을 입력하세요.');
+    setHistorySaving(true);
+    try {
+      await saveHistory(historyForm);
+      await loadHistory();
+      setHistoryForm({ id: null, year: '', month: '', text: '', sort_order: historyList.length + 1 });
+      setHistoryEditing(false);
+      setHistoryMsg('✅ 저장 완료');
+    } catch (e) { setHistoryMsg('❌ ' + e.message); }
+    finally { setHistorySaving(false); }
+  };
+
+  const handleHistoryEdit = (item) => {
+    setHistoryForm(item);
+    setHistoryEditing(true);
+    setHistoryMsg('');
+  };
+
+  const handleHistoryDelete = async (id) => {
+    if (!confirm('삭제하시겠습니까?')) return;
+    try { await deleteHistory(id); await loadHistory(); setHistoryMsg('✅ 삭제 완료'); }
+    catch (e) { setHistoryMsg('❌ ' + e.message); }
   };
 
   const handleStatusChange = async (id, status) => {
@@ -426,6 +468,12 @@ export default function AdminPage() {
                 {requests.filter(r => r.status === 'new').length}
               </span>
             )}
+          </button>
+          <button
+            onClick={() => { setTab('history'); loadHistory(); }}
+            className={`pb-3 text-sm font-bold border-b-2 transition-colors ${tab === 'history' ? 'border-[#45469A] text-[#45469A]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+          >
+            연혁 관리
           </button>
         </div>
       </header>
@@ -765,6 +813,105 @@ export default function AdminPage() {
                 >
                   🗑 신청 삭제
                 </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── 연혁 관리 탭 ── */}
+        {tab === 'history' && (
+          <div className="flex flex-col gap-6">
+            <h2 className="font-bold text-lg text-gray-800">연혁 관리</h2>
+
+            {/* 메시지 */}
+            {historyMsg && (
+              <p className={`text-sm px-4 py-2 rounded-lg ${historyMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}>
+                {historyMsg}
+              </p>
+            )}
+
+            {/* 추가/수정 폼 */}
+            <form onSubmit={handleHistorySubmit} className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-3 border border-gray-100">
+              <p className="text-sm font-bold text-gray-700">{historyEditing ? '✏️ 수정 중' : '➕ 새 연혁 추가'}</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-gray-500 mb-1 block">연도 *</label>
+                  <input
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                    placeholder="예) 2025"
+                    value={historyForm.year}
+                    onChange={e => setHistoryForm(f => ({ ...f, year: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 mb-1 block">월 (없으면 —)</label>
+                  <input
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                    placeholder="예) 06 또는 —"
+                    value={historyForm.month}
+                    onChange={e => setHistoryForm(f => ({ ...f, month: e.target.value }))}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1 block">내용 *</label>
+                <input
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                  placeholder="예) 벤처기업 인증(중소벤처기업부)"
+                  value={historyForm.text}
+                  onChange={e => setHistoryForm(f => ({ ...f, text: e.target.value }))}
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1 block">정렬 순서 (숫자 작을수록 위)</label>
+                <input
+                  type="number"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                  value={historyForm.sort_order}
+                  onChange={e => setHistoryForm(f => ({ ...f, sort_order: Number(e.target.value) }))}
+                />
+              </div>
+              <div className="flex gap-2 pt-1">
+                <button type="submit" disabled={historySaving}
+                  className="px-5 py-2 bg-[#45469A] text-white text-sm font-bold rounded-lg hover:bg-[#3535a0] transition-colors disabled:opacity-50">
+                  {historySaving ? '저장 중...' : historyEditing ? '수정 완료' : '추가'}
+                </button>
+                {historyEditing && (
+                  <button type="button"
+                    onClick={() => { setHistoryForm({ id: null, year: '', month: '', text: '', sort_order: 0 }); setHistoryEditing(false); setHistoryMsg(''); }}
+                    className="px-5 py-2 border border-gray-200 text-gray-500 text-sm font-bold rounded-lg hover:bg-gray-100 transition-colors">
+                    취소
+                  </button>
+                )}
+              </div>
+            </form>
+
+            {/* 목록 */}
+            {historyLoading ? (
+              <p className="text-sm text-gray-400 text-center py-8">불러오는 중...</p>
+            ) : (
+              <div className="flex flex-col gap-2">
+                {historyList.map(item => (
+                  <div key={item.id} className="flex items-center justify-between gap-4 bg-white border border-gray-100 rounded-xl px-4 py-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="font-bold text-[#45469A] text-sm w-[36px] shrink-0">{item.year}</span>
+                      <span className="text-[#6d758f] text-sm w-[28px] shrink-0">{item.month}</span>
+                      <span className="text-gray-700 text-sm truncate">{item.text}</span>
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <button onClick={() => handleHistoryEdit(item)}
+                        className="px-3 py-1 text-xs font-bold border border-[#45469A] text-[#45469A] rounded-lg hover:bg-[#45469A] hover:text-white transition-colors">
+                        수정
+                      </button>
+                      <button onClick={() => handleHistoryDelete(item.id)}
+                        className="px-3 py-1 text-xs font-bold border border-red-200 text-red-400 rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors">
+                        삭제
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>

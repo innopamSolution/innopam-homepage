@@ -91,6 +91,42 @@ export async function deleteDemoRequest(id) {
   if (error) throw error;
 }
 
+// ── 연혁 ─────────────────────────────────────────────────────────
+export async function fetchHistory() {
+  const { data, error } = await supabase
+    .from('history')
+    .select('*')
+    .order('sort_order', { ascending: true });
+  if (error) throw error;
+  return data;
+}
+
+export async function saveHistory(item) {
+  if (item.id) {
+    const { data, error } = await supabase
+      .from('history')
+      .update({ year: item.year, month: item.month, text: item.text, sort_order: item.sort_order })
+      .eq('id', item.id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } else {
+    const { data, error } = await supabase
+      .from('history')
+      .insert({ year: item.year, month: item.month, text: item.text, sort_order: item.sort_order })
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+}
+
+export async function deleteHistory(id) {
+  const { error } = await supabase.from('history').delete().eq('id', id);
+  if (error) throw error;
+}
+
 // ── 인증 ─────────────────────────────────────────────────────────
 export async function signIn(email, password) {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
