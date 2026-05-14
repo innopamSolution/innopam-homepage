@@ -1,9 +1,11 @@
 // Products Page — Figma node 242:2397
 // Faithfully implements the Figma design for the Products page
 
+import { useState } from 'react'
 import SectionLabel from '../components/SectionLabel'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import DemoModal from '../components/DemoModal'
 import { useFadeUp } from '../utils/useFadeUp';
 
 // ---- Icon Components (from Figma) ----
@@ -149,9 +151,10 @@ function IconMultiplePages() {
 
 // ---- Demo Button ----
 
-function DemoButton() {
+function DemoButton({ onOpen }) {
   return (
     <button
+      onClick={onOpen}
       className="flex items-center gap-[15px] bg-[#473bf0] text-white font-pretendard font-bold text-[18px] md:text-[20px] leading-[32px] px-[32px] md:px-[40px] py-[16px] md:py-[20px] rounded-full hover:bg-[#3c31cc] transition-colors"
     >
       데모 신청하기
@@ -377,7 +380,7 @@ function FeatureItem({ icon, title, children }) {
 
 // ---- GeoXRealMap Section (Content 01) ----
 
-function GeoXRealMapSection() {
+function GeoXRealMapSection({ onOpen }) {
   const ref = useFadeUp();
   return (
     <section
@@ -428,14 +431,14 @@ function GeoXRealMapSection() {
       </div>
 
       {/* Demo button */}
-      <DemoButton />
+      <DemoButton onOpen={onOpen} />
     </section>
   )
 }
 
 // ---- GeoX CityVision Section (Content 2) ----
 
-function GeoXCityVisionSection() {
+function GeoXCityVisionSection({ onOpen }) {
   const ref = useFadeUp();
   return (
     <section ref={ref} className="fade-up bg-[#f4f7fa] flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full">
@@ -498,14 +501,14 @@ function GeoXCityVisionSection() {
       </div>
 
       {/* Demo button */}
-      <DemoButton />
+      <DemoButton onOpen={onOpen} />
     </section>
   )
 }
 
 // ---- CrackEyeX Section (Content 3) ----
 
-function CrackEyeXSection() {
+function CrackEyeXSection({ onOpen }) {
   const ref = useFadeUp();
   return (
     <section
@@ -566,7 +569,7 @@ function CrackEyeXSection() {
       </div>
 
       {/* Demo button */}
-      <DemoButton />
+      <DemoButton onOpen={onOpen} />
     </section>
   )
 }
@@ -574,19 +577,21 @@ function CrackEyeXSection() {
 // ---- Main ProductsPage Component ----
 
 export default function ProductsPage() {
+  const [demoOpen, setDemoOpen] = useState(false);
+
   return (
     <div className="min-h-screen w-full bg-white">
       <Header />
       <main>
-        {/* pt-[84px] to offset fixed header height (py-[20px] * 2 + logo 44px = 84px) */}
         <div className="pt-[84px]">
           <HeroSection />
           <GeoXMeaningSection />
-          <GeoXRealMapSection />
-          <GeoXCityVisionSection />
-          <CrackEyeXSection />
+          <GeoXRealMapSection onOpen={() => setDemoOpen(true)} />
+          <GeoXCityVisionSection onOpen={() => setDemoOpen(true)} />
+          <CrackEyeXSection onOpen={() => setDemoOpen(true)} />
         </div>
       </main>
+      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
       <Footer />
     </div>
   )

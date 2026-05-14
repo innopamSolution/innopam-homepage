@@ -60,6 +60,29 @@ export async function deleteNews(id) {
   if (error) throw error;
 }
 
+// ── 데모 신청 ─────────────────────────────────────────────────────
+export async function submitDemoRequest(data) {
+  const { error } = await supabase.from('demo_requests').insert(data);
+  if (error) throw error;
+}
+
+export async function fetchDemoRequests() {
+  const { data, error } = await supabase
+    .from('demo_requests')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
+export async function updateDemoStatus(id, status) {
+  const { error } = await supabase
+    .from('demo_requests')
+    .update({ status })
+    .eq('id', id);
+  if (error) throw error;
+}
+
 // ── 인증 ─────────────────────────────────────────────────────────
 export async function signIn(email, password) {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });

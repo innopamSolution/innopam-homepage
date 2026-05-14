@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession } from '../lib/supabase';
+import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession, fetchDemoRequests, updateDemoStatus } from '../lib/supabase';
 
 const CATEGORIES = ['이노팸 소식', '언론보도'];
 
@@ -244,7 +244,10 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [tab, setTab] = useState('list'); // 'list' | 'form'
+  const [tab, setTab] = useState('list'); // 'list' | 'form' | 'requests'
+  const [requests, setRequests] = useState([]);
+  const [reqLoading, setReqLoading] = useState(false);
+  const [selectedReq, setSelectedReq] = useState(null);
   const fileRef = useRef();
 
   // 세션 확인
@@ -264,7 +267,20 @@ export default function AdminPage() {
     }
   };
 
-  useEffect(() => { if (session) load(); }, [session]);
+  useEffect(() => { if (session) { load(); loadRequests(); } }, [session]);
+
+  const loadRequests = async () => {
+    setReqLoading(true);
+    try { setRequests(await fetchDemoRequests()); }
+    catch (e) { console.error(e); }
+    finally { setReqLoading(false); }
+  };
+
+  const handleStatusChange = async (id, status) => {
+    await updateDemoStatus(id, status);
+    setRequests(r => r.map(req => req.id === id ? { ...req, status } : req));
+    if (selectedReq?.id === id) setSelectedReq(req => ({ ...req, status }));
+  };
 
   const handleLogout = async () => {
     await signOut();
@@ -387,17 +403,22 @@ export default function AdminPage() {
 
         {/* 탭 */}
         <div className="flex gap-1 mb-6 bg-gray-100 rounded-xl p-1 w-fit">
-          <button
-            onClick={() => setTab('list')}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${tab === 'list' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
-          >
-            목록
+          <button onClick={() => setTab('list')}
+            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${tab === 'list' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>
+            뉴스 목록
           </button>
-          <button
-            onClick={handleNew}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${tab === 'form' && !editing ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
-          >
+          <button onClick={handleNew}
+            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${tab === 'form' && !editing ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>
             + 새 글
+          </button>
+          <button onClick={() => { setTab('requests'); loadRequests(); }}
+            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-1.5 ${tab === 'requests' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>
+            데모 신청
+            {requests.filter(r => r.status === 'new').length > 0 && (
+              <span className="w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                {requests.filter(r => r.status === 'new').length}
+              </span>
+            )}
           </button>
         </div>
 
@@ -597,6 +618,102 @@ export default function AdminPage() {
                 취소
               </button>
             </div>
+          </div>
+        )}
+
+        {/* ── 데모 신청 목록 ── */}
+        {tab === 'requests' && (
+          <div className="flex gap-4 items-start">
+            {/* 목록 */}
+            <div className="flex-1 bg-white rounded-2xl border border-gray-200 overflow-hidden">
+              {reqLoading ? (
+                <div className="text-center py-16 text-gray-400">불러오는 중...</div>
+              ) : requests.length === 0 ? (
+                <div className="text-center py-16 text-gray-400">신청 내역이 없습니다.</div>
+              ) : (
+                <div className="divide-y divide-gray-100">
+                  {requests.map(req => (
+                    <button
+                      key={req.id}
+                      onClick={() => setSelectedReq(req)}
+                      className={`w-full text-left px-5 py-4 hover:bg-gray-50 transition-colors flex items-start gap-3 ${selectedReq?.id === req.id ? 'bg-blue-50' : ''}`}
+                    >
+                      <span className={`shrink-0 mt-0.5 w-2 h-2 rounded-full ${req.status === 'new' ? 'bg-red-400' : req.status === 'replied' ? 'bg-green-400' : 'bg-gray-300'}`} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="font-semibold text-sm text-gray-800 truncate">{req.name}</span>
+                          {req.company && <span className="text-xs text-gray-400 truncate">{req.company}</span>}
+                        </div>
+                        <p className="text-xs text-gray-500 truncate">{req.product || req.inquiry_type || '문의'}</p>
+                        <p className="text-xs text-gray-400 mt-0.5">{req.created_at?.slice(0,10)}</p>
+                      </div>
+                      <span className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        req.status === 'new' ? 'bg-red-50 text-red-500' :
+                        req.status === 'replied' ? 'bg-green-50 text-green-600' :
+                        'bg-gray-100 text-gray-500'
+                      }`}>
+                        {req.status === 'new' ? '신규' : req.status === 'checked' ? '확인' : '답변완료'}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 상세 */}
+            {selectedReq && (
+              <div className="w-[360px] shrink-0 bg-white rounded-2xl border border-gray-200 p-6 flex flex-col gap-4 sticky top-20">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-gray-800 text-[15px]">신청 상세</h3>
+                  <button onClick={() => setSelectedReq(null)} className="text-gray-400 hover:text-gray-600 text-lg">×</button>
+                </div>
+
+                <div className="flex flex-col gap-3 text-sm">
+                  {[
+                    ['이름', selectedReq.name],
+                    ['회사', selectedReq.company],
+                    ['직책', selectedReq.position],
+                    ['이메일', selectedReq.email],
+                    ['연락처', selectedReq.phone],
+                    ['관심 제품', selectedReq.product],
+                    ['문의 유형', selectedReq.inquiry_type],
+                  ].map(([label, val]) => val ? (
+                    <div key={label} className="flex gap-3">
+                      <span className="text-gray-400 w-16 shrink-0">{label}</span>
+                      <span className="text-gray-800 font-medium break-all">{val}</span>
+                    </div>
+                  ) : null)}
+
+                  {selectedReq.message && (
+                    <div className="bg-gray-50 rounded-xl p-3 mt-1">
+                      <p className="text-gray-400 text-xs mb-1">문의 내용</p>
+                      <p className="text-gray-700 text-[13px] leading-relaxed whitespace-pre-wrap">{selectedReq.message}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* 상태 변경 */}
+                <div className="flex gap-2 pt-2 border-t border-gray-100">
+                  {[['new','신규','bg-red-100 text-red-600'],['checked','확인','bg-gray-100 text-gray-600'],['replied','답변완료','bg-green-100 text-green-700']].map(([val, label, cls]) => (
+                    <button
+                      key={val}
+                      onClick={() => handleStatusChange(selectedReq.id, val)}
+                      className={`flex-1 py-2 rounded-lg text-xs font-bold transition-opacity ${cls} ${selectedReq.status === val ? 'opacity-100 ring-2 ring-offset-1 ring-current' : 'opacity-50 hover:opacity-80'}`}
+                    >{label}</button>
+                  ))}
+                </div>
+
+                {/* 이메일 바로가기 */}
+                {selectedReq.email && (
+                  <a
+                    href={`mailto:${selectedReq.email}?subject=[이노팸] 데모 신청 답변&body=안녕하세요 ${selectedReq.name}님,`}
+                    className="w-full py-2.5 bg-[#45469A] text-white text-sm font-bold rounded-xl text-center hover:bg-[#3535a0] transition-colors block"
+                  >
+                    ✉ 이메일 답변하기
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>
