@@ -88,7 +88,8 @@ export default function DemoModal({ open, onClose }) {
 
       setDone(true);
     } catch (err) {
-      setError('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      const msg = err?.message || JSON.stringify(err);
+      setError(`전송 중 오류가 발생했습니다. (${msg})`);
       console.error(err);
     } finally {
       setSending(false);
@@ -126,10 +127,9 @@ export default function DemoModal({ open, onClose }) {
               </svg>
             </div>
             <div>
-              <p className="font-pretendard font-bold text-[20px] text-[#1a1a2e] mb-2">신청이 완료되었습니다!</p>
+              <p className="font-pretendard font-bold text-[20px] text-[#1a1a2e] mb-2">데모 신청이 정상적으로 완료되었습니다.</p>
               <p className="font-pretendard text-[15px] text-[#6d758f] leading-relaxed">
-                담당자 확인 후 <strong className="text-[#3a343b]">{form.email}</strong>으로<br/>
-                빠르게 연락드리겠습니다.
+                빠른 시일내로 이노팸의 담당자가 연락드리겠습니다.
               </p>
             </div>
             <button
