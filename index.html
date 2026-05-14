@@ -20,24 +20,6 @@
     />
     <!-- Kakao Maps SDK (autoload=false: React component calls kakao.maps.load()) -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0ba52bd34c4b5acf99b451a8123e3dd7&autoload=false"></script>
-    <script>
-      // Restore path from 404.html redirect query param
-      (function() {
-        var redirect = window.location.search.slice(1);
-        if (redirect) {
-          var params = redirect.split('&');
-          var p = params.find(function(s) { return s.startsWith('p=/'); });
-          if (p) {
-            var path = p.slice(2).replace(/~and~/g, '&');
-            var query = params.find(function(s) { return s.startsWith('q='); });
-            var search = query ? '?' + query.slice(2).replace(/~and~/g, '&') : '';
-            window.history.replaceState(null, null,
-              window.location.pathname.replace(/\/$/, '') + path + search + window.location.hash
-            );
-          }
-        }
-      })();
-    </script>
     <script type="module" crossorigin src="/innopam-homepage/assets/index-gr6S6zsK.js"></script>
     <link rel="stylesheet" crossorigin href="/innopam-homepage/assets/index-DNshanZJ.css">
   </head>
