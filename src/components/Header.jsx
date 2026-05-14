@@ -35,6 +35,7 @@ export default function Header() {
   const navItems = [
     { label: 'Solutions', href: '/solutions', isRoute: true },
     { label: 'Products', href: '/products', isRoute: true },
+    { label: 'Industries', href: '/industries', isRoute: true },
     { label: 'News', href: '/news', isRoute: true },
   ]
 
