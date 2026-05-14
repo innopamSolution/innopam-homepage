@@ -1,30 +1,9 @@
 // Figma node: 183:3759 (NEWS section)
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SectionLabel from './SectionLabel';
-import { asset } from '../utils/asset';
-
-const imgNews1 = asset('assets/news1.jpg');
-const imgNews2 = asset('assets/news2.jpg');
-
-const newsItems = [
-  {
-    id: 1,
-    date: "Jan 28, 2024",
-    category: "언론보도",
-    title: "[건설기술] 도시계획 재난·안전 개발제한구역 '모니터링' 신속 정확한 공간정보 분석 기대",
-    image: imgNews1,
-    link: "https://www.ctman.kr/31971",
-  },
-  {
-    id: 2,
-    date: "Jan 28, 2024",
-    category: "언론보도",
-    title: "[매일건설신문] AI 분석'으로 문제 해결… '플랫폼 솔루션 서비스 기업' 될 것",
-    image: imgNews2,
-    link: "https://mcnews.co.kr/77976",
-  },
-];
+import { fetchNews } from '../lib/supabase';
+import { newsItems as localNewsItems } from '../data/news';
 
 const TABS = ['All', '이노팸 소식', '언론보도'];
 
@@ -68,10 +47,18 @@ function IconArrow() {
 
 export default function NewsSection() {
   const [activeTab, setActiveTab] = useState('All');
+  const [allNews, setAllNews] = useState(localNewsItems);
 
-  const filtered = activeTab === 'All'
-    ? newsItems
-    : newsItems.filter(item => item.category === activeTab);
+  useEffect(() => {
+    fetchNews()
+      .then(data => { if (data?.length) setAllNews(data); })
+      .catch(() => {});
+  }, []);
+
+  const filtered = (activeTab === 'All'
+    ? allNews
+    : allNews.filter(item => item.category === activeTab)
+  ).slice(0, 3);
 
   return (
     <section id="news" className="bg-white flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
@@ -131,7 +118,7 @@ export default function NewsSection() {
               <div className="w-full h-[200px] md:w-[350px] md:h-[218px] rounded-[8px] overflow-hidden shrink-0"
                 style={{ boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' }}>
                 <img
-                  src={item.image}
+                  src={item.image_url || item.image}
                   alt={item.title}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -158,14 +145,23 @@ export default function NewsSection() {
                 </h3>
 
                 {/* CTA */}
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
-                >
-                  기사 보기 <IconExternal />
-                </a>
+                {item.category === '이노팸 소식' ? (
+                  <Link
+                    to={`/news/${item.id}`}
+                    className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
+                  >
+                    자세히 보기 <IconArrow />
+                  </Link>
+                ) : (
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
+                  >
+                    기사 보기 <IconExternal />
+                  </a>
+                )}
               </div>
             </article>
           ))}
