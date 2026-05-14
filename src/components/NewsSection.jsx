@@ -1,19 +1,18 @@
 // Figma node: 183:3759 (NEWS section)
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
+
 const imgNews1 = asset('assets/news1.jpg');
 const imgNews2 = asset('assets/news2.jpg');
-const imgCalendar = asset('assets/icon-calendar.svg');
-const imgTag = asset('assets/icon-tag.svg');
-const imgExternal = asset('assets/icon-external.svg');
 
 const newsItems = [
   {
     id: 1,
     date: "Jan 28, 2024",
     category: "언론보도",
-    title:
-      "[건설기술] 도시계획 재난·안전 개발제한구역 '모니터링' 신속 정확한 공간정보 분석 기대",
+    title: "[건설기술] 도시계획 재난·안전 개발제한구역 '모니터링' 신속 정확한 공간정보 분석 기대",
     image: imgNews1,
     link: "https://www.ctman.kr/31971",
   },
@@ -21,74 +20,156 @@ const newsItems = [
     id: 2,
     date: "Jan 28, 2024",
     category: "언론보도",
-    title:
-      "[매일건설신문] AI 분석'으로 문제 해결… '플랫폼 솔루션 서비스 기업' 될 것",
+    title: "[매일건설신문] AI 분석'으로 문제 해결… '플랫폼 솔루션 서비스 기업' 될 것",
     image: imgNews2,
     link: "https://mcnews.co.kr/77976",
   },
 ];
 
+const TABS = ['All', '이노팸 소식', '언론보도'];
+
+function IconCalendar() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+      <rect x="1" y="2.5" width="13" height="11.5" rx="1.5" stroke="#6d758f" strokeWidth="1.2"/>
+      <line x1="1" y1="5.5" x2="14" y2="5.5" stroke="#6d758f" strokeWidth="1.2"/>
+      <line x1="4.5" y1="1" x2="4.5" y2="4" stroke="#6d758f" strokeWidth="1.2" strokeLinecap="round"/>
+      <line x1="10.5" y1="1" x2="10.5" y2="4" stroke="#6d758f" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function IconTag() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+      <path d="M1.5 1.5H7.5L13.5 7.5L7.5 13.5L1.5 7.5V1.5Z" stroke="#6d758f" strokeWidth="1.2" strokeLinejoin="round"/>
+      <circle cx="4.5" cy="4.5" r="1" fill="#6d758f"/>
+    </svg>
+  );
+}
+
+function IconExternal() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M7.5 3.75H3.75A1.5 1.5 0 002.25 5.25v9A1.5 1.5 0 003.75 15.75h9a1.5 1.5 0 001.5-1.5V10.5" stroke="#4262ff" strokeWidth="1.4" strokeLinecap="round"/>
+      <path d="M10.5 2.25h5.25v5.25" stroke="#4262ff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+      <line x1="15.75" y1="2.25" x2="8.25" y2="9.75" stroke="#4262ff" strokeWidth="1.4" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function IconArrow() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 8h10M9 4l4 4-4 4" stroke="#4262ff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
 export default function NewsSection() {
+  const [activeTab, setActiveTab] = useState('All');
+
+  const filtered = activeTab === 'All'
+    ? newsItems
+    : newsItems.filter(item => item.category === activeTab);
+
   return (
     <section id="news" className="bg-white flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
+
       {/* Header */}
       <div className="flex flex-col items-center text-center max-w-[803px]">
         <SectionLabel text="News" />
-        <h2 className="section-title mt-4 mb-3">NEWS</h2>
+        <h2 className="font-space font-light text-[32px] md:text-[40px] leading-[48px] text-black mt-4 mb-3">
+          이노팸 소식과 언론보도
+        </h2>
         <p className="font-pretendard text-[16px] text-[#444] leading-[1.4]">
-          공공기관 및 지자체와 함께 진행한 GeoAI 기반 주요 프로젝트 사례입니다.
+          이노팸의 최근 소식과 언론보도 내용을 전합니다.
         </p>
       </div>
 
-      {/* Cards */}
-      <div className="flex flex-col gap-12 w-full max-w-[1104px]">
-        {newsItems.map((item) => (
-          <article
-            key={item.id}
-            className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0"
-          >
-            {/* Image — full width on mobile, fixed on desktop */}
-            <div className="w-full h-[200px] md:w-[461px] md:h-[286px] rounded-[8px] shadow-card overflow-hidden shrink-0">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-full object-cover rounded-[8px]"
-              />
-            </div>
+      {/* Tabs + 더 보기 */}
+      <div className="flex flex-col gap-[40px] items-center w-full max-w-[1104px]">
+        <div className="flex items-center justify-between w-full">
+          {/* 필터 탭 */}
+          <div className="flex gap-[8px] items-center">
+            {TABS.map(tab => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-[36px] py-[16px] rounded-full text-[14px] font-pretendard font-semibold border transition-colors ${
+                  activeTab === tab
+                    ? 'bg-[#f1f3fd] border-[#f2f2f2] text-[#3d485b]'
+                    : 'bg-white border-[#f2f2f2] text-[#3a343b] hover:bg-gray-50'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
 
-            {/* Content */}
-            <div className="flex flex-col w-full md:w-[509px]">
-              {/* Meta */}
-              <div className="flex items-center gap-[18px] mb-6">
-                <div className="flex items-center gap-1.5 text-[#6d758f] text-[16px] font-inter">
-                  <img src={imgCalendar} alt="" className="w-[15px] h-[15px]" />
-                  <span>{item.date}</span>
-                </div>
-                <span className="w-[23px] h-px bg-[#6d758f]" />
-                <div className="flex items-center gap-1.5 text-[#6d758f] text-[16px] font-inter">
-                  <img src={imgTag} alt="" className="w-[15px] h-[15px]" />
-                  <span>{item.category}</span>
-                </div>
+          {/* 더 보기 */}
+          <Link
+            to="/news"
+            className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
+          >
+            더 보기 <IconArrow />
+          </Link>
+        </div>
+
+        {/* Cards */}
+        <div className="flex flex-col gap-[48px] w-full">
+          {filtered.length === 0 ? (
+            <p className="font-pretendard text-[#6d758f] text-[16px] text-center py-12">
+              해당 카테고리의 소식이 없습니다.
+            </p>
+          ) : filtered.map((item) => (
+            <article
+              key={item.id}
+              className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0"
+            >
+              {/* Image */}
+              <div className="w-full h-[200px] md:w-[350px] md:h-[218px] rounded-[8px] overflow-hidden shrink-0"
+                style={{ boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' }}>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
               </div>
 
-              {/* Title */}
-              <h3 className="font-inter font-semibold text-[20px] md:text-[30px] leading-[1.3] md:leading-[36px] text-[#6d758f] mb-8">
-                {item.title}
-              </h3>
+              {/* Content */}
+              <div className="flex flex-col items-start w-full md:w-[697px]">
+                {/* Meta */}
+                <div className="flex items-center gap-[18px] mb-6">
+                  <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
+                    <IconCalendar />
+                    <span>{item.date}</span>
+                  </div>
+                  <span className="w-[23px] h-px bg-[#6d758f] shrink-0" />
+                  <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
+                    <IconTag />
+                    <span>{item.category}</span>
+                  </div>
+                </div>
 
-              {/* CTA */}
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-[#4262ff] text-[14px] font-pretendard"
-              >
-                기사 보기
-                <img src={imgExternal} alt="" className="w-[18px] h-[18px]" />
-              </a>
-            </div>
-          </article>
-        ))}
+                {/* Title */}
+                <h3 className="font-pretendard font-semibold text-[20px] md:text-[30px] leading-[1.3] md:leading-[36px] text-[#3a343b] mb-8 w-full">
+                  {item.title}
+                </h3>
+
+                {/* CTA */}
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
+                >
+                  기사 보기 <IconExternal />
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
