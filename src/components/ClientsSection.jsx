@@ -56,7 +56,7 @@ export default function ClientsSection() {
       </div>
 
       {/* Desktop: 3 rows × 3 columns */}
-      <div className="hidden md:flex flex-col gap-[58px]">
+      <div className="hidden md:flex flex-col gap-[68px]">
         {clientRows.map((row, rowIdx) => (
           <div
             key={rowIdx}
