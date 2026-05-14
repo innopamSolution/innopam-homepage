@@ -163,9 +163,9 @@ const industries = [
     ],
     circleImage: asset('assets/solution-farm.jpg'),
     markers: [
-      { id: 1, top: '35%', left: '40%', color: '#16a34a', label: '벼 재배지', desc: '재배면적 2.4ha · 생육 양호', box: { w: 60, h: 50 } },
+      { id: 1, top: '35%', left: '40%', color: '#16a34a', label: '생산량예측', desc: '재배면적 2.4ha · 수확량 예측', box: { w: 60, h: 50 } },
       { id: 2, top: '60%', left: '65%', color: '#f59e0b', label: '휴경지 탐지', desc: '미경작 확인 · 직불금 제외', box: { w: 54, h: 42 } },
-      { id: 3, top: '45%', left: '25%', color: '#5871ed', label: '밭작물', desc: '고추 재배 추정 · 0.8ha', box: { w: 46, h: 38 } },
+      { id: 3, top: '45%', left: '25%', color: '#5871ed', label: '작물탐지', desc: '고추 재배 추정 · 0.8ha', box: { w: 46, h: 38 } },
     ],
     cases: [
       {
