@@ -267,20 +267,24 @@ export default function AdminPage() {
     }
   };
 
-  useEffect(() => { if (session) { load(); loadRequests(); } }, [session]);
-
   const loadRequests = async () => {
     setReqLoading(true);
     try { setRequests(await fetchDemoRequests()); }
-    catch (e) { console.error(e); }
+    catch (e) { console.error('demo_requests 로드 실패:', e); }
     finally { setReqLoading(false); }
   };
 
   const handleStatusChange = async (id, status) => {
-    await updateDemoStatus(id, status);
-    setRequests(r => r.map(req => req.id === id ? { ...req, status } : req));
-    if (selectedReq?.id === id) setSelectedReq(req => ({ ...req, status }));
+    try {
+      await updateDemoStatus(id, status);
+      setRequests(r => r.map(req => req.id === id ? { ...req, status } : req));
+      setSelectedReq(prev => prev?.id === id ? { ...prev, status } : prev);
+    } catch (e) { console.error(e); }
   };
+
+  useEffect(() => {
+    if (session) { load(); loadRequests(); }
+  }, [session]);
 
   const handleLogout = async () => {
     await signOut();
