@@ -393,16 +393,38 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 헤더 */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
-        <div className="flex items-center gap-3">
-          <span className="font-bold text-[#45469A] text-xl">INNOPAM</span>
-          <span className="text-gray-400">|</span>
-          <span className="font-semibold text-gray-700">뉴스 관리</span>
+      <header className="bg-white border-b border-gray-200 px-6 sticky top-0 z-10">
+        <div className="flex items-center justify-between py-4">
+          <div className="flex items-center gap-3">
+            <span className="font-bold text-[#45469A] text-xl">INNOPAM</span>
+            <span className="text-gray-400">|</span>
+            <span className="font-semibold text-gray-700">관리자</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-gray-400 hidden md:block">{session?.user?.email}</span>
+            <a href="#/news" target="_blank" className="text-sm text-blue-500 hover:underline">사이트 보기 →</a>
+            <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-red-500 transition-colors">로그아웃</button>
+          </div>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-400 hidden md:block">{session?.user?.email}</span>
-          <a href="#/news" target="_blank" className="text-sm text-blue-500 hover:underline">사이트 보기 →</a>
-          <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-red-500 transition-colors">로그아웃</button>
+        {/* 탭 네비게이션 */}
+        <div className="flex gap-6">
+          <button
+            onClick={() => { if (tab === 'requests') setTab('list'); }}
+            className={`pb-3 text-sm font-bold border-b-2 transition-colors ${tab !== 'requests' ? 'border-[#45469A] text-[#45469A]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+          >
+            뉴스 관리
+          </button>
+          <button
+            onClick={() => { setTab('requests'); loadRequests(); }}
+            className={`pb-3 text-sm font-bold border-b-2 transition-colors flex items-center gap-1.5 ${tab === 'requests' ? 'border-[#45469A] text-[#45469A]' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+          >
+            데모 신청
+            {requests.filter(r => r.status === 'new').length > 0 && (
+              <span className="w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                {requests.filter(r => r.status === 'new').length}
+              </span>
+            )}
+          </button>
         </div>
       </header>
 
@@ -416,26 +438,19 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* 탭 */}
-        <div className="flex gap-1 mb-6 bg-gray-100 rounded-xl p-1 w-fit">
-          <button onClick={() => setTab('list')}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${tab === 'list' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>
-            뉴스 목록
-          </button>
-          <button onClick={handleNew}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${tab === 'form' && !editing ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>
-            + 새 글
-          </button>
-          <button onClick={() => { setTab('requests'); loadRequests(); }}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-1.5 ${tab === 'requests' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>
-            데모 신청
-            {requests.filter(r => r.status === 'new').length > 0 && (
-              <span className="w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                {requests.filter(r => r.status === 'new').length}
-              </span>
-            )}
-          </button>
-        </div>
+        {/* 뉴스 관리 서브탭 */}
+        {tab !== 'requests' && (
+          <div className="flex gap-1 mb-6 bg-gray-100 rounded-xl p-1 w-fit">
+            <button onClick={() => setTab('list')}
+              className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${tab === 'list' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>
+              목록
+            </button>
+            <button onClick={handleNew}
+              className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${tab === 'form' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}>
+              + 새 글
+            </button>
+          </div>
+        )}
 
         {/* 목록 */}
         {tab === 'list' && (
