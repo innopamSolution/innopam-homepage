@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import * as XLSX from 'xlsx';
 import { fetchNews, saveNews, deleteNews, uploadImage, signIn, signOut, getSession, fetchDemoRequests, updateDemoStatus, deleteDemoRequest, fetchHistory, saveHistory, deleteHistory, fetchBusinessRecords, saveBusinessRecord, deleteBusinessRecord, fetchIpRights, saveIpRight, deleteIpRight } from '../lib/supabase';
 
 const CATEGORIES = ['이노팸 소식', '언론보도'];
@@ -250,6 +251,9 @@ export default function AdminPage() {
   const [selectedReq, setSelectedReq] = useState(null);
   const fileRef = useRef();
 
+  const bizXlsxRef = useRef();
+  const ipXlsxRef = useRef();
+
   // ── 실적 state ──
   const [bizRecords, setBizRecords] = useState([]);
   const [bizLoading, setBizLoading] = useState(false);
@@ -319,6 +323,80 @@ export default function AdminPage() {
       setBizMsg('✅ 저장 완료');
     } catch (e) { setBizMsg('❌ ' + e.message); }
     finally { setBizSaving(false); }
+  };
+
+  // ── 엑셀 다운로드 ──
+  const downloadBizExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(
+      bizRecords.map(r => ({ 연도: r.year, 과제명: r.name, 발주처: r.client, 사업내용: r.content, 정렬순서: r.sort_order }))
+    );
+    ws['!cols'] = [{ wch: 8 }, { wch: 60 }, { wch: 25 }, { wch: 30 }, { wch: 8 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, '주요사업수행실적');
+    XLSX.writeFile(wb, `이노팸_주요사업수행실적_${new Date().toISOString().slice(0,10)}.xlsx`);
+  };
+
+  const downloadIpExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(
+      ipList.map(r => ({ 유형: r.type, 제목: r.title, 등록일: r.date, 등록번호: r.number, 정렬순서: r.sort_order }))
+    );
+    ws['!cols'] = [{ wch: 12 }, { wch: 60 }, { wch: 12 }, { wch: 20 }, { wch: 8 }];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, '지적재산권');
+    XLSX.writeFile(wb, `이노팸_지적재산권_${new Date().toISOString().slice(0,10)}.xlsx`);
+  };
+
+  // ── 엑셀 업로드 ──
+  const uploadBizExcel = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    e.target.value = '';
+    setBizMsg('📤 업로드 중...');
+    try {
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws);
+      if (!rows.length) return setBizMsg('❌ 데이터가 없습니다.');
+      let order = bizRecords.length + 1;
+      for (const row of rows) {
+        await saveBusinessRecord({
+          year:       String(row['연도'] ?? row['year'] ?? ''),
+          name:       String(row['과제명'] ?? row['name'] ?? ''),
+          client:     String(row['발주처'] ?? row['client'] ?? ''),
+          content:    String(row['사업내용'] ?? row['content'] ?? ''),
+          sort_order: Number(row['정렬순서'] ?? row['sort_order'] ?? order++),
+        });
+      }
+      await loadBiz();
+      setBizMsg(`✅ ${rows.length}건 업로드 완료`);
+    } catch (err) { setBizMsg('❌ ' + err.message); }
+  };
+
+  const uploadIpExcel = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    e.target.value = '';
+    setIpMsg('📤 업로드 중...');
+    try {
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws);
+      if (!rows.length) return setIpMsg('❌ 데이터가 없습니다.');
+      let order = ipList.length + 1;
+      for (const row of rows) {
+        await saveIpRight({
+          type:       String(row['유형'] ?? row['type'] ?? '특허'),
+          title:      String(row['제목'] ?? row['title'] ?? ''),
+          date:       String(row['등록일'] ?? row['date'] ?? ''),
+          number:     String(row['등록번호'] ?? row['number'] ?? ''),
+          sort_order: Number(row['정렬순서'] ?? row['sort_order'] ?? order++),
+        });
+      }
+      await loadBiz();
+      setIpMsg(`✅ ${rows.length}건 업로드 완료`);
+    } catch (err) { setIpMsg('❌ ' + err.message); }
   };
 
   const handleIpSubmit = async (e) => {
@@ -995,7 +1073,22 @@ export default function AdminPage() {
 
             {/* ── 주요사업 수행 실적 ── */}
             {bizSubTab === 'records' && (<>
-              {bizMsg && <p className={`text-sm px-4 py-2 rounded-lg ${bizMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}>{bizMsg}</p>}
+              {bizMsg && <p className={`text-sm px-4 py-2 rounded-lg ${bizMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : bizMsg.startsWith('📤') ? 'bg-blue-50 text-blue-600' : 'bg-red-50 text-red-600'}`}>{bizMsg}</p>}
+
+              {/* 엑셀 다운로드/업로드 */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button onClick={downloadBizExcel}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition-colors">
+                  📥 엑셀 다운로드
+                </button>
+                <button onClick={() => bizXlsxRef.current?.click()}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 text-white text-sm font-bold rounded-lg hover:bg-orange-600 transition-colors">
+                  📤 엑셀 업로드
+                </button>
+                <input ref={bizXlsxRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={uploadBizExcel} />
+                <span className="text-xs text-gray-400">※ 업로드 시 기존 데이터에 추가됩니다</span>
+              </div>
+
               <form onSubmit={handleBizSubmit} className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-3 border border-gray-100">
                 <p className="text-sm font-bold text-gray-700">{bizEditing ? '✏️ 수정 중' : '➕ 새 실적 추가'}</p>
                 <div className="grid grid-cols-2 gap-3">
@@ -1059,7 +1152,22 @@ export default function AdminPage() {
 
             {/* ── 지적재산권 ── */}
             {bizSubTab === 'ip' && (<>
-              {ipMsg && <p className={`text-sm px-4 py-2 rounded-lg ${ipMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}>{ipMsg}</p>}
+              {ipMsg && <p className={`text-sm px-4 py-2 rounded-lg ${ipMsg.startsWith('✅') ? 'bg-green-50 text-green-700' : ipMsg.startsWith('📤') ? 'bg-blue-50 text-blue-600' : 'bg-red-50 text-red-600'}`}>{ipMsg}</p>}
+
+              {/* 엑셀 다운로드/업로드 */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button onClick={downloadIpExcel}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition-colors">
+                  📥 엑셀 다운로드
+                </button>
+                <button onClick={() => ipXlsxRef.current?.click()}
+                  className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 text-white text-sm font-bold rounded-lg hover:bg-orange-600 transition-colors">
+                  📤 엑셀 업로드
+                </button>
+                <input ref={ipXlsxRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={uploadIpExcel} />
+                <span className="text-xs text-gray-400">※ 업로드 시 기존 데이터에 추가됩니다</span>
+              </div>
+
               <form onSubmit={handleIpSubmit} className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-3 border border-gray-100">
                 <p className="text-sm font-bold text-gray-700">{ipEditing ? '✏️ 수정 중' : '➕ 새 지재권 추가'}</p>
                 <div className="grid grid-cols-2 gap-3">
