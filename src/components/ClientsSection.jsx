@@ -1,32 +1,31 @@
 // Figma node: 183:3535 (Clients section)
 import { asset } from '../utils/asset';
-const imgLogo1 = asset('assets/client-logo1.svg');
-const imgLogo2 = asset('assets/client-logo2.svg');
-const imgLogo3 = asset('assets/client-logo3.svg');
-const imgKiast = asset('assets/client-kiast.png');
-const imgUos = asset('assets/client-uos.png');
-const imgNdmri = asset('assets/client-ndmri.png');
+const imgLogo1  = asset('assets/client-logo1.svg');
+const imgLogo2  = asset('assets/client-logo2.svg');
+const imgLogo3  = asset('assets/client-logo3.svg');
+const imgKiast  = asset('assets/client-kiast.png');
+const imgUos    = asset('assets/client-uos.png');
+const imgNdmri  = asset('assets/client-ndmri.png');
+const imgSba    = asset('assets/client-sba.png');
+const imgDaelim = asset('assets/client-daelim.png');
+const imgKwater = asset('assets/client-kwater.png');
 
 const clients = [
-  { src: imgLogo1, alt: "Client Logo 1", width: 103 },
-  { src: imgLogo2, alt: "Client Logo 2", width: 179 },
-  { src: imgLogo3, alt: "Client Logo 3", width: 157 },
-  { src: imgKiast, alt: "KIAST", width: 116 },
-  { src: imgUos, alt: "UOS", width: 247 },
-  { src: imgNdmri, alt: "NDMRI", width: 209 },
+  { src: imgLogo1,  alt: "제주특별자치도",   width: 103 },
+  { src: imgLogo2,  alt: "아산시",           width: 179 },
+  { src: imgLogo3,  alt: "서울특별시",        width: 157 },
+  { src: imgKiast,  alt: "KAIST",            width: 116 },
+  { src: imgUos,    alt: "서울시립대학교",    width: 247 },
+  { src: imgNdmri,  alt: "국립재난안전연구원", width: 209 },
+  { src: imgSba,    alt: "SBA 서울산업진흥원", width: 140 },
+  { src: imgDaelim, alt: "대림",              width: 120 },
+  { src: imgKwater, alt: "K-water",           width: 140 },
 ];
 
 const clientRows = [
-  [
-    { src: imgLogo1, alt: "Client Logo 1", width: 103 },
-    { src: imgLogo2, alt: "Client Logo 2", width: 179 },
-    { src: imgLogo3, alt: "Client Logo 3", width: 157 },
-  ],
-  [
-    { src: imgKiast, alt: "KIAST", width: 116 },
-    { src: imgUos, alt: "UOS", width: 247 },
-    { src: imgNdmri, alt: "NDMRI", width: 209 },
-  ],
+  clients.slice(0, 3),
+  clients.slice(3, 6),
+  clients.slice(6, 9),
 ];
 
 export default function ClientsSection() {
@@ -42,21 +41,21 @@ export default function ClientsSection() {
         </p>
       </div>
 
-      {/* Mobile: 2-column grid */}
-      <div className="grid grid-cols-2 gap-8 w-full md:hidden">
+      {/* Mobile: 3-column grid */}
+      <div className="grid grid-cols-3 gap-6 w-full md:hidden">
         {clients.map((logo) => (
           <div key={logo.alt} className="flex items-center justify-center">
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-10 w-auto object-contain"
+              className="h-8 w-auto object-contain"
               style={{ maxWidth: logo.width }}
             />
           </div>
         ))}
       </div>
 
-      {/* Desktop: rows layout */}
+      {/* Desktop: 3 rows × 3 columns */}
       <div className="hidden md:flex flex-col gap-[58px]">
         {clientRows.map((row, rowIdx) => (
           <div
