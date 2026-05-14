@@ -58,7 +58,7 @@ function NewsCard({ item }) {
       style={{ boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' }}
     >
       <img
-        src={item.image}
+        src={item.image_url || item.image}
         alt={item.title}
         className="w-full h-full object-cover object-left-top hover:scale-105 transition-transform duration-300"
       />
@@ -72,7 +72,7 @@ function NewsCard({ item }) {
       style={{ boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' }}
     >
       <img
-        src={item.image}
+        src={item.image_url || item.image}
         alt={item.title}
         className="w-full h-full object-cover object-left-top hover:scale-105 transition-transform duration-300"
       />
