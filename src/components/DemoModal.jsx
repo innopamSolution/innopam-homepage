@@ -99,7 +99,6 @@ export default function DemoModal({ open, onClose }) {
     <div
       className="fixed inset-0 z-[999] flex items-center justify-center p-4"
       style={{ background: 'rgba(0,0,0,0.55)' }}
-      onClick={e => e.target === e.currentTarget && onClose()}
     >
       <div className="relative w-full max-w-[680px] max-h-[90vh] bg-white rounded-2xl overflow-hidden flex flex-col shadow-2xl">
 
@@ -113,7 +112,8 @@ export default function DemoModal({ open, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors text-xl"
+            className="w-11 h-11 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-900 transition-all text-2xl font-light"
+            aria-label="닫기"
           >×</button>
         </div>
 
