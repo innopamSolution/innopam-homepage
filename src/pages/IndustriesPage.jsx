@@ -205,7 +205,7 @@ const industries = [
           { title: '분석결과 시각화', desc: 'GIS 기반 지도에서 AI 분석 결과와 공간정보를 직관적으로 조회' },
           { title: '보고서 자동생성', desc: '분석 결과를 기반으로 행정용 보고서를 자동으로 생성' },
         ],
-        caseImage: asset('assets/solution-farm.jpg'),
+        caseImage: asset('assets/drone-mgmt-service.png'),
       },
     ],
   },
