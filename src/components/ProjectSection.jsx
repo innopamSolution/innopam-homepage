@@ -180,7 +180,7 @@ export default function ProjectSection() {
           <button
             onClick={() => go(current + 1)}
             disabled={current === projects.length - 1}
-            className="hidden md:flex shrink-0 w-[44px] h-[44px] rounded-full bg-[#4262ff] items-center justify-center text-white hover:bg-[#2e4de0] disabled:opacity-25 disabled:cursor-not-allowed transition-all"
+            className="hidden md:flex shrink-0 w-[44px] h-[44px] rounded-full border border-[#e1e4ed] bg-white items-center justify-center text-[#6d758f] hover:bg-[#4262ff] hover:text-white hover:border-[#4262ff] disabled:opacity-25 disabled:cursor-not-allowed transition-all"
             aria-label="다음"
           >
             →
@@ -216,7 +216,7 @@ export default function ProjectSection() {
           <button
             onClick={() => go(current + 1)}
             disabled={current === projects.length - 1}
-            className="md:hidden w-[40px] h-[40px] rounded-full bg-[#4262ff] flex items-center justify-center text-white hover:bg-[#2e4de0] disabled:opacity-25 transition-all"
+            className="md:hidden w-[40px] h-[40px] rounded-full border border-[#e1e4ed] bg-white flex items-center justify-center text-[#6d758f] hover:bg-[#4262ff] hover:text-white hover:border-[#4262ff] disabled:opacity-25 transition-all"
           >→</button>
 
           {/* 카운터 */}
