@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 
 // direction: 'up' | 'left' | 'right' | 'scale' | 'stagger'
-export function useFadeUp(threshold = 0.12, direction = 'up') {
+// 인자 없이 호출하면 예전처럼 ref만 반환 (하위 호환)
+export function useFadeUp(threshold = 0.12, direction) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -22,7 +23,9 @@ export function useFadeUp(threshold = 0.12, direction = 'up') {
     return () => observer.disconnect();
   }, [threshold]);
 
-  // CSS class mapping
+  // direction 미지정 시 ref만 반환 (ProductsPage 등 기존 코드 호환)
+  if (!direction) return ref;
+
   const classMap = {
     up:      'fade-up',
     left:    'fade-left',
