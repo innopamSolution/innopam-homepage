@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-export function useFadeUp(threshold = 0.15) {
+// direction: 'up' | 'left' | 'right' | 'scale' | 'stagger'
+export function useFadeUp(threshold = 0.12, direction = 'up') {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -21,5 +22,14 @@ export function useFadeUp(threshold = 0.15) {
     return () => observer.disconnect();
   }, [threshold]);
 
-  return ref;
+  // CSS class mapping
+  const classMap = {
+    up:      'fade-up',
+    left:    'fade-left',
+    right:   'fade-right',
+    scale:   'fade-scale',
+    stagger: 'stagger-children',
+  };
+
+  return { ref, className: classMap[direction] || 'fade-up' };
 }

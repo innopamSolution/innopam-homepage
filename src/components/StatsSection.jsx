@@ -1,5 +1,6 @@
 // Figma node: 163:2647 (Frame 19 — stats bar)
 import { asset } from '../utils/asset';
+import { useFadeUp } from '../utils/useFadeUp';
 const imgBgPattern = asset('assets/stats-bg-pattern.png');
 
 const stats = [
@@ -10,6 +11,7 @@ const stats = [
 ];
 
 export default function StatsSection() {
+  const { ref, className } = useFadeUp(0.1, 'stagger');
   return (
     <section className="relative bg-[#eef1ff] py-[57px] px-6 md:px-[147px]">
       {/* Subtle bg pattern */}
@@ -20,7 +22,7 @@ export default function StatsSection() {
         <img src={imgBgPattern} alt="" className="w-full h-full object-cover" />
       </div>
 
-      <div className="relative grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 md:flex md:justify-center md:gap-[190px] items-center">
+      <div ref={ref} className={`relative grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 md:flex md:justify-center md:gap-[190px] items-center ${className}`}>
         {stats.map((stat) => (
           <div
             key={stat.label}

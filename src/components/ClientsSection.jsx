@@ -1,5 +1,6 @@
 // Figma node: 183:3535 (Clients section)
 import { asset } from '../utils/asset';
+import { useFadeUp } from '../utils/useFadeUp';
 const imgLogo1  = asset('assets/client-logo1.svg');
 const imgLogo2  = asset('assets/client-logo2.svg');
 const imgLogo3  = asset('assets/client-logo3.svg');
@@ -29,10 +30,12 @@ const clientRows = [
 ];
 
 export default function ClientsSection() {
+  const headerRef = useFadeUp(0.1, 'up');
+  const logosRef  = useFadeUp(0.05, 'stagger');
   return (
     <section className="bg-[#f8f8f8] flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
       {/* Header */}
-      <div className="flex flex-col items-center text-center leading-none max-w-[803px]">
+      <div ref={headerRef.ref} className={`flex flex-col items-center text-center leading-none max-w-[803px] ${headerRef.className}`}>
         <h2 className="section-title font-space font-light text-[40px] text-black mb-3">
           Clients
         </h2>
@@ -56,7 +59,7 @@ export default function ClientsSection() {
       </div>
 
       {/* Desktop: 3 rows × 3 columns */}
-      <div className="hidden md:flex flex-col gap-[68px]">
+      <div ref={logosRef.ref} className={`hidden md:flex flex-col gap-[68px] ${logosRef.className}`}>
         {clientRows.map((row, rowIdx) => (
           <div
             key={rowIdx}

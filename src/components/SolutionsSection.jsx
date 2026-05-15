@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from 'react-router-dom';
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
+import { useFadeUp } from '../utils/useFadeUp';
 
 // ── Figma node 159:2246(도시변화), 176:3308(농업분석) 기준 데이터 ──────────
 const solutions = [
@@ -61,6 +62,7 @@ export default function SolutionsSection() {
   const [active, setActive] = useState(0);
   const hoveredRef = useRef(null); // 현재 호버 중인 탭 id (null이면 자동 순환)
   const timerRef = useRef(null);
+  const headerFade = useFadeUp(0.1, 'up');
 
   // 타이머 시작: 20초마다 다음 탭으로 이동
   const startTimer = () => {
@@ -89,7 +91,7 @@ export default function SolutionsSection() {
     <section id="solutions" className="bg-white flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
 
       {/* Heading */}
-      <div className="flex flex-col items-center gap-[9px] w-full max-w-[880px]">
+      <div ref={headerFade.ref} className={`flex flex-col items-center gap-[9px] w-full max-w-[880px] ${headerFade.className}`}>
         <SectionLabel text="Solutions" />
         <h2 className="font-space font-light text-[28px] md:text-[40px] text-black text-center leading-[1.3] md:leading-[48px] w-full">
           <span>산업별 문제를 </span>

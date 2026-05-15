@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SectionLabel from './SectionLabel';
 import { fetchNews } from '../lib/supabase';
 import { newsItems as localNewsItems } from '../data/news';
+import { useFadeUp } from '../utils/useFadeUp';
 
 const TABS = ['All', '이노팸 소식', '언론보도'];
 
@@ -48,6 +49,9 @@ function IconArrow() {
 export default function NewsSection() {
   const [activeTab, setActiveTab] = useState('All');
   const [allNews, setAllNews] = useState(localNewsItems);
+  const headerRef  = useFadeUp(0.1, 'up');
+  const tabsRef    = useFadeUp(0.08, 'up');
+  const cardsRef   = useFadeUp(0.05, 'stagger');
 
   useEffect(() => {
     fetchNews()
@@ -64,7 +68,7 @@ export default function NewsSection() {
     <section id="news" className="bg-white flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
 
       {/* Header */}
-      <div className="flex flex-col items-center text-center max-w-[803px]">
+      <div ref={headerRef.ref} className={`flex flex-col items-center text-center max-w-[803px] ${headerRef.className}`}>
         <SectionLabel text="News" />
         <h2 className="font-space font-light text-[32px] md:text-[40px] leading-[48px] text-black mt-4 mb-3">
           이노팸 소식과 언론보도
@@ -75,7 +79,7 @@ export default function NewsSection() {
       </div>
 
       {/* Tabs + 더 보기 */}
-      <div className="flex flex-col gap-[40px] items-center w-full max-w-[1104px]">
+      <div ref={tabsRef.ref} className={`flex flex-col gap-[40px] items-center w-full max-w-[1104px] ${tabsRef.className}`}>
         <div className="flex items-center justify-between w-full">
           {/* 필터 탭 */}
           <div className="flex gap-[8px] items-center">
@@ -104,7 +108,7 @@ export default function NewsSection() {
         </div>
 
         {/* Cards */}
-        <div className="flex flex-col gap-[48px] w-full">
+        <div ref={cardsRef.ref} className={`flex flex-col gap-[48px] w-full ${cardsRef.className}`}>
           {filtered.length === 0 ? (
             <p className="font-pretendard text-[#6d758f] text-[16px] text-center py-12">
               해당 카테고리의 소식이 없습니다.

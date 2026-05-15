@@ -3,8 +3,10 @@
 import { Link } from 'react-router-dom';
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
+import { useFadeUp } from '../utils/useFadeUp';
 
 export default function ProductsSection() {
+  const { ref, className } = useFadeUp(0.1, 'up');
   return (
     <section id="products" className="relative w-full h-[500px] md:h-[638px] overflow-hidden">
       {/* Background image */}
@@ -18,7 +20,7 @@ export default function ProductsSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full gap-[38px] text-center px-6">
+      <div ref={ref} className={`relative z-10 flex flex-col items-center justify-center h-full gap-[38px] text-center px-6 ${className}`}>
         <SectionLabel text="Products" light />
 
         <div className="flex flex-col gap-[4px] items-center w-full max-w-[794px]">

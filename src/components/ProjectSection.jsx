@@ -2,6 +2,7 @@
 import { useState } from "react";
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
+import { useFadeUp } from '../utils/useFadeUp';
 
 const imgProjectMain = asset('assets/project-main.jpg');
 
@@ -23,11 +24,13 @@ const projects = [
 export default function ProjectSection() {
   const [current, setCurrent] = useState(0);
   const project = projects[current] ?? projects[0];
+  const headerRef = useFadeUp(0.1, 'up');
+  const contentRef = useFadeUp(0.08, 'up');
 
   return (
     <section className="bg-white flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
       {/* Header */}
-      <div className="flex flex-col items-center text-center max-w-[803px]">
+      <div ref={headerRef.ref} className={`flex flex-col items-center text-center max-w-[803px] ${headerRef.className}`}>
         <SectionLabel text="Project" />
         <h2 className="section-title mt-4 mb-3">실제 도입 사례</h2>
         <p className="font-pretendard text-[16px] text-[#444] leading-[1.4]">
@@ -36,7 +39,7 @@ export default function ProjectSection() {
       </div>
 
       {/* Carousel */}
-      <div className="flex items-center gap-4 lg:gap-12 w-full max-w-[1264px]">
+      <div ref={contentRef.ref} className={`flex items-center gap-4 lg:gap-12 w-full max-w-[1264px] ${contentRef.className}`}>
         {/* Prev button — hidden on mobile */}
         <button
           onClick={() => setCurrent((c) => Math.max(0, c - 1))}
