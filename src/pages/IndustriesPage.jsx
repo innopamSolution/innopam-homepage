@@ -207,7 +207,7 @@ const industries = [
     circleImage: asset('assets/solution-eco.jpg'),
     markers: [
       { id: 1, top: '32%', left: '55%', color: '#ef4444', label: '산림 훼손 탐지', desc: '훼손 면적 0.6ha · 신규 감지', box: { w: 56, h: 48 } },
-      { id: 2, top: '62%', left: '38%', color: '#f59e0b', label: '불법 벌채 의심', desc: '수목 소실 구역 확인', box: { w: 50, h: 44 } },
+//      { id: 2, top: '62%', left: '38%', color: '#f59e0b', label: '불법 훼손 의심', desc: '수목 소실 구역 확인', box: { w: 50, h: 44 } },
       { id: 3, top: '48%', left: '70%', color: '#06b6d4', label: '해안선 변화', desc: '침식 2.1m 후퇴 감지', box: { w: 44, h: 36 } },
     ],
     cases: [
@@ -219,7 +219,7 @@ const industries = [
         features: [
           { title: '산림 훼손 자동 탐지', desc: '다시기 영상 분석으로 산림 훼손 지역을 자동으로 감지' },
           { title: '복구지 관리', desc: '훼손 지역의 복구 진행 현황을 주기적으로 모니터링' },
-          { title: '불법 벌채 감시', desc: '항공·위성 영상 분석으로 불법 산림 훼손 행위를 실시간 감시' },
+          { title: '불법 훼손 감시', desc: '항공·위성 영상 분석으로 불법 산림 훼손 모니터링' },
           { title: '변화 이력 관리', desc: '산림 변화 이력을 체계적으로 기록하고 리포트 자동 생성' },
         ],
         caseImage: asset('assets/forest-aerial.jpg'),
@@ -231,9 +231,10 @@ const industries = [
         subtitle: '위성·드론 영상 기반 해양환경 변화 탐지 및 해양 쓰레기 관리 서비스',
         features: [
           { title: '해양 쓰레기 탐지', desc: '드론 영상으로 해안선 및 해양 쓰레기 분포를 자동 탐지' },
-          { title: '해안선 변화 분석', desc: '다시기 위성영상으로 해안선 침식·퇴적 변화를 모니터링' },
-          { title: '수질 모니터링', desc: '위성 분광 데이터 분석으로 수질 변화를 원격 탐지' },
-          { title: '환경 이력 관리', desc: '해양환경 변화 이력 데이터베이스 구축 및 통계 제공' },
+          { title: '해안선 변화 분석', desc: '시기별 위성영상으로 해안선 침식·퇴적 변화를 모니터링' },
+//          { title: '수질 모니터링', desc: '위성 분광 데이터 분석으로 수질 변화를 원격 탐지' },
+          { title: '탐지 이력 관리', desc: '쓰레기 탐지 이력 데이터베이스 구축 및 통계 제공' },
+          { title: '현장 업무 지원', desc: '수거 및 관리 업무에 지원할 수 있는 데이터 제공' },
         ],
         caseImage: asset('assets/solution-eco.jpg'),
       },
