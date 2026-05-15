@@ -87,9 +87,6 @@ export default function IntroductionPage() {
                   key={m.title}
                   className="relative flex flex-col gap-[24px] p-[36px] rounded-[20px] bg-white border border-[#e8eaf6] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
-                  {/* 그라디언트 강조선 */}
-                  <div className="absolute top-0 left-0 right-0 h-[4px] brand-gradient" />
-
                   {/* 번호 배지 */}
                   <span className="font-space font-bold text-[13px] tracking-[2px] text-[#4262ff] opacity-50">
                     {String(i + 1).padStart(2, '0')}
