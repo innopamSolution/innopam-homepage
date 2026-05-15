@@ -3,7 +3,7 @@ import { asset } from '../utils/asset';
 
 export default function NewsHero() {
   return (
-    <section className="relative w-full h-[375px] md:h-[471px] overflow-hidden bg-[#1a1008]">
+    <section className="relative w-full h-[400px] overflow-hidden bg-[#1a1008]">
 
       {/* 이미지: Figma 스펙 h=259.34%, top=-110.67% */}
       <div className="absolute inset-0 overflow-hidden">
@@ -24,7 +24,7 @@ export default function NewsHero() {
       <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.5)' }} />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 pt-[80px] md:pt-[115px]">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center gap-[38px] px-6 h-full">
         <SectionLabel text="News" light />
         <h1
           className="font-pretendard font-bold text-white text-[36px] md:text-[48px] tracking-[-2px]"
