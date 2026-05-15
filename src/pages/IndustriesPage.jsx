@@ -151,6 +151,19 @@ const industries = [
         ],
         caseImage: asset('assets/seoul-change-detection.png'),
       },
+      {
+        id: 'geoai',
+        label: 'GEO-AI 영상분석 서비스',
+        title: 'GEO-AI 영상분석 서비스',
+        subtitle: '멀티센서(위성, 항공, 드론)영상 기반의 GeoAI 분석 플랫폼 서비스',
+        features: [
+          { title: '데이터 수집 · 관리', desc: '위성, 드론, 항공 영상 데이터를 한 곳에 모아 쉽게 저장하고 관리' },
+          { title: 'GEO-AI 모델 개발', desc: '모델 앙상블 적용을 통한 AI모델 객체 탐지 정확도 제고' },
+          { title: 'One-Stop AI 서비스', desc: '학습데이터 수집, 전처리, 구축, 관리를 위한 One-Stop 서비스' },
+          { title: '모델 학습 갱신', desc: '플랫폼에서 구축된 학습데이터를 이용해 직접 모델 학습 갱신' },
+        ],
+        caseImage: asset('assets/industries-case-screen.jpg'),
+      },
     ],
   },
   {
@@ -169,17 +182,17 @@ const industries = [
     ],
     cases: [
       {
-        id: 'geoai',
-        label: 'GEO-AI 영상분석 서비스',
-        title: 'GEO-AI 영상분석 서비스',
-        subtitle: '멀티센서(위성, 항공, 드론)영상 기반의 GeoAI 분석 플랫폼 서비스',
+        id: 'crop-management',
+        label: '재배면적 관리 서비스',
+        title: '재배면적 관리 서비스',
+        subtitle: '드론·위성 영상 기반 농작물 재배면적 AI 자동 분석 및 관리 서비스',
         features: [
-          { title: '데이터 수집 · 관리', desc: '위성, 드론, 항공 영상 데이터를 한 곳에 모아 쉽게 저장하고 관리' },
-          { title: 'GEO-AI 모델 개발', desc: '모델 앙상블 적용을 통한 AI모델 객체 탐지 정확도 제고' },
-          { title: 'One-Stop AI 서비스', desc: '학습데이터 수집, 전처리, 구축, 관리를 위한 One-Stop 서비스' },
-          { title: '모델 학습 갱신', desc: '플랫폼에서 구축된 학습데이터를 이용해 직접 모델 학습 갱신' },
+          { title: '작물 자동 탐지 및 분류', desc: '드론·위성 영상으로 월동무·감귤·양배추 등 작물 종류를 AI가 자동 식별' },
+          { title: '재배면적 산출', desc: '필지별 작물 재배면적을 자동 계산하여 지역별 통계 데이터 제공' },
+          { title: '생산량 예측', desc: 'AI 분석 기반 작물별 예측 생산량 및 검출면적·건수 정보 제공' },
+          { title: '직불금·행정 연계', desc: '재배 현황 데이터를 직불금 지급·휴경지 관리 등 농업 행정에 연계' },
         ],
-        caseImage: asset('assets/industries-case-screen.jpg'),
+        caseImage: asset('assets/crop-management-service.png'),
       },
       {
         id: 'drone-mgmt',
