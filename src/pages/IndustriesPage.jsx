@@ -222,7 +222,7 @@ const industries = [
           { title: '불법 벌채 감시', desc: '항공·위성 영상 분석으로 불법 산림 훼손 행위를 실시간 감시' },
           { title: '변화 이력 관리', desc: '산림 변화 이력을 체계적으로 기록하고 리포트 자동 생성' },
         ],
-        caseImage: asset('assets/solution-eco.jpg'),
+        caseImage: asset('assets/forest-aerial.jpg'),
       },
       {
         id: 'ocean',
