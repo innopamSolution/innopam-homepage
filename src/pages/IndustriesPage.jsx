@@ -182,19 +182,6 @@ const industries = [
         caseImage: asset('assets/industries-case-screen.jpg'),
       },
       {
-        id: 'geoai-farm',
-        label: 'GEO-AI 영상분석 서비스 (농업)',
-        title: 'GEO-AI 영상분석 서비스 (농업)',
-        subtitle: '드론 영상 기반 농작물 분류 및 재배면적 자동 산출 서비스',
-        features: [
-          { title: '작물 자동 분류', desc: '드론 영상에서 AI가 농작물 종류를 자동으로 식별하여 분류' },
-          { title: '재배면적 산출', desc: '필지별 작물 재배면적을 자동으로 계산하여 통계 데이터 제공' },
-          { title: '직불금 관리 연계', desc: '작물 재배 현황 데이터를 직불금 지급 시스템과 연계' },
-          { title: '이상지 탐지', desc: '휴경지, 불법 경작지 등을 AI로 자동 탐지하여 행정 효율화' },
-        ],
-        caseImage: asset('assets/solution-farm.jpg'),
-      },
-      {
         id: 'drone-mgmt',
         label: '드론영상관리 시스템',
         title: '드론영상관리 시스템',
