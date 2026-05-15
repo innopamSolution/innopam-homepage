@@ -19,9 +19,9 @@ const solutions = [
     relatedProduct: { name: "GeoX CityVision", href: "/products#geoxcityvision" },
     projects: ["고정밀 전자지도 구축 챌린지 사업", "AI 기반 품질검증 지원 시스템 개발"],
     markers: [
-      { id: 1, top: '28%', left: '42%', color: '#ef4444', label: '불법 건축 의심', desc: '신규 구조물 탐지 · 신뢰도 94%', box: { w: 60, h: 50 } },
-      { id: 2, top: '55%', left: '65%', color: '#4262ff', label: '도로 변화 탐지', desc: '도로 신설 / 확장 감지', box: { w: 72, h: 32 } },
-      { id: 3, top: '72%', left: '30%', color: '#f59e0b', label: '건물 변화', desc: '증축 탐지 · 면적 +128㎡', box: { w: 52, h: 46 } },
+      { id: 1, top: '35%', left: '40%', color: '#ef4444', label: '불법 건축 의심', desc: '신규 구조물 탐지 · 신뢰도 94%', box: { w: 60, h: 50 } },
+      { id: 2, top: '58%', left: '65%', color: '#4262ff', label: '도로 변화 탐지', desc: '도로 신설 / 확장 감지', box: { w: 72, h: 32 } },
+      { id: 3, top: '70%', left: '28%', color: '#f59e0b', label: '건물 변화', desc: '증축 탐지 · 면적 +128㎡', box: { w: 52, h: 46 } },
     ],
   },
   {
@@ -36,9 +36,9 @@ const solutions = [
     relatedProduct: null,
     projects: ["GeoAI 영상분석 서비스", "드론영상관리 시스템"],
     markers: [
-      { id: 1, top: '35%', left: '45%', color: '#16a34a', label: '생산량 예측', desc: '재배면적 2.4ha · 수확량 예측', box: { w: 68, h: 56 } },
-      { id: 2, top: '62%', left: '68%', color: '#f59e0b', label: '휴경지 탐지', desc: '미경작 확인 · 직불금 제외', box: { w: 60, h: 48 } },
-      { id: 3, top: '48%', left: '22%', color: '#4262ff', label: '작물 탐지', desc: '고추 재배 추정 · 0.8ha', box: { w: 52, h: 42 } },
+      { id: 1, top: '40%', left: '50%', color: '#16a34a', label: '생산량 예측', desc: '재배면적 2.4ha · 수확량 예측', box: { w: 68, h: 56 } },
+      { id: 2, top: '65%', left: '70%', color: '#f59e0b', label: '휴경지 탐지', desc: '미경작 확인 · 직불금 제외', box: { w: 60, h: 48 } },
+      { id: 3, top: '55%', left: '25%', color: '#4262ff', label: '작물 탐지', desc: '고추 재배 추정 · 0.8ha', box: { w: 52, h: 42 } },
     ],
   },
   {
@@ -54,9 +54,9 @@ const solutions = [
     relatedProduct: null,
     projects: ["GeoAI 영상분석 서비스", "제주 드론특별자유화구역 조성 사업"],
     markers: [
-      { id: 1, top: '30%', left: '55%', color: '#ef4444', label: '산림 훼손 탐지', desc: '훼손 면적 0.6ha · 신규 감지', box: { w: 64, h: 54 } },
-      { id: 2, top: '62%', left: '35%', color: '#f59e0b', label: '해양쓰레기 탐지', desc: '해안선 쓰레기 분포 감지', box: { w: 64, h: 50 } },
-      { id: 3, top: '48%', left: '72%', color: '#06b6d4', label: '해안선 변화', desc: '침식 2.1m 후퇴 감지', box: { w: 50, h: 40 } },
+      { id: 1, top: '35%', left: '50%', color: '#ef4444', label: '산림 훼손 탐지', desc: '훼손 면적 0.6ha · 신규 감지', box: { w: 64, h: 54 } },
+      { id: 2, top: '65%', left: '32%', color: '#f59e0b', label: '해양쓰레기 탐지', desc: '해안선 쓰레기 분포 감지', box: { w: 64, h: 50 } },
+      { id: 3, top: '50%', left: '70%', color: '#06b6d4', label: '해안선 변화', desc: '침식 2.1m 후퇴 감지', box: { w: 50, h: 40 } },
     ],
   },
   {
@@ -71,9 +71,9 @@ const solutions = [
     relatedProduct: { name: "CrackEye X", href: "/products#crackeyex" },
     projects: ["기반시설 첨단관리(TotalCare) 기술개발", "고정밀 전자지도 구축 챌린지 사업"],
     markers: [
-      { id: 1, top: '38%', left: '48%', color: '#ef4444', label: '균열 탐지 (D등급)', desc: '폭 0.8mm · 즉시 보수 필요', box: { w: 58, h: 34 } },
-      { id: 2, top: '60%', left: '28%', color: '#f59e0b', label: '손상 탐지 (C등급)', desc: '박리 면적 0.12㎡ 감지', box: { w: 54, h: 42 } },
-      { id: 3, top: '28%', left: '68%', color: '#4262ff', label: '정상 구간', desc: '이상 없음 · A등급', box: { w: 48, h: 36 } },
+      { id: 1, top: '55%', left: '45%', color: '#ef4444', label: '균열 탐지 (D등급)', desc: '폭 0.8mm · 즉시 보수 필요', box: { w: 58, h: 34 } },
+      { id: 2, top: '72%', left: '28%', color: '#f59e0b', label: '손상 탐지 (C등급)', desc: '박리 면적 0.12㎡ 감지', box: { w: 54, h: 42 } },
+      { id: 3, top: '42%', left: '68%', color: '#4262ff', label: '정상 구간', desc: '이상 없음 · A등급', box: { w: 48, h: 36 } },
     ],
   },
 ];
@@ -131,7 +131,7 @@ export default function SolutionsSection() {
               key={sol.id}
               src={sol.image}
               alt={sol.title}
-              className="absolute inset-0 w-full h-full object-cover object-left-top"
+              className="absolute inset-0 w-full h-full object-cover object-center"
               style={{
                 opacity: sol.id === active ? 1 : 0,
                 transition: 'opacity 700ms ease-in-out',
