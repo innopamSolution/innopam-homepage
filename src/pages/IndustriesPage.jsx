@@ -359,18 +359,18 @@ export default function IndustriesPage() {
 
         {/* 콘텐츠 */}
         {activeIndustry && (
-          <div className="w-full px-4 md:px-[88px] py-[80px] md:py-[120px] flex flex-col gap-[60px] md:gap-[80px] items-center">
-            <div className="w-full max-w-[1264px] flex flex-col gap-[60px] md:gap-[80px]">
+          <div className="w-full px-4 md:px-[88px] pt-[80px] pb-[120px] flex flex-col gap-[80px] items-center">
+            <div className="w-full max-w-[1264px] flex flex-col gap-[80px]">
 
-              {/* 산업 개요: 설명(좌) + 인터랙티브 원형 이미지(우) */}
-              <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-0">
-                <div className="flex flex-col gap-[40px] lg:w-[580px]">
-                  <h2 className="font-pretendard font-black text-[36px] md:text-[48px] text-[#3a343b] tracking-[-1.2px] leading-tight">
+              {/* 산업 개요: 타이틀+설명(좌) + 인터랙티브 원형 이미지(우) */}
+              <div className="flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-0">
+                <div className="flex flex-col gap-[80px] lg:w-[640px]">
+                  <h2 className="font-pretendard font-black text-[36px] md:text-[48px] text-[#3a343b] tracking-[-1.2px] leading-[48px]">
                     {activeIndustry.title}
                   </h2>
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-[20px]">
                     {activeIndustry.description.map((p, i) => (
-                      <p key={i} className="font-pretendard text-[17px] md:text-[20px] text-[#161c2d] leading-[1.75] tracking-[-0.3px]">
+                      <p key={i} className="font-pretendard text-[20px] md:text-[28px] text-[#161c2d] leading-[48px] tracking-[-1.2px]">
                         {p}
                       </p>
                     ))}
@@ -383,63 +383,70 @@ export default function IndustriesPage() {
                 />
               </div>
 
-              {/* 프로젝트 필터 탭 */}
-              <div className="flex flex-wrap gap-2">
-                {activeIndustry.cases.map((c) => (
-                  <button
-                    key={c.id}
-                    onClick={() => setActiveCaseId(c.id)}
-                    className={`px-[24px] md:px-[36px] py-[12px] md:py-[16px] rounded-full text-[14px] md:text-[18px] font-pretendard transition-colors ${
-                      activeCaseId === c.id
-                        ? 'bg-[#f1f3fd] border border-[#5871ed] text-[#161c2d] font-bold'
-                        : 'bg-white border border-[#d4d4d4] text-[#3a343b] font-semibold hover:border-[#5871ed]'
-                    }`}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
+              {/* 실제 도입 사례 */}
+              <div className="flex flex-col gap-[40px]">
+                <h3 className="font-pretendard font-medium text-[36px] md:text-[48px] text-[#3a343b] tracking-[-1.2px] leading-[48px]">
+                  실제 도입 사례
+                </h3>
 
-              {/* 도입사례 상세 */}
-              {activeCase && (
-                <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-[60px] animate-fadeIn">
-                  <div className="flex flex-col gap-[26px] lg:flex-1 min-w-0">
-                    <div className="flex flex-col gap-2">
-                      <h3 className="font-pretendard font-bold text-[24px] md:text-[32px] text-black tracking-[-1.5px] leading-[1.4]">
-                        {activeCase.title}
-                      </h3>
-                      <p className="font-pretendard font-medium text-[14px] md:text-[16px] text-[#444] leading-[1.4]">
-                        {activeCase.subtitle}
-                      </p>
-                    </div>
-                    <div className="flex flex-col gap-[18px] md:gap-[26px]">
-                      {activeCase.features.map((f, i) => (
-                        <div key={i} className="flex gap-[14px] items-start">
-                          <CheckIcon />
-                          <div className="flex flex-col gap-[2px]">
-                            <p className="font-pretendard text-[15px] md:text-[18px] font-bold text-[#050038] leading-[1.5]">
-                              {f.title}
-                            </p>
-                            <p className="font-pretendard text-[13px] md:text-[16px] text-[#555] leading-[1.5]">
-                              {f.desc}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div
-                    className="w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl overflow-hidden shrink-0"
-                    style={{ boxShadow: '0px 4px 20px rgba(0,0,0,0.12)' }}
-                  >
-                    <img
-                      src={activeCase.caseImage}
-                      alt={activeCase.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                {/* 프로젝트 필터 탭 */}
+                <div className="flex flex-wrap gap-2">
+                  {activeIndustry.cases.map((c) => (
+                    <button
+                      key={c.id}
+                      onClick={() => setActiveCaseId(c.id)}
+                      className={`px-[24px] md:px-[36px] py-[12px] md:py-[16px] rounded-full text-[14px] md:text-[18px] font-pretendard transition-colors ${
+                        activeCaseId === c.id
+                          ? 'bg-[#f1f3fd] border border-[#5871ed] text-[#161c2d] font-bold'
+                          : 'bg-white border border-[#d4d4d4] text-[#3a343b] font-semibold hover:border-[#5871ed]'
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  ))}
                 </div>
-              )}
+
+                {/* 도입사례 상세 */}
+                {activeCase && (
+                  <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-[40px] animate-fadeIn">
+                    <div className="flex flex-col gap-[30px] lg:flex-1 min-w-0">
+                      <div className="flex flex-col gap-1">
+                        <h4 className="font-pretendard font-bold text-[24px] md:text-[32px] text-black tracking-[-2px] leading-[65px]">
+                          {activeCase.title}
+                        </h4>
+                        <p className="font-pretendard font-medium text-[14px] md:text-[16px] text-[#444] leading-[1.4]">
+                          {activeCase.subtitle}
+                        </p>
+                      </div>
+                      <div className="flex flex-col gap-[20px] md:gap-[26px]">
+                        {activeCase.features.map((f, i) => (
+                          <div key={i} className="flex gap-[14px] items-start">
+                            <CheckIcon />
+                            <div className="flex flex-col">
+                              <p className="font-pretendard text-[16px] md:text-[18px] font-bold text-[#050038] leading-[24px]">
+                                {f.title}
+                              </p>
+                              <p className="font-pretendard text-[14px] md:text-[16px] text-[#050038] leading-[24px]">
+                                {f.desc}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div
+                      className="w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl overflow-hidden shrink-0"
+                      style={{ boxShadow: '0px 4px 4px rgba(0,0,0,0.15)' }}
+                    >
+                      <img
+                        src={activeCase.caseImage}
+                        alt={activeCase.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
 
             </div>
           </div>
