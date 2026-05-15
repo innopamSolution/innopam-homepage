@@ -118,6 +118,34 @@ export default function ProjectSection() {
       {/* Carousel */}
       <div ref={contentRef.ref} className={`flex flex-col gap-8 w-full max-w-[1264px] ${contentRef.className}`}>
 
+        {/* 모바일 전용 상단 네비게이션 */}
+        <div className="flex md:hidden items-center justify-between w-full">
+          <button
+            onClick={() => go(current - 1)}
+            disabled={current === 0}
+            className="w-[36px] h-[36px] rounded-full border border-[#e1e4ed] flex items-center justify-center text-[#6d758f] hover:bg-[#4262ff] hover:text-white disabled:opacity-25 transition-all"
+          >←</button>
+
+          <div className="flex items-center gap-1.5">
+            {projects.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => go(i)}
+                className={`rounded-full transition-all duration-300 ${
+                  i === current ? 'w-5 h-2 bg-[#4262ff]' : 'w-2 h-2 bg-gray-200'
+                }`}
+                aria-label={`${i + 1}번째 슬라이드`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => go(current + 1)}
+            disabled={current === projects.length - 1}
+            className="w-[36px] h-[36px] rounded-full border border-[#e1e4ed] bg-white flex items-center justify-center text-[#6d758f] hover:bg-[#4262ff] hover:text-white hover:border-[#4262ff] disabled:opacity-25 transition-all"
+          >→</button>
+        </div>
+
         {/* 슬라이드 컨텐츠 */}
         <div className="flex items-center gap-4 lg:gap-12 w-full">
           {/* Prev */}
@@ -187,16 +215,8 @@ export default function ProjectSection() {
           </button>
         </div>
 
-        {/* 하단: 도트 + 모바일 버튼 */}
-        <div className="flex items-center justify-center gap-6">
-          {/* 모바일 이전 버튼 */}
-          <button
-            onClick={() => go(current - 1)}
-            disabled={current === 0}
-            className="md:hidden w-[40px] h-[40px] rounded-full border border-[#e1e4ed] flex items-center justify-center text-[#6d758f] hover:bg-[#4262ff] hover:text-white disabled:opacity-25 transition-all"
-          >←</button>
-
-          {/* 도트 인디케이터 */}
+        {/* 하단: 데스크탑 도트 + 카운터 */}
+        <div className="hidden md:flex items-center justify-center gap-6">
           <div className="flex items-center gap-2">
             {projects.map((_, i) => (
               <button
@@ -211,16 +231,7 @@ export default function ProjectSection() {
               />
             ))}
           </div>
-
-          {/* 모바일 다음 버튼 */}
-          <button
-            onClick={() => go(current + 1)}
-            disabled={current === projects.length - 1}
-            className="md:hidden w-[40px] h-[40px] rounded-full border border-[#e1e4ed] bg-white flex items-center justify-center text-[#6d758f] hover:bg-[#4262ff] hover:text-white hover:border-[#4262ff] disabled:opacity-25 transition-all"
-          >→</button>
-
-          {/* 카운터 */}
-          <span className="hidden md:block font-pretendard text-[13px] text-[#aab0c6] ml-2">
+          <span className="font-pretendard text-[13px] text-[#aab0c6] ml-2">
             {current + 1} / {projects.length}
           </span>
         </div>
