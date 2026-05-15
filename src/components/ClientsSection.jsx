@@ -12,15 +12,15 @@ const imgDaelim = asset('assets/client-daelim.png');
 const imgKwater = asset('assets/client-kwater.png');
 
 const clients = [
-  { src: imgLogo1,  alt: "제주특별자치도",   width: 103 },
-  { src: imgLogo2,  alt: "아산시",           width: 179 },
-  { src: imgLogo3,  alt: "서울특별시",        width: 157 },
-  { src: imgKiast,  alt: "KAIST",            width: 116 },
-  { src: imgUos,    alt: "서울시립대학교",    width: 247 },
-  { src: imgNdmri,  alt: "국립재난안전연구원", width: 209 },
-  { src: imgSba,    alt: "SBA 서울산업진흥원", width: 140 },
-  { src: imgDaelim, alt: "대림",              width: 120 },
-  { src: imgKwater, alt: "K-water",           width: 140 },
+  { src: imgLogo1,  alt: "제주특별자치도",   width: 82 },
+  { src: imgLogo2,  alt: "아산시",           width: 143 },
+  { src: imgLogo3,  alt: "서울특별시",        width: 126 },
+  { src: imgKiast,  alt: "KAIST",            width: 93 },
+  { src: imgUos,    alt: "서울시립대학교",    width: 198 },
+  { src: imgNdmri,  alt: "국립재난안전연구원", width: 167 },
+  { src: imgSba,    alt: "SBA 서울산업진흥원", width: 112 },
+  { src: imgDaelim, alt: "대림",              width: 96 },
+  { src: imgKwater, alt: "K-water",           width: 112 },
 ];
 
 const clientRows = [
