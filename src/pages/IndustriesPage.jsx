@@ -222,7 +222,7 @@ const industries = [
           { title: '불법 훼손 감시', desc: '항공·위성 영상 분석으로 불법 산림 훼손 모니터링' },
           { title: '변화 이력 관리', desc: '산림 변화 이력을 체계적으로 기록하고 리포트 자동 생성' },
         ],
-        caseImage: asset('assets/forest-aerial.jpg'),
+        caseImage: asset('assets/forest-aerial.png'),
       },
       {
         id: 'ocean',
@@ -231,7 +231,7 @@ const industries = [
         subtitle: '위성·드론 영상 기반 해양환경 변화 탐지 및 해양 쓰레기 관리 서비스',
         features: [
           { title: '해양 쓰레기 탐지', desc: '드론 영상으로 해안선 및 해양 쓰레기 분포를 자동 탐지' },
-          { title: '해안선 변화 분석', desc: '시기별 위성영상으로 해안선 침식·퇴적 변화를 모니터링' },
+          { title: '해안선 퇴적물 및 쓰레기 모니터링', desc: '시기별 위성영상으로 해안선 퇴적물 및 쓰레기 분포 변화를 모니터링' },
 //          { title: '수질 모니터링', desc: '위성 분광 데이터 분석으로 수질 변화를 원격 탐지' },
           { title: '탐지 이력 관리', desc: '쓰레기 탐지 이력 데이터베이스 구축 및 통계 제공' },
           { title: '현장 업무 지원', desc: '수거 및 관리 업무에 지원할 수 있는 데이터 제공' },
