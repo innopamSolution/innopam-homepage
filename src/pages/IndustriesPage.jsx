@@ -433,7 +433,7 @@ export default function IndustriesPage() {
                       <img
                         src={activeCase.caseImage}
                         alt={activeCase.title}
-                        className="w-full h-full object-cover"
+                        className="h-full w-auto max-w-none"
                       />
                     </div>
                   </div>
