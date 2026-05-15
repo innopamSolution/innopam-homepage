@@ -80,14 +80,15 @@ export default function NewsSection() {
 
       {/* Tabs + 더 보기 */}
       <div ref={tabsRef.ref} className={`flex flex-col gap-[40px] items-center w-full max-w-[1104px] ${tabsRef.className}`}>
-        <div className="flex items-center justify-between w-full">
+        {/* 모바일: 탭 + 더보기 세로 배치 / 데스크탑: 가로 배치 */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 w-full">
           {/* 필터 탭 */}
-          <div className="flex gap-[8px] items-center">
+          <div className="flex gap-[6px] md:gap-[8px] items-center">
             {TABS.map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-[36px] py-[16px] rounded-full text-[14px] font-pretendard font-semibold border transition-colors ${
+                className={`px-[16px] md:px-[36px] py-[10px] md:py-[16px] rounded-full text-[12px] md:text-[14px] font-pretendard font-semibold border transition-colors ${
                   activeTab === tab
                     ? 'bg-[#f1f3fd] border-[#f2f2f2] text-[#3d485b]'
                     : 'bg-white border-[#f2f2f2] text-[#3a343b] hover:bg-gray-50'
@@ -101,7 +102,7 @@ export default function NewsSection() {
           {/* 더 보기 */}
           <Link
             to="/news"
-            className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
+            className="flex items-center gap-[5px] text-[#4262ff] text-[13px] md:text-[14px] font-pretendard hover:opacity-70 transition-opacity self-start md:self-auto"
           >
             더 보기 <IconArrow />
           </Link>
