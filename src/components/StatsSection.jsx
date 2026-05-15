@@ -7,7 +7,7 @@ const stats = [
   { label: "GeoAI 연구", value: "10년+", suffix: "" },
   { label: "산업분야", value: "7개+", suffix: "" },
   { label: "AI모델 보유", value: "30개+", suffix: "" },
-  { label: "프로젝트 수행", value: "100개+", suffix: "" },
+  { label: "프로젝트 수행", value: "30개+", suffix: "" },
 ];
 
 export default function StatsSection() {
