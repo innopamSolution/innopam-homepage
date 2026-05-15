@@ -16,7 +16,7 @@ const projects = [
       { title: "모델 학습 갱신", desc: "플랫폼에서 구축된 학습데이터를 이용해 직접 모델 학습 갱신" },
     ],
     image: asset('assets/industries-case-screen.jpg'),
-    tag: '도시변화 모니터링',
+    tag: '농업 · 산림 · 해양',
   },
   {
     id: 1,
