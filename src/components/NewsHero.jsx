@@ -4,17 +4,26 @@ import { asset } from '../utils/asset';
 export default function NewsHero() {
   return (
     <section className="relative w-full h-[375px] md:h-[471px] overflow-hidden bg-[#1a1008]">
-      {/* Background image */}
-      <img
-        src={asset('assets/news-hero-bg.jpg')}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ objectPosition: '50% 42%' }}
-      />
+
+      {/* 이미지: Figma 스펙 h=259.34%, top=-110.67% */}
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src={asset('assets/news-hero-bg.jpg')}
+          alt=""
+          className="absolute left-0 w-full pointer-events-none"
+          style={{
+            height: '259.34%',
+            top: '-110.67%',
+            objectFit: 'cover',
+            objectPosition: '50% 50%',
+          }}
+        />
+      </div>
+
       {/* Dark overlay */}
       <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.5)' }} />
 
-      {/* Content — Figma: top 115px, horizontally centered */}
+      {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 pt-[80px] md:pt-[115px]">
         <SectionLabel text="News" light />
         <h1
