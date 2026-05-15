@@ -51,8 +51,8 @@ export default function ClientsSection() {
             <img
               src={logo.src}
               alt={logo.alt}
-              className="w-full h-auto object-contain"
-              style={{ maxHeight: '28px', maxWidth: '80px' }}
+              className="h-6 w-auto object-contain"
+              style={{ maxWidth: '80px' }}
             />
           </div>
         ))}
