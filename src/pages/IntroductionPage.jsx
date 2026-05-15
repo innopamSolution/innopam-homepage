@@ -81,18 +81,34 @@ export default function IntroductionPage() {
             <h3 className="font-pretendard font-bold text-[#3a343b] text-[28px] md:text-[48px] tracking-[-1.2px]">
               Mission
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px]">
-              {missions.map((m) => (
-                <div key={m.title} className="flex flex-col items-center gap-[20px] text-center">
-                  <div className="w-[60px] h-[60px] flex items-center justify-center">
-                    <img src={m.icon} alt="" className="w-full h-full object-contain" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-[24px]">
+              {missions.map((m, i) => (
+                <div
+                  key={m.title}
+                  className="relative flex flex-col gap-[24px] p-[36px] rounded-[20px] bg-white border border-[#e8eaf6] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                >
+                  {/* 그라디언트 강조선 */}
+                  <div className="absolute top-0 left-0 right-0 h-[4px] brand-gradient" />
+
+                  {/* 번호 배지 */}
+                  <span className="font-space font-bold text-[13px] tracking-[2px] text-[#4262ff] opacity-50">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+
+                  {/* 아이콘 원형 배경 */}
+                  <div className="w-[68px] h-[68px] rounded-full bg-[#eef1ff] flex items-center justify-center shrink-0">
+                    <img src={m.icon} alt="" className="w-[36px] h-[36px] object-contain" />
                   </div>
-                  <p className="font-pretendard font-bold text-[#5871ed] text-[20px] md:text-[28px] leading-[1.35]">
-                    {m.title}
-                  </p>
-                  <p className="font-pretendard text-[#3a343b] text-[14px] md:text-[20px] leading-[1.4] tracking-[-0.2px] whitespace-pre-line">
-                    {m.desc}
-                  </p>
+
+                  {/* 텍스트 */}
+                  <div className="flex flex-col gap-[12px]">
+                    <p className="font-pretendard font-bold text-[#1a1a2e] text-[20px] md:text-[22px] leading-[1.35]">
+                      {m.title}
+                    </p>
+                    <p className="font-pretendard text-[#6d758f] text-[14px] md:text-[16px] leading-[1.7] whitespace-pre-line">
+                      {m.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
