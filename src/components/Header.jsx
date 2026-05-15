@@ -33,9 +33,9 @@ export default function Header() {
   const isCompanyActive = location.pathname.startsWith('/company')
 
   const navItems = [
-    { label: 'Solutions', href: '/solutions', isRoute: true },
-    { label: 'Products', href: '/products', isRoute: true },
     { label: 'Industries', href: '/industries', isRoute: true },
+    { label: 'Products', href: '/products', isRoute: true },
+    { label: 'Solutions', href: '/solutions', isRoute: true },
     { label: 'News', href: '/news', isRoute: true },
   ]
 
