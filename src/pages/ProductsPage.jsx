@@ -1,7 +1,8 @@
 // Products Page — Figma node 242:2397
 // Faithfully implements the Figma design for the Products page
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import SectionLabel from '../components/SectionLabel'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
@@ -384,6 +385,7 @@ function GeoXRealMapSection({ onOpen }) {
   const ref = useFadeUp();
   return (
     <section
+      id="geoxrealmap"
       ref={ref}
       className="fade-up flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full"
       style={{ background: 'linear-gradient(to right, #eef1ff, #eef1ff)' }}
@@ -441,7 +443,7 @@ function GeoXRealMapSection({ onOpen }) {
 function GeoXCityVisionSection({ onOpen }) {
   const ref = useFadeUp();
   return (
-    <section ref={ref} className="fade-up bg-[#f4f7fa] flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full">
+    <section id="geoxcityvision" ref={ref} className="fade-up bg-[#f4f7fa] flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full">
       {/* Title area with GS1 mark */}
       <div className="flex flex-wrap gap-[20px] md:gap-[40px] items-center justify-center">
         <img
@@ -512,6 +514,7 @@ function CrackEyeXSection({ onOpen }) {
   const ref = useFadeUp();
   return (
     <section
+      id="crackeyex"
       ref={ref}
       className="fade-up flex flex-col gap-[60px] md:gap-[80px] items-center px-4 md:px-[88px] py-[60px] md:py-[120px] w-full"
       style={{ background: 'linear-gradient(to right, #eef1ff, #eef1ff)' }}
@@ -578,6 +581,20 @@ function CrackEyeXSection({ onOpen }) {
 
 export default function ProductsPage() {
   const [demoOpen, setDemoOpen] = useState(false);
+  const location = useLocation();
+
+  // URL 해시(#geoxcityvision 등)로 진입 시 해당 섹션으로 스크롤
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300); // 페이지 렌더 후 스크롤
+      }
+    }
+  }, [location.hash]);
 
   return (
     <div className="min-h-screen w-full bg-white">

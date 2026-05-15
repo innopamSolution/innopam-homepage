@@ -16,7 +16,7 @@ const solutions = [
       "위성, 항공, 드론 데이터를 AI로 분석해 도시 변화를 실시간으로 탐지하고 관리합니다.",
       "도시계획·개발제한구역 관리, 불법건축·개발 감시, 수치지형도 고도화 등 행정 효율화에 활용됩니다.",
     ],
-    relatedProduct: { name: "GeoX CityVision", href: "/products" },
+    relatedProduct: { name: "GeoX CityVision", href: "/products#geoxcityvision" },
     projects: ["고정밀 전자지도 구축 챌린지 사업", "AI 기반 품질검증 지원 시스템 개발"],
     markers: [
       { id: 1, top: '28%', left: '42%', color: '#ef4444', label: '불법 건축 의심', desc: '신규 구조물 탐지 · 신뢰도 94%', box: { w: 60, h: 50 } },
@@ -68,7 +68,7 @@ const solutions = [
       "분석 결과를 기반으로 시설물 상태를 한눈에 확인하고 외관조사망도를 자동 생성하여 효율적인 점검과 관리에 활용할 수 있습니다.",
       "시설물 안전 점검 관리, 점검 결과 보고 및 이력 관리, 유지보수 계획 수립, 공공 안전 모니터링, 데이터 기반 행정 운영에 활용됩니다.",
     ],
-    relatedProduct: { name: "CrackEye X", href: "/products" },
+    relatedProduct: { name: "CrackEye X", href: "/products#crackeyex" },
     projects: ["기반시설 첨단관리(TotalCare) 기술개발", "고정밀 전자지도 구축 챌린지 사업"],
     markers: [
       { id: 1, top: '38%', left: '48%', color: '#ef4444', label: '균열 탐지 (D등급)', desc: '폭 0.8mm · 즉시 보수 필요', box: { w: 58, h: 34 } },
