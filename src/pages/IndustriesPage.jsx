@@ -126,19 +126,6 @@ const industries = [
     ],
     cases: [
       {
-        id: 'geoai',
-        label: 'GEO-AI 영상분석 서비스',
-        title: 'GEO-AI 영상분석 서비스',
-        subtitle: '멀티센서(위성, 항공, 드론)영상 기반의 GeoAI 분석 플랫폼 서비스',
-        features: [
-          { title: '데이터 수집 · 관리', desc: '위성, 드론, 항공 영상 데이터를 한 곳에 모아 쉽게 저장하고 관리' },
-          { title: 'GEO-AI 모델 개발', desc: '모델 앙상블 적용을 통한 AI모델 객체 탐지 정확도 제고' },
-          { title: 'One-Stop AI 서비스', desc: '학습데이터 수집, 전처리, 구축, 관리를 위한 One-Stop 서비스' },
-          { title: '모델 학습 갱신', desc: '플랫폼에서 구축된 학습데이터를 이용해 직접 모델 학습 갱신' },
-        ],
-        caseImage: asset('assets/industries-case-screen.jpg'),
-      },
-      {
         id: 'cityvision',
         label: 'GeoX CityVision',
         title: 'GeoX CityVision',
@@ -148,6 +135,19 @@ const industries = [
           { title: '3D 도시 모델', desc: '항공·드론 영상으로부터 고정밀 3D 도시 모델을 자동 생성' },
           { title: '행정 연계', desc: '지자체 공간정보시스템과 연동하여 변화 이력을 자동 반영' },
           { title: '이상 감지 알림', desc: '불법 건축·개발 등 이상 변화 발생 시 실시간 알림 제공' },
+        ],
+        caseImage: asset('assets/solution-city.jpg'),
+      },
+      {
+        id: 'seoul-urban',
+        label: '서울시 도시변화탐지',
+        title: '서울시 도시변화탐지',
+        subtitle: '서울시 전역 위성·항공 영상 기반 도시 변화 자동 탐지 서비스',
+        features: [
+          { title: '건물 변화 탐지', desc: '서울시 전역의 신축·증축·멸실 건물을 위성 영상으로 자동 탐지' },
+          { title: '개발제한구역 감시', desc: '그린벨트 내 불법 개발 행위를 AI로 실시간 모니터링' },
+          { title: '도로·인프라 변화', desc: '도로 신설·확장 및 도시 기반시설 변화를 자동으로 감지' },
+          { title: '이력 관리', desc: '탐지된 변화 이력을 시계열로 관리하고 행정 보고서 자동 생성' },
         ],
         caseImage: asset('assets/solution-city.jpg'),
       },
@@ -169,8 +169,21 @@ const industries = [
     ],
     cases: [
       {
-        id: 'geoai-farm',
+        id: 'geoai',
         label: 'GEO-AI 영상분석 서비스',
+        title: 'GEO-AI 영상분석 서비스',
+        subtitle: '멀티센서(위성, 항공, 드론)영상 기반의 GeoAI 분석 플랫폼 서비스',
+        features: [
+          { title: '데이터 수집 · 관리', desc: '위성, 드론, 항공 영상 데이터를 한 곳에 모아 쉽게 저장하고 관리' },
+          { title: 'GEO-AI 모델 개발', desc: '모델 앙상블 적용을 통한 AI모델 객체 탐지 정확도 제고' },
+          { title: 'One-Stop AI 서비스', desc: '학습데이터 수집, 전처리, 구축, 관리를 위한 One-Stop 서비스' },
+          { title: '모델 학습 갱신', desc: '플랫폼에서 구축된 학습데이터를 이용해 직접 모델 학습 갱신' },
+        ],
+        caseImage: asset('assets/industries-case-screen.jpg'),
+      },
+      {
+        id: 'geoai-farm',
+        label: 'GEO-AI 영상분석 서비스 (농업)',
         title: 'GEO-AI 영상분석 서비스 (농업)',
         subtitle: '드론 영상 기반 농작물 분류 및 재배면적 자동 산출 서비스',
         features: [
