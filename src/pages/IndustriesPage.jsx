@@ -305,23 +305,14 @@ export default function IndustriesPage() {
 
         {/* 히어로 */}
         <div className="relative w-full h-[400px] overflow-hidden">
-          {/* 배경 이미지 1 (회로기판 AI 이미지) */}
+          {/* 배경 이미지 */}
           <div className="absolute inset-0 pointer-events-none">
             <img
               alt=""
-              className="absolute w-full h-full object-cover blur-[5px] scale-110"
-              src={asset('assets/industries-hero-bg1.jpg')}
+              className="absolute w-full h-full object-cover object-center blur-[5px] scale-110"
+              src={asset('assets/industries-hero-main.jpg')}
             />
             <div className="absolute inset-0" style={{ background: 'rgba(41,42,105,0.6)' }} />
-          </div>
-          {/* 배경 이미지 2 (오른쪽 노트북/AI 이미지) — 오른쪽에 블렌드 */}
-          <div className="absolute inset-0 pointer-events-none hidden md:block">
-            <img
-              alt=""
-              className="absolute right-0 h-full w-[55%] object-cover blur-[5px] scale-110"
-              src={asset('assets/industries-hero-bg2.jpg')}
-            />
-            <div className="absolute inset-0" style={{ background: 'rgba(41,42,105,0.5)' }} />
           </div>
 
           {/* 텍스트 */}
