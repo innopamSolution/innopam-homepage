@@ -149,7 +149,7 @@ const industries = [
           { title: '도로·인프라 변화', desc: '도로 신설·확장 및 도시 기반시설 변화를 자동으로 감지' },
           { title: '이력 관리', desc: '탐지된 변화 이력을 시계열로 관리하고 행정 보고서 자동 생성' },
         ],
-        caseImage: asset('assets/solution-city.jpg'),
+        caseImage: asset('assets/seoul-change-detection.png'),
       },
     ],
   },
