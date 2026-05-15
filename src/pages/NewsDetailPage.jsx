@@ -122,7 +122,7 @@ export default function NewsDetailPage() {
                 return (
                   <p
                     key={i}
-                    className="font-pretendard text-[#3a343b] text-[20px] w-full"
+                    className="font-pretendard text-[#3a343b] text-[20px] w-full whitespace-pre-line"
                     style={{ fontWeight: 500, lineHeight: '36px' }}
                   >
                     {block.value}
