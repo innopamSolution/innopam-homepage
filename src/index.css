@@ -48,6 +48,22 @@ body {
   width: 100%;
 }
 
+/* ── 프로젝트 슬라이드 애니메이션 ─────────────── */
+@keyframes slideFromRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideFromLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.slide-from-right {
+  animation: slideFromRight 0.42s cubic-bezier(0.22,1,0.36,1) both;
+}
+.slide-from-left {
+  animation: slideFromLeft 0.42s cubic-bezier(0.22,1,0.36,1) both;
+}
+
 /* ── 스크롤 애니메이션 ─────────────────────────── */
 .fade-up {
   opacity: 0;
