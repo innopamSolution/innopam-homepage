@@ -12,9 +12,9 @@ export default function Footer() {
       <div className="relative w-full max-w-[1280px]">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 lg:h-[377px]">
           {/* Left: CTA */}
-          <div className="lg:absolute lg:left-10 lg:top-0 lg:right-[640px] lg:h-[352px] text-center lg:text-left">
+          <div className="lg:absolute lg:left-10 lg:top-0 lg:right-[640px] lg:h-[352px] text-left">
             <p
-              className="font-pretendard font-normal text-white mb-10 text-[18px] md:text-[24px]"
+              className="font-pretendard font-normal text-white mb-7 md:mb-10 text-[15px] md:text-[24px]"
               style={{ lineHeight: "1.8", letterSpacing: "-0.48px" }}
             >
               공간정보 기반 AI 프로젝트를 계획 중이신가요?
@@ -25,20 +25,20 @@ export default function Footer() {
             </p>
             <button
               onClick={() => setContactOpen(true)}
-              className="brand-gradient inline-flex items-center text-white font-space font-bold text-[12px] tracking-[1.3px] uppercase px-[54px] py-[15px] rounded-full hover:opacity-90 transition-opacity"
+              className="brand-gradient inline-flex items-center text-white font-space font-bold text-[11px] md:text-[12px] tracking-[1.3px] uppercase px-[36px] md:px-[54px] py-[12px] md:py-[15px] rounded-full hover:opacity-90 transition-opacity"
             >
               문의하기
             </button>
           </div>
 
           {/* Right: Contact info */}
-          <div className="lg:absolute lg:left-[640px] lg:top-0 lg:right-0 flex flex-col gap-8 lg:gap-0 lg:h-[345px] lg:justify-between text-center lg:text-left items-center lg:items-start">
+          <div className="lg:absolute lg:left-[640px] lg:top-0 lg:right-0 flex flex-col gap-6 lg:gap-0 lg:h-[345px] lg:justify-between text-left items-start">
             {/* Address */}
             <div>
-              <p className="font-space font-bold text-[11px] text-[rgba(255,255,255,0.6)] tracking-[1.2px] uppercase mb-3">
+              <p className="font-space font-bold text-[10px] md:text-[11px] text-[rgba(255,255,255,0.6)] tracking-[1.2px] uppercase mb-2 md:mb-3">
                 Address
               </p>
-              <div className="font-space text-[17px] text-white leading-[27.2px]">
+              <div className="font-space text-[13px] md:text-[17px] text-white leading-[22px] md:leading-[27.2px]">
                 <p>본사</p>
                 <p>서울시 용산구 원효로 146 금강프라임빌딩 6층, 13층</p>
                 <br />
@@ -48,22 +48,22 @@ export default function Footer() {
             </div>
 
             {/* Phone & Email */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 md:gap-6">
               <div>
-                <p className="font-space font-bold text-[11px] text-[rgba(255,255,255,0.6)] tracking-[1.2px] uppercase mb-2">
+                <p className="font-space font-bold text-[10px] md:text-[11px] text-[rgba(255,255,255,0.6)] tracking-[1.2px] uppercase mb-1 md:mb-2">
                   PHONE
                 </p>
-                <p className="font-space text-[17px] text-white leading-[27.2px]">
+                <p className="font-space text-[13px] md:text-[17px] text-white leading-[22px] md:leading-[27.2px]">
                   02-702-5127
                 </p>
               </div>
               <div>
-                <p className="font-space font-bold text-[11px] text-[rgba(255,255,255,0.6)] tracking-[1.2px] uppercase mb-2">
+                <p className="font-space font-bold text-[10px] md:text-[11px] text-[rgba(255,255,255,0.6)] tracking-[1.2px] uppercase mb-1 md:mb-2">
                   EMAIL
                 </p>
                 <a
                   href="mailto:innopam@innopam.com"
-                  className="font-space text-[17px] text-white leading-[27.2px] underline hover:text-blue-300 transition-colors"
+                  className="font-space text-[13px] md:text-[17px] text-white leading-[22px] md:leading-[27.2px] underline hover:text-blue-300 transition-colors"
                 >
                   innopam@innopam.com
                 </a>
