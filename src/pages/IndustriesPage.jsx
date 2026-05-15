@@ -286,8 +286,8 @@ const industries = [
 
 // ── 메인 페이지 ────────────────────────────────────────────────────
 export default function IndustriesPage() {
-  const [activeIndustryId, setActiveIndustryId] = useState('urban');
-  const [activeCaseId, setActiveCaseId] = useState('geoai');
+  const [activeIndustryId, setActiveIndustryId] = useState(industries[0].id);
+  const [activeCaseId, setActiveCaseId] = useState(industries[0].cases[0].id);
 
   const activeIndustry = industries.find(i => i.id === activeIndustryId);
   const activeCase = activeIndustry?.cases.find(c => c.id === activeCaseId);
