@@ -232,11 +232,10 @@ const industries = [
         features: [
           { title: '해양 쓰레기 탐지', desc: '드론 영상으로 해안선 및 해양 쓰레기 분포를 자동 탐지' },
           { title: '해안선 퇴적물 및 쓰레기 모니터링', desc: '시기별 위성영상으로 해안선 퇴적물 및 쓰레기 분포 변화를 모니터링' },
-//          { title: '수질 모니터링', desc: '위성 분광 데이터 분석으로 수질 변화를 원격 탐지' },
           { title: '탐지 이력 관리', desc: '쓰레기 탐지 이력 데이터베이스 구축 및 통계 제공' },
           { title: '현장 업무 지원', desc: '수거 및 관리 업무에 지원할 수 있는 데이터 제공' },
         ],
-        caseImage: asset('assets/solution-eco.jpg'),
+        caseImage: asset('assets/ocean-waste-service.png'),
       },
     ],
   },
@@ -433,7 +432,7 @@ export default function IndustriesPage() {
                       <img
                         src={activeCase.caseImage}
                         alt={activeCase.title}
-                        className="h-full w-auto max-w-none"
+                        className="w-full h-full object-cover object-left-top"
                       />
                     </div>
                   </div>
