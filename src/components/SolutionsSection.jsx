@@ -18,6 +18,11 @@ const solutions = [
     ],
     relatedProduct: { name: "GeoX CityVision", href: "/products" },
     projects: ["고정밀 전자지도 구축 챌린지 사업", "AI 기반 품질검증 지원 시스템 개발"],
+    markers: [
+      { id: 1, top: '28%', left: '42%', color: '#ef4444', label: '불법 건축 의심', desc: '신규 구조물 탐지 · 신뢰도 94%', box: { w: 60, h: 50 } },
+      { id: 2, top: '55%', left: '65%', color: '#4262ff', label: '도로 변화 탐지', desc: '도로 신설 / 확장 감지', box: { w: 72, h: 32 } },
+      { id: 3, top: '72%', left: '30%', color: '#f59e0b', label: '건물 변화', desc: '증축 탐지 · 면적 +128㎡', box: { w: 52, h: 46 } },
+    ],
   },
   {
     id: 1,
@@ -30,6 +35,11 @@ const solutions = [
     ],
     relatedProduct: null,
     projects: ["GeoAI 영상분석 서비스", "드론영상관리 시스템"],
+    markers: [
+      { id: 1, top: '35%', left: '45%', color: '#16a34a', label: '생산량 예측', desc: '재배면적 2.4ha · 수확량 예측', box: { w: 68, h: 56 } },
+      { id: 2, top: '62%', left: '68%', color: '#f59e0b', label: '휴경지 탐지', desc: '미경작 확인 · 직불금 제외', box: { w: 60, h: 48 } },
+      { id: 3, top: '48%', left: '22%', color: '#4262ff', label: '작물 탐지', desc: '고추 재배 추정 · 0.8ha', box: { w: 52, h: 42 } },
+    ],
   },
   {
     id: 2,
@@ -43,6 +53,11 @@ const solutions = [
     ],
     relatedProduct: null,
     projects: ["GeoAI 영상분석 서비스", "제주 드론특별자유화구역 조성 사업"],
+    markers: [
+      { id: 1, top: '30%', left: '55%', color: '#ef4444', label: '산림 훼손 탐지', desc: '훼손 면적 0.6ha · 신규 감지', box: { w: 64, h: 54 } },
+      { id: 2, top: '62%', left: '35%', color: '#f59e0b', label: '해양쓰레기 탐지', desc: '해안선 쓰레기 분포 감지', box: { w: 64, h: 50 } },
+      { id: 3, top: '48%', left: '72%', color: '#06b6d4', label: '해안선 변화', desc: '침식 2.1m 후퇴 감지', box: { w: 50, h: 40 } },
+    ],
   },
   {
     id: 3,
@@ -55,11 +70,17 @@ const solutions = [
     ],
     relatedProduct: { name: "CrackEye X", href: "/products" },
     projects: ["기반시설 첨단관리(TotalCare) 기술개발", "고정밀 전자지도 구축 챌린지 사업"],
+    markers: [
+      { id: 1, top: '38%', left: '48%', color: '#ef4444', label: '균열 탐지 (D등급)', desc: '폭 0.8mm · 즉시 보수 필요', box: { w: 58, h: 34 } },
+      { id: 2, top: '60%', left: '28%', color: '#f59e0b', label: '손상 탐지 (C등급)', desc: '박리 면적 0.12㎡ 감지', box: { w: 54, h: 42 } },
+      { id: 3, top: '28%', left: '68%', color: '#4262ff', label: '정상 구간', desc: '이상 없음 · A등급', box: { w: 48, h: 36 } },
+    ],
   },
 ];
 
 export default function SolutionsSection() {
   const [active, setActive] = useState(0);
+  const [hoveredMarker, setHoveredMarker] = useState(null);
   const hoveredRef = useRef(null); // 현재 호버 중인 탭 id (null이면 자동 순환)
   const timerRef = useRef(null);
   const headerFade = useFadeUp(0.1, 'up');
@@ -102,8 +123,9 @@ export default function SolutionsSection() {
       {/* Content */}
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-[80px] items-start lg:items-center w-full max-w-[1264px]">
 
-        {/* 이미지 — 크로스페이드 */}
-        <div className="relative w-full h-[300px] md:h-[400px] lg:w-[600px] lg:h-[600px] shrink-0 overflow-hidden">
+        {/* 이미지 — 크로스페이드 + AI 인터랙션 오버레이 */}
+        <div className="relative w-full h-[300px] md:h-[400px] lg:w-[600px] lg:h-[600px] shrink-0 overflow-hidden rounded-[12px]">
+          {/* 크로스페이드 이미지들 */}
           {solutions.map((sol) => (
             <img
               key={sol.id}
@@ -116,6 +138,79 @@ export default function SolutionsSection() {
               }}
             />
           ))}
+
+          {/* 스캔 라인 */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="scan-line" />
+          </div>
+
+          {/* 그리드 오버레이 */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.07]"
+            style={{
+              backgroundImage: 'linear-gradient(rgba(88,113,237,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(88,113,237,0.8) 1px, transparent 1px)',
+              backgroundSize: '48px 48px',
+            }}
+          />
+
+          {/* 활성 솔루션 마커들 */}
+          {solutions[active]?.markers.map((m) => (
+            <div
+              key={m.id}
+              className="absolute z-10"
+              style={{ top: m.top, left: m.left, transform: 'translate(-50%, -50%)' }}
+              onMouseEnter={() => setHoveredMarker(m.id)}
+              onMouseLeave={() => setHoveredMarker(null)}
+            >
+              {/* 감지 박스 */}
+              {m.box && (
+                <div
+                  className="absolute border border-dashed pointer-events-none"
+                  style={{
+                    width: m.box.w, height: m.box.h,
+                    top: '50%', left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    borderColor: m.color,
+                    opacity: 0.9,
+                  }}
+                >
+                  <span
+                    className="absolute -top-5 left-0 text-[9px] font-bold px-1.5 py-0.5 whitespace-nowrap"
+                    style={{ background: m.color, color: '#fff' }}
+                  >
+                    {m.label}
+                  </span>
+                </div>
+              )}
+
+              {/* 펄스 도트 */}
+              <div className="relative cursor-pointer">
+                <span className="absolute inline-flex rounded-full opacity-50 animate-ping"
+                  style={{ width: 20, height: 20, top: -10, left: -10, background: m.color }} />
+                <span className="relative flex items-center justify-center w-5 h-5 rounded-full border-2 border-white"
+                  style={{ background: m.color, boxShadow: `0 0 0 3px ${m.color}40` }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                </span>
+              </div>
+
+              {/* 툴팁 */}
+              {hoveredMarker === m.id && (
+                <div
+                  className="absolute z-20 bg-white rounded-xl px-3 py-2 shadow-xl border border-gray-100 whitespace-nowrap animate-fadeIn"
+                  style={{ bottom: 28, left: '50%', transform: 'translateX(-50%)', minWidth: 140 }}
+                >
+                  <p className="text-[11px] font-bold mb-0.5" style={{ color: m.color }}>{m.label}</p>
+                  <p className="text-[11px] text-gray-600 leading-tight">{m.desc}</p>
+                  <div className="absolute left-1/2 -translate-x-1/2 bottom-[-6px] w-3 h-3 bg-white border-b border-r border-gray-100 rotate-45" />
+                </div>
+              )}
+            </div>
+          ))}
+
+          {/* AI 분석 중 뱃지 */}
+          <div className="absolute bottom-4 right-4 bg-[#4262ff] text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-lg z-10">
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            AI 분석 중
+          </div>
         </div>
 
         {/* 아코디언 — grid-template-rows 트릭으로 실제 높이 기반 자연스러운 애니메이션 */}
