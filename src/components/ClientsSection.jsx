@@ -45,14 +45,14 @@ export default function ClientsSection() {
       </div>
 
       {/* Mobile: 3-column grid */}
-      <div className="grid grid-cols-3 gap-6 w-full md:hidden">
+      <div className="grid grid-cols-3 gap-4 w-full md:hidden">
         {clients.map((logo) => (
-          <div key={logo.alt} className="flex items-center justify-center">
+          <div key={logo.alt} className="flex items-center justify-center p-1">
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-8 w-auto object-contain"
-              style={{ maxWidth: logo.width }}
+              className="w-full h-auto object-contain"
+              style={{ maxHeight: '28px', maxWidth: '80px' }}
             />
           </div>
         ))}
