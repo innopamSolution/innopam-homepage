@@ -213,8 +213,8 @@ const industries = [
     cases: [
       {
         id: 'forest',
-        label: '산림 모니터링 서비스',
-        title: '산림 모니터링 서비스',
+        label: '불법 산림훼손 관리 서비스',
+        title: '불법 산림훼손 관리 서비스',
         subtitle: '위성·드론 영상 기반 산림 변화 탐지 및 훼손지 관리 서비스',
         features: [
           { title: '산림 훼손 자동 탐지', desc: '다시기 영상 분석으로 산림 훼손 지역을 자동으로 감지' },
@@ -226,8 +226,8 @@ const industries = [
       },
       {
         id: 'ocean',
-        label: '해양 모니터링 서비스',
-        title: '해양 모니터링 서비스',
+        label: '해양쓰레기 관리 서비스',
+        title: '해양쓰레기 관리 서비스',
         subtitle: '위성·드론 영상 기반 해양환경 변화 탐지 및 해양 쓰레기 관리 서비스',
         features: [
           { title: '해양 쓰레기 탐지', desc: '드론 영상으로 해안선 및 해양 쓰레기 분포를 자동 탐지' },
@@ -236,7 +236,7 @@ const industries = [
           { title: '탐지 이력 관리', desc: '쓰레기 탐지 이력 데이터베이스 구축 및 통계 제공' },
           { title: '현장 업무 지원', desc: '수거 및 관리 업무에 지원할 수 있는 데이터 제공' },
         ],
-        caseImage: asset('assets/solution-eco.jpg'),
+        caseImage: asset('assets/solution-eco.png'),
       },
     ],
   },
