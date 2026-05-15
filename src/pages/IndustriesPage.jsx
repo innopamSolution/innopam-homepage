@@ -207,7 +207,7 @@ const industries = [
     circleImage: asset('assets/solution-eco.jpg'),
     markers: [
       { id: 1, top: '32%', left: '55%', color: '#ef4444', label: '산림 훼손 탐지', desc: '훼손 면적 0.6ha · 신규 감지', box: { w: 56, h: 48 } },
-//      { id: 2, top: '62%', left: '38%', color: '#f59e0b', label: '불법 훼손 의심', desc: '수목 소실 구역 확인', box: { w: 50, h: 44 } },
+      { id: 2, top: '62%', left: '38%', color: '#f59e0b', label: '해양쓰레기 탐지', desc: '해안선 쓰레기 분포 감지', box: { w: 56, h: 44 } },
       { id: 3, top: '48%', left: '70%', color: '#06b6d4', label: '해안선 변화', desc: '침식 2.1m 후퇴 감지', box: { w: 44, h: 36 } },
     ],
     cases: [
