@@ -278,7 +278,7 @@ const industries = [
           { title: '안전 등급 산정', desc: 'AI 분석 결과를 기반으로 시설물 안전 등급을 자동 산정' },
           { title: '이력 관리', desc: '시설물별 점검 이력 데이터베이스 구축 및 유지보수 계획 지원' },
         ],
-        caseImage: asset('assets/solution-disaster.jpg'),
+        caseImage: asset('assets/crackeye-service.png'),
       },
       {
         id: 'totalcare',
