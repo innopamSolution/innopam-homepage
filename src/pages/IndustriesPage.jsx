@@ -136,7 +136,7 @@ const industries = [
           { title: '행정 연계', desc: '지자체 공간정보시스템과 연동하여 변화 이력을 자동 반영' },
           { title: '이상 감지 알림', desc: '불법 건축·개발 등 이상 변화 발생 시 실시간 알림 제공' },
         ],
-        caseImage: asset('assets/solution-city.jpg'),
+        caseImage: asset('assets/cityvision-service.png'),
       },
       {
         id: 'seoul-urban',
@@ -439,13 +439,13 @@ export default function IndustriesPage() {
                       </div>
                     </div>
                     <div
-                      className={`w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl shrink-0 ${activeCase.id === 'crackeye' ? 'overflow-x-auto overflow-y-hidden' : 'overflow-hidden'}`}
+                      className={`w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl shrink-0 ${['crackeye','cityvision'].includes(activeCase.id) ? 'overflow-x-auto overflow-y-hidden' : 'overflow-hidden'}`}
                       style={{ boxShadow: '0px 4px 4px rgba(0,0,0,0.15)' }}
                     >
                       <img
                         src={activeCase.caseImage}
                         alt={activeCase.title}
-                        className={activeCase.id === 'crackeye' ? 'h-full w-auto max-w-none' : 'w-full h-full object-cover object-left-top'}
+                        className={['crackeye','cityvision'].includes(activeCase.id) ? 'h-full w-auto max-w-none' : 'w-full h-full object-cover object-left-top'}
                       />
                     </div>
                   </div>
