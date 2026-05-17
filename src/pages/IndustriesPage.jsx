@@ -439,7 +439,7 @@ export default function IndustriesPage() {
                       </div>
                     </div>
                     <div
-                      className={`w-full h-[240px] md:h-[380px] lg:h-[447px] rounded-xl overflow-hidden shrink-0 ${activeCase.id === 'crackeye' ? 'lg:w-[880px] xl:w-[880px]' : 'lg:w-[580px] xl:w-[613px]'}`}
+                      className={`w-full rounded-xl overflow-hidden shrink-0 ${activeCase.id === 'crackeye' ? 'lg:w-[704px] xl:w-[704px] h-[200px] md:h-[280px] lg:h-[358px]' : 'lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px]'}`}
                       style={{ boxShadow: '0px 4px 4px rgba(0,0,0,0.15)' }}
                     >
                       <img
