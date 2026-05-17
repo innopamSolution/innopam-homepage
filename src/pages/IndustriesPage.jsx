@@ -291,7 +291,7 @@ const industries = [
           { title: '3D 모델 생성', desc: '포인트 클라우드 기반으로 교량·터널 등 시설물의 고정밀 3D 메시 모델 자동 생성' },
           { title: '정사영상 생성', desc: '3D 모델을 기반으로 왜곡 보정된 정사영상을 자동 생성하여 GIS 활용 가능 형태로 제공' },
         ],
-        caseImage: asset('assets/solution-disaster.jpg'),
+        caseImage: asset('assets/ortho-3d-model.png'),
       },
     ],
   },
@@ -439,13 +439,13 @@ export default function IndustriesPage() {
                       </div>
                     </div>
                     <div
-                      className={`w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl shrink-0 ${['crackeye','cityvision'].includes(activeCase.id) ? 'overflow-x-auto overflow-y-hidden' : 'overflow-hidden'}`}
+                      className={`w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl shrink-0 ${['crackeye','cityvision','totalcare'].includes(activeCase.id) ? 'overflow-x-auto overflow-y-hidden' : 'overflow-hidden'}`}
                       style={{ boxShadow: '0px 4px 4px rgba(0,0,0,0.15)' }}
                     >
                       <img
                         src={activeCase.caseImage}
                         alt={activeCase.title}
-                        className={['crackeye','cityvision'].includes(activeCase.id) ? 'h-full w-auto max-w-none' : 'w-full h-full object-cover object-left-top'}
+                        className={['crackeye','cityvision','totalcare'].includes(activeCase.id) ? 'h-full w-auto max-w-none' : 'w-full h-full object-cover object-left-top'}
                       />
                     </div>
                   </div>
