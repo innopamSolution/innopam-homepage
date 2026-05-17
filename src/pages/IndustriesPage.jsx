@@ -439,13 +439,13 @@ export default function IndustriesPage() {
                       </div>
                     </div>
                     <div
-                      className={`w-full rounded-xl overflow-hidden shrink-0 ${activeCase.id === 'crackeye' ? 'lg:w-[704px] xl:w-[704px] h-[200px] md:h-[280px] lg:h-[358px]' : 'lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px]'}`}
+                      className={`w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl shrink-0 ${activeCase.id === 'crackeye' ? 'overflow-x-auto overflow-y-hidden' : 'overflow-hidden'}`}
                       style={{ boxShadow: '0px 4px 4px rgba(0,0,0,0.15)' }}
                     >
                       <img
                         src={activeCase.caseImage}
                         alt={activeCase.title}
-                        className="w-full h-full object-cover object-left-top"
+                        className={activeCase.id === 'crackeye' ? 'h-full w-auto max-w-none' : 'w-full h-full object-cover object-left-top'}
                       />
                     </div>
                   </div>
