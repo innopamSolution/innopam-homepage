@@ -119,7 +119,7 @@ export default function NewsDetailPage() {
 
           {/* 본문 콘텐츠 */}
           <div className="w-full max-w-[1264px] flex flex-col gap-[50px] items-center pb-[40px] border-b border-[#e9e9e9]">
-            {((lang === 'en' && item.content_en) ? item.content_en : item.content).map((block, i) => {
+            {((lang === 'en' && item.content_en) ? item.content_en : (item.content || [])).map((block, i) => {
               if (block.type === 'text') {
                 return (
                   <p

@@ -152,7 +152,7 @@ export default function NewsPage() {
   useEffect(() => {
     setActiveTab('All');
     setPage(1);
-  }, [t]);
+  }, [lang]);
 
   const filtered = activeTab === 'All'
     ? newsItems
