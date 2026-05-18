@@ -5,35 +5,8 @@ import { asset } from '../utils/asset';
 import { useFadeUp } from '../utils/useFadeUp';
 
 const projects = [
-  // ── 도시변화 모니터링 ──
   {
     id: 0,
-    title: "GeoX CityVision",
-    subtitle: "드론·항공 영상 기반 도시 변화 탐지 및 3D 도시 모델링 서비스",
-    features: [
-      { title: "변화 자동 탐지", desc: "다시기 영상 비교를 통해 건물·도로 등 도시 구조물 변화를 자동으로 감지" },
-      { title: "3D 도시 모델", desc: "항공·드론 영상으로부터 고정밀 3D 도시 모델을 자동 생성" },
-      { title: "행정 연계", desc: "지자체 공간정보시스템과 연동하여 변화 이력을 자동 반영" },
-      { title: "이상 감지 알림", desc: "불법 건축·개발 등 이상 변화 발생 시 실시간 알림 제공" },
-    ],
-    image: asset('assets/solution-city.jpg'),
-    tag: '도시변화 모니터링',
-  },
-  {
-    id: 1,
-    title: "서울시 도시변화탐지",
-    subtitle: "서울시 전역 위성·항공 영상 기반 도시 변화 자동 탐지 서비스",
-    features: [
-      { title: "건물 변화 탐지", desc: "서울시 전역의 신축·증축·멸실 건물을 위성 영상으로 자동 탐지" },
-      { title: "개발제한구역 감시", desc: "그린벨트 내 불법 개발 행위를 AI로 실시간 모니터링" },
-      { title: "도로·인프라 변화", desc: "도로 신설·확장 및 도시 기반시설 변화를 자동으로 감지" },
-      { title: "이력 관리", desc: "탐지된 변화 이력을 시계열로 관리하고 행정 보고서 자동 생성" },
-    ],
-    image: asset('assets/seoul-change-detection.png'),
-    tag: '도시변화 모니터링',
-  },
-  {
-    id: 2,
     title: "GEO-AI 영상분석 서비스",
     subtitle: "멀티센서(위성, 항공, 드론)영상 기반의 GeoAI 분석 플랫폼 서비스",
     features: [
@@ -45,9 +18,8 @@ const projects = [
     image: asset('assets/industries-case-screen.jpg'),
     tag: '도시변화 모니터링',
   },
-  // ── 농업분석 ──
   {
-    id: 3,
+    id: 1,
     title: "재배면적 관리 서비스",
     subtitle: "드론·위성 영상 기반 농작물 재배면적 AI 자동 분석 및 관리 서비스",
     features: [
@@ -60,7 +32,7 @@ const projects = [
     tag: '농업분석',
   },
   {
-    id: 4,
+    id: 2,
     title: "드론영상관리 시스템",
     subtitle: "농업 드론 영상 데이터의 수집·저장·분석을 통합하는 관리 플랫폼",
     features: [
@@ -72,9 +44,8 @@ const projects = [
     image: asset('assets/drone-mgmt-service.png'),
     tag: '농업분석',
   },
-  // ── 산림 · 해양 ──
   {
-    id: 5,
+    id: 3,
     title: "불법 산림훼손 관리 서비스",
     subtitle: "위성·드론 영상 기반 산림 변화 탐지 및 훼손지 관리 서비스",
     features: [
@@ -87,7 +58,7 @@ const projects = [
     tag: '산림 · 해양',
   },
   {
-    id: 6,
+    id: 4,
     title: "해양쓰레기 관리 서비스",
     subtitle: "위성·드론 영상 기반 해양환경 변화 탐지 및 해양 쓰레기 관리 서비스",
     features: [
@@ -99,32 +70,18 @@ const projects = [
     image: asset('assets/ocean-waste-service.png'),
     tag: '산림 · 해양',
   },
-  // ── 재난 · 안전 ──
   {
-    id: 7,
-    title: "CrackEye X",
-    subtitle: "AI 기반 시설물 균열·손상 자동 탐지 및 안전점검 관리 서비스",
+    id: 5,
+    title: "정사영상생성 솔루션",
+    subtitle: "드론·항공 영상을 활용한 고정밀 정사영상 및 3D 모델 자동 생성 솔루션",
     features: [
-      { title: "균열 자동 탐지", desc: "영상 데이터에서 AI가 균열·박리·파손 등 손상을 자동으로 식별" },
-      { title: "외관조사망도 생성", desc: "점검 결과를 기반으로 외관조사망도를 자동으로 생성" },
-      { title: "안전 등급 산정", desc: "AI 분석 결과를 기반으로 시설물 안전 등급을 자동 산정" },
-      { title: "이력 관리", desc: "시설물별 점검 이력 데이터베이스 구축 및 유지보수 계획 지원" },
+      { title: "정사영상 자동 생성", desc: "드론·항공 촬영 영상을 자동으로 처리하여 기하보정된 정사영상 생성" },
+      { title: "3D 포인트클라우드", desc: "SfM/MVS 기반으로 고밀도 3D 포인트클라우드 및 DSM 자동 생성" },
+      { title: "정확도 검증", desc: "GCP(지상기준점) 기반 정확도 검증 및 품질 리포트 자동 생성" },
+      { title: "공간정보 연계", desc: "생성된 정사영상을 GIS 시스템에 바로 연동하여 분석에 활용" },
     ],
-    image: asset('assets/solution-disaster.jpg'),
-    tag: '재난 · 안전',
-  },
-  {
-    id: 8,
-    title: "기반시설 첨단관리 (TotalCare)",
-    subtitle: "기반시설 안전점검 전 과정을 디지털화하는 스마트 유지관리 시스템",
-    features: [
-      { title: "디지털 점검", desc: "현장 점검 결과를 모바일로 실시간 입력하고 자동 분석" },
-      { title: "IoT 센서 연동", desc: "진동·변위 센서 데이터와 영상 분석 결과를 통합 관리" },
-      { title: "위험도 예측", desc: "축적된 이력 데이터 기반 AI 모델로 시설물 위험도 예측" },
-      { title: "행정 보고 자동화", desc: "안전점검 결과 보고서 및 유지보수 계획서를 자동 생성" },
-    ],
-    image: asset('assets/solution-disaster.jpg'),
-    tag: '재난 · 안전',
+    image: asset('assets/ortho-3d-model.png'),
+    tag: '공간정보',
   },
 ];
 
