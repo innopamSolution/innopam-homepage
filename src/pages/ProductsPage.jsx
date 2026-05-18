@@ -185,7 +185,7 @@ function HeroSection() {
       </div>
 
       {/* Content — centered */}
-      <div className="absolute inset-0 flex flex-col gap-[38px] items-center justify-center px-4 md:px-[88px] text-center">
+      <div className="hero-content absolute inset-0 flex flex-col gap-[38px] items-center justify-center px-4 md:px-[88px] text-center">
         {/* Section label */}
         <div className="flex items-center gap-[10px]">
           <img

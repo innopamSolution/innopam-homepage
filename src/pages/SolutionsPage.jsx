@@ -119,7 +119,7 @@ export default function SolutionsPage() {
             style={{ filter: 'blur(3px)', transform: 'scale(1.1)' }}
           />
           <div className="absolute inset-0 bg-[rgba(41,42,105,0.6)]" />
-          <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
+          <div className="hero-content relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
             <SectionLabel text="Solutions" light />
             <h1 className="font-pretendard font-bold text-white text-[48px] tracking-[-2px] leading-[65px]">
               Mapping &amp; AI Solutions

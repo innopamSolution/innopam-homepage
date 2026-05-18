@@ -13,6 +13,10 @@
 .animate-fadeIn {
   animation: fadeIn 0.4s ease forwards;
 }
+/* 히어로 콘텐츠 공통 진입 애니메이션 */
+.hero-content {
+  animation: fadeUpIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
 /* Industries 스캔 라인 */
 @keyframes scanLine {

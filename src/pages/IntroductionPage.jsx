@@ -31,7 +31,7 @@ export function CompanyHero({ subtitle }) {
         style={{ objectPosition: '50% 41%' }}
       />
       <div className="absolute inset-0" style={{ background: 'rgba(20,26,54,0.5)' }} />
-      <div className="relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
+      <div className="hero-content relative z-10 flex flex-col items-center text-center gap-[38px] px-6 max-w-[795px]">
         <SectionLabel text="Company" light />
         <h1 className="font-pretendard font-bold text-white text-[34px] md:text-[48px] tracking-[-2px]" style={{ lineHeight: '65px' }}>
           About Innopam

@@ -24,7 +24,7 @@ export default function NewsHero() {
       <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.5)' }} />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center gap-[38px] px-6 h-full">
+      <div className="hero-content relative z-10 flex flex-col items-center justify-center text-center gap-[38px] px-6 h-full">
         <SectionLabel text="News" light />
         <h1
           className="font-pretendard font-bold text-white text-[36px] md:text-[48px] tracking-[-2px]"

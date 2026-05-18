@@ -332,8 +332,7 @@ export default function IndustriesPage() {
             <div className="absolute inset-0" style={{ background: 'rgba(41,42,105,0.6)' }} />
           </div>
           {/* 히어로 텍스트: 페이지 진입 시 fade-up */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-[38px] px-4"
-            style={{ animation: 'fadeUpIn 0.8s ease both' }}>
+          <div className="hero-content absolute inset-0 flex flex-col items-center justify-center gap-[38px] px-4">
             <SectionLabel text="Industries" light />
             <div className="flex flex-col items-center gap-4 text-center">
               <h1 className="font-pretendard font-bold text-[40px] md:text-[48px] text-white tracking-[-2px] leading-[1.35]">
