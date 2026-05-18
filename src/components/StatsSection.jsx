@@ -26,7 +26,7 @@ export default function StatsSection() {
 
       <div ref={ref} className={`relative grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-0 md:flex md:justify-center md:gap-[190px] items-center ${className}`}>
         {stats.map((stat) => (
-          <div key={stat.label} className="flex flex-col gap-[8px] md:gap-[32px] items-center text-center text-[#5871ed] w-full md:w-[140px] shrink-0">
+          <div key={stat.label} className="flex flex-col gap-[8px] md:gap-[20px] items-center text-center text-[#5871ed] w-full md:w-[140px] shrink-0">
 
             {/* 라벨: Figma text-[20px] leading-[40px] medium */}
             <p className="font-pretendard font-medium text-[13px] md:text-[20px] leading-[1.2] md:leading-[40px] w-full">
