@@ -6,6 +6,7 @@ import NewsHero from '../components/NewsHero';
 import { asset } from '../utils/asset';
 import { fetchNewsById, fetchNews } from '../lib/supabase';
 import { newsItems as localNewsItems } from '../data/news';
+import { useLanguage } from '../i18n/LanguageContext';
 
 function IconBack() {
   return (
@@ -26,6 +27,7 @@ function IconNext() {
 export default function NewsDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { lang, t } = useLanguage();
   const [item, setItem] = useState(null);
   const [prevItem, setPrevItem] = useState(null);
   const [nextItem, setNextItem] = useState(null);
@@ -91,7 +93,7 @@ export default function NewsDetailPage() {
             >
               <IconBack />
               <span className="font-pretendard font-bold text-[#3a343b] text-[20px] tracking-[-1.2px]">
-                목록
+                {t('목록', 'List')}
               </span>
             </button>
           </div>
@@ -100,14 +102,14 @@ export default function NewsDetailPage() {
           <div className="w-full max-w-[1264px] flex flex-col items-start pb-[40px] border-b border-[#e9e9e9]">
             {/* 카테고리 */}
             <span className="font-pretendard font-bold text-[#4262ff] text-[14px] leading-[24px] mb-1">
-              이노팸 소식
+              {t('이노팸 소식', 'Innopam News')}
             </span>
             {/* 제목 */}
             <h1
               className="font-pretendard font-semibold text-[#3a343b] text-[30px] w-full mb-8"
               style={{ lineHeight: '36px' }}
             >
-              {item.title}
+              {(lang === 'en' && item.title_en) ? item.title_en : item.title}
             </h1>
             {/* 날짜 */}
             <p className="font-pretendard font-normal text-[#6d758f] text-[16px]" style={{ lineHeight: '22px' }}>
@@ -117,7 +119,7 @@ export default function NewsDetailPage() {
 
           {/* 본문 콘텐츠 */}
           <div className="w-full max-w-[1264px] flex flex-col gap-[50px] items-center pb-[40px] border-b border-[#e9e9e9]">
-            {item.content.map((block, i) => {
+            {((lang === 'en' && item.content_en) ? item.content_en : item.content).map((block, i) => {
               if (block.type === 'text') {
                 return (
                   <p
@@ -162,7 +164,7 @@ export default function NewsDetailPage() {
               >
                 <IconBack />
                 <span className="font-pretendard font-bold text-[#3a343b] text-[20px] tracking-[-1.2px]">
-                  이전글
+                  {t('이전글', 'Prev')}
                 </span>
               </Link>
             ) : (
@@ -174,7 +176,7 @@ export default function NewsDetailPage() {
                 className="flex items-center gap-[10px] hover:opacity-70 transition-opacity"
               >
                 <span className="font-pretendard font-bold text-[#3a343b] text-[20px] tracking-[-1.2px]">
-                  다음글
+                  {t('다음글', 'Next')}
                 </span>
                 <IconNext />
               </Link>

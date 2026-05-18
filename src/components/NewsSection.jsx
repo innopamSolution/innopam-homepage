@@ -46,7 +46,7 @@ function IconArrow() {
 }
 
 export default function NewsSection() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const TABS = ['All', t('이노팸 소식', 'Innopam News'), t('언론보도', 'Press Coverage')];
 
   const [activeTab, setActiveTab] = useState('All');
@@ -153,7 +153,7 @@ export default function NewsSection() {
 
                 {/* Title */}
                 <h3 className="font-pretendard font-semibold text-[20px] md:text-[30px] leading-[1.3] md:leading-[36px] text-[#3a343b] mb-8 w-full">
-                  {item.title}
+                  {(lang === 'en' && item.title_en) ? item.title_en : item.title}
                 </h3>
 
                 {/* CTA */}

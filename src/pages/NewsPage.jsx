@@ -48,9 +48,10 @@ function IconArrow() {
   );
 }
 
-function NewsCard({ item, t }) {
+function NewsCard({ item, t, lang }) {
   const isInternal = item.category === '이노팸 소식';
   const imgSrc = item.image_url || item.image;
+  const displayTitle = (lang === 'en' && item.title_en) ? item.title_en : item.title;
 
   const WrapperLink = ({ children, className }) => isInternal
     ? <Link to={`/news/${item.id}`} className={className}>{children}</Link>
@@ -89,7 +90,7 @@ function NewsCard({ item, t }) {
           </div>
           <WrapperLink className="block">
             <h2 className="font-pretendard font-semibold text-[#3a343b] text-[17px] leading-[1.5] line-clamp-3">
-              {item.title}
+              {displayTitle}
             </h2>
           </WrapperLink>
           {linkEl}
@@ -121,12 +122,12 @@ function NewsCard({ item, t }) {
           {isInternal ? (
             <Link to={`/news/${item.id}`} className="hover:text-[#4262ff] transition-colors">
               <h2 className="font-pretendard font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
-                {item.title}
+                {displayTitle}
               </h2>
             </Link>
           ) : (
             <h2 className="font-pretendard font-semibold text-[#3a343b] w-full mb-8" style={{ fontSize: '30px', lineHeight: '36px' }}>
-              {item.title}
+              {displayTitle}
             </h2>
           )}
           {linkEl}
@@ -137,7 +138,7 @@ function NewsCard({ item, t }) {
 }
 
 export default function NewsPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const TABS = ['All', t('이노팸 소식', 'Innopam News'), t('언론보도', 'Press Coverage')];
 
   const [activeTab, setActiveTab] = useState('All');
@@ -204,7 +205,7 @@ export default function NewsPage() {
                   {t('해당 카테고리의 소식이 없습니다.', 'No news available in this category.')}
                 </p>
               ) : paged.map(item => (
-                <NewsCard key={item.id} item={item} t={t} />
+                <NewsCard key={item.id} item={item} t={t} lang={lang} />
               ))}
             </div>
 

@@ -7,6 +7,7 @@ export const newsItems = [
     date: '2025-04-15',
     category: '이노팸 소식',
     title: '이노팸, 2025 스마트시티 엑스포 참가 및 GeoX 솔루션 시연',
+    title_en: 'Innopam Participates in 2025 Smart City Expo, Demonstrates GeoX Solutions',
     image: asset('assets/news/20241028.jpg'),
     link: null,
     content: [
@@ -33,12 +34,37 @@ export const newsItems = [
         value: '이번 행사에는 국내외 스마트시티 관련 기업 및 기관 200여 곳이 참가하였으며, 이노팸은 특히 변화탐지 AI 기술 시연으로 높은 관심을 받았습니다.',
       },
     ],
+    content_en: [
+      {
+        type: 'text',
+        value: 'Innopam participated in the 2025 Smart City Expo held from April 15 to 17, 2025, showcasing its GeoX platform solution series.',
+      },
+      {
+        type: 'text',
+        value: 'At the expo, Innopam exhibited its key products including GeoXRealMap, GeoX CityVision, and CrackEyeX, and presented case studies on solving urban challenges using geospatial AI technology.',
+      },
+      {
+        type: 'image',
+        src: asset('assets/news/20241028.jpg'),
+        alt: '2025 Smart City Expo Innopam Booth',
+        caption: 'Overview of the Innopam Booth at the 2025 Smart City Expo',
+      },
+      {
+        type: 'text',
+        value: 'The CEO stated, "We will continue to advance our next-generation platform that leverages GeoAI technology to solve challenges across diverse fields including urban planning, agriculture, disaster response, and infrastructure management."',
+      },
+      {
+        type: 'text',
+        value: 'The event saw participation from over 200 smart city companies and organizations from Korea and abroad, with Innopam drawing significant attention for its change detection AI technology demonstration.',
+      },
+    ],
   },
   {
     id: 102,
     date: '2025-03-10',
     category: '이노팸 소식',
     title: '이노팸, 국토교통부 공간정보 활용 촉진사업 최종 선정',
+    title_en: "Innopam Selected for Ministry of Land's Geospatial Utilization Promotion Project",
     image: asset('assets/news/20230209.jpeg'),
     link: null,
     content: [
@@ -61,12 +87,33 @@ export const newsItems = [
         value: '이노팸 관계자는 "이번 사업 선정을 계기로 GeoAI 기반 공간정보 서비스의 실용화를 더욱 가속화할 수 있을 것으로 기대한다"고 전했습니다.',
       },
     ],
+    content_en: [
+      {
+        type: 'text',
+        value: 'Innopam has been selected as a final participant in the 2025 Geospatial Information Utilization Promotion Project organized by the Ministry of Land, Infrastructure and Transport. The project aims to develop and demonstrate AI technologies based on geospatial information, and Innopam was named among the 10 selected companies.',
+      },
+      {
+        type: 'text',
+        value: 'Through this project, Innopam plans to advance its change detection AI model based on satellite, aerial, and drone imagery and develop demonstration services.',
+      },
+      {
+        type: 'image',
+        src: asset('assets/news/20230209.jpeg'),
+        alt: 'Ministry of Land Geospatial Project Selection',
+        caption: 'Commemoration of Selection for the Ministry of Land Geospatial Utilization Promotion Project',
+      },
+      {
+        type: 'text',
+        value: 'An Innopam representative noted, "We expect this project selection to further accelerate the commercialization of GeoAI-based geospatial information services."',
+      },
+    ],
   },
   {
     id: 103,
     date: '2025-01-20',
     category: '이노팸 소식',
     title: '이노팸-제주특별자치도, 스마트 농업 드론 데이터 분석 MOU 체결',
+    title_en: 'Innopam Signs MOU with Jeju Special Self-Governing Province for Smart Agriculture Drone Data Analysis',
     image: asset('assets/news/20210215.jpeg'),
     link: null,
     content: [
@@ -91,6 +138,30 @@ export const newsItems = [
       {
         type: 'text',
         value: '이노팸은 이번 협약을 시작으로 제주 지역 농업 분야 디지털 전환을 위한 다양한 사업을 추진해 나갈 계획입니다.',
+      },
+    ],
+    content_en: [
+      {
+        type: 'text',
+        value: 'On January 20, 2025, Innopam signed a Memorandum of Understanding (MOU) with Jeju Special Self-Governing Province for smart agriculture drone data analysis.',
+      },
+      {
+        type: 'text',
+        value: 'Through this agreement, Innopam will collect and analyze agricultural drone imagery data in Jeju to provide precision agriculture services including crop growth monitoring, pest detection, and yield forecasting.',
+      },
+      {
+        type: 'image',
+        src: asset('assets/news/20210215.jpeg'),
+        alt: 'MOU Signing Ceremony',
+        caption: 'Innopam–Jeju Province MOU Signing Ceremony',
+      },
+      {
+        type: 'text',
+        value: 'A Jeju Province official noted, "We expect this initiative to enhance agricultural productivity and increase farmer incomes by building a smart agriculture framework that integrates drone and AI technologies."',
+      },
+      {
+        type: 'text',
+        value: "Innopam plans to pursue various projects for the digital transformation of Jeju's agricultural sector, starting with this agreement.",
       },
     ],
   },
