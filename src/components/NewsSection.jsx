@@ -78,7 +78,7 @@ export default function NewsSection() {
       {/* Header */}
       <div ref={headerRef.ref} className={`flex flex-col items-center text-center max-w-[803px] ${headerRef.className}`}>
         <SectionLabel text="News" />
-        <h2 className="font-space font-light text-[32px] md:text-[40px] leading-[48px] text-black mt-4 mb-3">
+        <h2 className="font-pretendard font-bold text-[32px] md:text-[40px] leading-[48px] text-[#32394c] mt-4 mb-3">
           {t('이노팸 소식과 언론보도', 'Innopam News & Press Coverage')}
         </h2>
         <p className="font-pretendard text-[16px] text-[#444] leading-[1.4]">
