@@ -52,10 +52,8 @@ function NewsCard({ item, t, lang }) {
   const isInternal = item.category === '이노팸 소식';
   const imgSrc = item.image_url || item.image;
   const displayTitle = (lang === 'en' && item.title_en) ? item.title_en : item.title;
-
-  const WrapperLink = ({ children, className }) => isInternal
-    ? <Link to={`/news/${item.id}`} className={className}>{children}</Link>
-    : <a href={item.link} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>;
+  const imgBoxClass = "shrink-0 w-[461px] h-[286px] rounded-[8px] overflow-hidden block";
+  const imgBoxStyle = { boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' };
 
   const linkEl = isInternal ? (
     <Link to={`/news/${item.id}`} className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity mt-auto pt-4">
@@ -67,20 +65,23 @@ function NewsCard({ item, t, lang }) {
     </a>
   );
 
+  const thumbImg = (
+    <img
+      src={imgSrc}
+      alt={displayTitle}
+      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+    />
+  );
+
   return (
     <>
       {/* ── 모바일 카드 ── */}
       <article className="md:hidden bg-white rounded-2xl overflow-hidden border border-gray-100"
         style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.07)' }}>
-        <WrapperLink className="block">
-          <div className="w-full overflow-hidden" style={{ aspectRatio: '16/9' }}>
-            <img
-              src={imgSrc}
-              alt={item.title}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-        </WrapperLink>
+        {isInternal
+          ? <Link to={`/news/${item.id}`} className="block"><div className="w-full overflow-hidden" style={{ aspectRatio: '16/9' }}>{thumbImg}</div></Link>
+          : <a href={item.link} target="_blank" rel="noopener noreferrer" className="block"><div className="w-full overflow-hidden" style={{ aspectRatio: '16/9' }}>{thumbImg}</div></a>
+        }
         <div className="flex flex-col p-5 gap-3">
           <div className="flex items-center gap-3">
             <span className={`text-[11px] font-pretendard font-bold px-2 py-0.5 rounded-full ${isInternal ? 'bg-blue-50 text-[#4262ff]' : 'bg-gray-100 text-[#6d758f]'}`}>
@@ -88,25 +89,20 @@ function NewsCard({ item, t, lang }) {
             </span>
             <span className="text-[#6d758f] text-[13px] font-pretendard">{item.date}</span>
           </div>
-          <WrapperLink className="block">
-            <h2 className="font-pretendard font-semibold text-[#3a343b] text-[17px] leading-[1.5] line-clamp-3">
-              {displayTitle}
-            </h2>
-          </WrapperLink>
+          {isInternal
+            ? <Link to={`/news/${item.id}`} className="block"><h2 className="font-pretendard font-semibold text-[#3a343b] text-[17px] leading-[1.5] line-clamp-3">{displayTitle}</h2></Link>
+            : <a href={item.link} target="_blank" rel="noopener noreferrer" className="block"><h2 className="font-pretendard font-semibold text-[#3a343b] text-[17px] leading-[1.5] line-clamp-3">{displayTitle}</h2></a>
+          }
           {linkEl}
         </div>
       </article>
 
       {/* ── 데스크탑 가로형 ── */}
       <article className="hidden md:flex flex-row items-center justify-between gap-0 w-full">
-        <WrapperLink className="shrink-0 w-[461px] h-[286px] rounded-[8px] overflow-hidden block"
-          style={{ boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.15)' }}>
-          <img
-            src={imgSrc}
-            alt={item.title}
-            className="w-full h-full object-cover object-left-top hover:scale-105 transition-transform duration-300"
-          />
-        </WrapperLink>
+        {isInternal
+          ? <Link to={`/news/${item.id}`} className={imgBoxClass} style={imgBoxStyle}><img src={imgSrc} alt={displayTitle} className="w-full h-full object-cover object-left-top hover:scale-105 transition-transform duration-300" /></Link>
+          : <a href={item.link} target="_blank" rel="noopener noreferrer" className={imgBoxClass} style={imgBoxStyle}><img src={imgSrc} alt={displayTitle} className="w-full h-full object-cover object-left-top hover:scale-105 transition-transform duration-300" /></a>
+        }
         <div className="flex flex-col items-start w-[697px]">
           <div className="flex items-center gap-[18px] mb-6">
             <div className="flex items-center gap-[6px] text-[#6d758f] text-[16px] font-pretendard">
