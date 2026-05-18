@@ -28,7 +28,7 @@ export default function Hero() {
           {/* Title */}
           <h1
             className="font-space font-bold text-white w-full text-[34px] md:text-[48px] text-center"
-            style={{ lineHeight: "1.2" }}
+            style={{ lineHeight: "1.2", animation: "fadeUpIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s both" }}
           >
             Innovation Platform
             <br />
@@ -38,7 +38,7 @@ export default function Hero() {
           {/* Description */}
           <p
             className="font-pretendard font-normal text-white w-full text-[17px] md:text-[22px] text-center"
-            style={{ lineHeight: "1.7" }}
+            style={{ lineHeight: "1.7", animation: "fadeUpIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.4s both" }}
           >
             AI와 공간정보, 드론, 빅데이터 기술을 통해<span className="hidden md:inline"><br /></span>{' '}
             도시·농업·재난 등 다양한 환경의 변화를 분석하고<span className="hidden md:inline"><br /></span>{' '}
