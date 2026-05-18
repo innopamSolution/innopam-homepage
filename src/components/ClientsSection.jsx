@@ -65,7 +65,7 @@ export default function ClientsSection() {
 
       {/* 헤더 */}
       <div ref={headerRef.ref} className={`flex flex-col items-center text-center leading-none max-w-[803px] ${headerRef.className}`}>
-        <h2 className="section-title font-space font-light text-[40px] text-black mb-3">Clients</h2>
+        <h2 className="section-title mb-3">Clients</h2>
         <p className="font-pretendard text-[16px] text-[#444] leading-[1.4]">
           {t('이노팸의 공공기관 및 지자체 파트너', "Innopam's public institution and local government partners")}
         </p>

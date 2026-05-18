@@ -142,7 +142,7 @@ body {
   }
 
   .section-title {
-    @apply font-space font-light text-[40px] leading-[48px] text-black;
+    @apply font-pretendard font-bold text-[40px] leading-[48px] text-[#32394c];
   }
 
   /* label-arrow class removed — now using Figma arrow01.svg via SectionLabel component */
