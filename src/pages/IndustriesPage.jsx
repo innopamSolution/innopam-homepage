@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SectionLabel from '../components/SectionLabel';
 import { asset } from '../utils/asset';
+import { useFadeUp } from '../utils/useFadeUp';
 
 // ── 체크 아이콘 ────────────────────────────────────────────────────
 function CheckIcon() {
@@ -302,6 +303,10 @@ export default function IndustriesPage() {
   const [activeIndustryId, setActiveIndustryId] = useState(industries[0].id);
   const [activeCaseId, setActiveCaseId] = useState(industries[0].cases[0].id);
 
+  const tabsRef    = useFadeUp(0.1, 'up');
+  const contentRef = useFadeUp(0.05, 'up');
+  const casesRef   = useFadeUp(0.05, 'up');
+
   const activeIndustry = industries.find(i => i.id === activeIndustryId);
   const activeCase = activeIndustry?.cases.find(c => c.id === activeCaseId);
 
@@ -318,7 +323,6 @@ export default function IndustriesPage() {
 
         {/* 히어로 */}
         <div className="relative w-full h-[400px] overflow-hidden">
-          {/* 배경 이미지 */}
           <div className="absolute inset-0 pointer-events-none">
             <img
               alt=""
@@ -327,9 +331,9 @@ export default function IndustriesPage() {
             />
             <div className="absolute inset-0" style={{ background: 'rgba(41,42,105,0.6)' }} />
           </div>
-
-          {/* 텍스트 */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-[38px] px-4">
+          {/* 히어로 텍스트: 페이지 진입 시 fade-up */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-[38px] px-4"
+            style={{ animation: 'fadeUpIn 0.8s ease both' }}>
             <SectionLabel text="Industries" light />
             <div className="flex flex-col items-center gap-4 text-center">
               <h1 className="font-pretendard font-bold text-[40px] md:text-[48px] text-white tracking-[-2px] leading-[1.35]">
@@ -343,7 +347,10 @@ export default function IndustriesPage() {
         </div>
 
         {/* 탭 내비게이션 */}
-        <div className="w-full px-4 md:px-[88px] py-[28px] flex justify-center">
+        <div
+          ref={tabsRef.ref}
+          className={`w-full px-4 md:px-[88px] py-[28px] flex justify-center ${tabsRef.className}`}
+        >
           <div className="flex w-full max-w-[1264px]">
             {industries.map((ind) => (
               <button
@@ -361,14 +368,20 @@ export default function IndustriesPage() {
           </div>
         </div>
 
-        {/* 콘텐츠 */}
+        {/* 콘텐츠 — 탭 전환 시 key로 re-mount하여 애니메이션 재실행 */}
         {activeIndustry && (
-          <div className="w-full px-4 md:px-[88px] pt-[80px] pb-[120px] flex flex-col gap-[80px] items-center">
+          <div
+            key={activeIndustryId}
+            className="w-full px-4 md:px-[88px] pt-[80px] pb-[120px] flex flex-col gap-[80px] items-center animate-fadeIn"
+          >
             <div className="w-full max-w-[1264px] flex flex-col gap-[80px]">
 
-              {/* 산업 개요: 타이틀+설명(좌) + 인터랙티브 원형 이미지(우) */}
-              <div className="flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-0">
-                <div className="flex flex-col gap-[80px] lg:w-[640px]">
+              {/* 산업 개요: 좌(텍스트) + 우(원형 이미지) */}
+              <div
+                ref={contentRef.ref}
+                className={`flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-0 ${contentRef.className}`}
+              >
+                <div className="flex flex-col gap-[80px] lg:w-[640px]" style={{ animationDelay: '0.1s' }}>
                   <h2 className="font-pretendard font-black text-[36px] md:text-[48px] text-[#3a343b] tracking-[-1.2px] leading-[48px]">
                     {activeIndustry.title}
                   </h2>
@@ -380,15 +393,20 @@ export default function IndustriesPage() {
                     ))}
                   </div>
                 </div>
-                <InteractiveCircle
-                  image={activeIndustry.circleImage}
-                  alt={activeIndustry.title}
-                  markers={activeIndustry.markers}
-                />
+                <div style={{ animation: 'fadeUpIn 0.7s ease 0.25s both' }}>
+                  <InteractiveCircle
+                    image={activeIndustry.circleImage}
+                    alt={activeIndustry.title}
+                    markers={activeIndustry.markers}
+                  />
+                </div>
               </div>
 
               {/* 실제 도입 사례 */}
-              <div className="flex flex-col gap-[40px]">
+              <div
+                ref={casesRef.ref}
+                className={`flex flex-col gap-[40px] ${casesRef.className}`}
+              >
                 <h3 className="font-pretendard font-medium text-[36px] md:text-[48px] text-[#3a343b] tracking-[-1.2px] leading-[48px]">
                   실제 도입 사례
                 </h3>
@@ -410,9 +428,9 @@ export default function IndustriesPage() {
                   ))}
                 </div>
 
-                {/* 도입사례 상세 */}
+                {/* 도입사례 상세 — 케이스 전환 시 key로 재애니메이션 */}
                 {activeCase && (
-                  <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-[40px] animate-fadeIn">
+                  <div key={activeCase.id} className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-[40px] animate-fadeIn">
                     <div className="flex flex-col gap-[30px] lg:flex-1 min-w-0">
                       <div className="flex flex-col gap-1">
                         <h4 className="font-pretendard font-bold text-[24px] md:text-[32px] text-black tracking-[-2px] leading-[65px]">
@@ -424,7 +442,8 @@ export default function IndustriesPage() {
                       </div>
                       <div className="flex flex-col gap-[20px] md:gap-[26px]">
                         {activeCase.features.map((f, i) => (
-                          <div key={i} className="flex gap-[14px] items-start">
+                          <div key={i} className="flex gap-[14px] items-start"
+                            style={{ animation: `fadeUpIn 0.5s ease ${0.1 + i * 0.08}s both` }}>
                             <CheckIcon />
                             <div className="flex flex-col">
                               <p className="font-pretendard text-[16px] md:text-[18px] font-bold text-[#050038] leading-[24px]">
@@ -440,7 +459,7 @@ export default function IndustriesPage() {
                     </div>
                     <div
                       className={`w-full lg:w-[580px] xl:w-[613px] h-[240px] md:h-[380px] lg:h-[447px] rounded-xl shrink-0 ${['crackeye','cityvision','totalcare'].includes(activeCase.id) ? 'overflow-x-auto overflow-y-hidden' : 'overflow-hidden'}`}
-                      style={{ boxShadow: '0px 4px 4px rgba(0,0,0,0.15)' }}
+                      style={{ boxShadow: '0px 4px 4px rgba(0,0,0,0.15)', animation: 'fadeUpIn 0.6s ease 0.2s both' }}
                     >
                       <img
                         src={activeCase.caseImage}
