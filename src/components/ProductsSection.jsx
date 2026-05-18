@@ -31,8 +31,7 @@ export default function ProductsSection() {
             <img
               src={asset('assets/geox-logo-new.svg')}
               alt="GeoX"
-              style={{ width: "90px", height: "25px" }}
-              className="md:w-[137px] md:h-[38px]"
+              className="w-[90px] h-[25px] md:w-[137px] md:h-[38px]"
             />
             <p className="font-pretendard font-black text-[26px] md:text-[48px] text-white leading-[1.3] md:leading-[65px] tracking-[-1px] md:tracking-[-2px]">
               Series
