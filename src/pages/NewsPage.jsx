@@ -6,8 +6,8 @@ import Footer from '../components/Footer';
 import NewsHero from '../components/NewsHero';
 import { fetchNews } from '../lib/supabase';
 import { newsItems as localNewsItems } from '../data/news';
+import { useLanguage } from '../i18n/LanguageContext';
 
-const TABS = ['All', '이노팸 소식', '언론보도'];
 const PER_PAGE = 10;
 
 function IconCalendar() {
@@ -48,7 +48,7 @@ function IconArrow() {
   );
 }
 
-function NewsCard({ item }) {
+function NewsCard({ item, t }) {
   const isInternal = item.category === '이노팸 소식';
   const imgSrc = item.image_url || item.image;
 
@@ -58,11 +58,11 @@ function NewsCard({ item }) {
 
   const linkEl = isInternal ? (
     <Link to={`/news/${item.id}`} className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity mt-auto pt-4">
-      자세히 보기 <IconArrow />
+      {t('자세히 보기', 'Read More')} <IconArrow />
     </Link>
   ) : (
     <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity mt-auto pt-4">
-      기사 보기 <IconExternal />
+      {t('기사 보기', 'View Article')} <IconExternal />
     </a>
   );
 
@@ -137,21 +137,32 @@ function NewsCard({ item }) {
 }
 
 export default function NewsPage() {
+  const { t } = useLanguage();
+  const TABS = ['All', t('이노팸 소식', 'Innopam News'), t('언론보도', 'Press Coverage')];
+
   const [activeTab, setActiveTab] = useState('All');
   const [page, setPage] = useState(1);
   const [newsItems, setNewsItems] = useState(localNewsItems);
-  const [dbLoaded, setDbLoaded] = useState(false);
 
-  // Supabase에서 뉴스 로드 (실패시 로컬 데이터 fallback)
+  // Supabase에서 뉴스 로드
   useEffect(() => {
     fetchNews()
-      .then(data => { if (data?.length) { setNewsItems(data); setDbLoaded(true); } })
-      .catch(() => {}); // 실패시 로컬 데이터 유지
+      .then(data => { if (data?.length) { setNewsItems(data); } })
+      .catch(() => {});
   }, []);
+
+  // Reset tab on language switch
+  useEffect(() => {
+    setActiveTab('All');
+    setPage(1);
+  }, [t]);
 
   const filtered = activeTab === 'All'
     ? newsItems
-    : newsItems.filter(item => item.category === activeTab);
+    : newsItems.filter(item =>
+        (item.category === '이노팸 소식' && activeTab === t('이노팸 소식', 'Innopam News')) ||
+        (item.category === '언론보도' && activeTab === t('언론보도', 'Press Coverage'))
+      );
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
   const paged = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -190,10 +201,10 @@ export default function NewsPage() {
             <div className="flex flex-col gap-5 md:gap-[50px] w-full">
               {paged.length === 0 ? (
                 <p className="font-pretendard text-[#6d758f] text-[18px] text-center py-20">
-                  해당 카테고리의 소식이 없습니다.
+                  {t('해당 카테고리의 소식이 없습니다.', 'No news available in this category.')}
                 </p>
               ) : paged.map(item => (
-                <NewsCard key={item.id} item={item} />
+                <NewsCard key={item.id} item={item} t={t} />
               ))}
             </div>
 

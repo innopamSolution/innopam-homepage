@@ -5,9 +5,13 @@
 //   Gap between title and desc: 38px
 // Background: video loop (Sequence 02_2.mp4)
 
+import { useLanguage } from '../i18n/LanguageContext';
+
 const BASE = import.meta.env.BASE_URL;
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative w-full h-[500px] md:h-[706px] bg-[#1c193f] overflow-hidden">
       {/* Background video — autoplay, muted, loop */}
@@ -40,9 +44,10 @@ export default function Hero() {
             className="font-pretendard font-normal text-white w-full text-[17px] md:text-[22px] text-center"
             style={{ lineHeight: "1.7", animation: "fadeUpIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.4s both" }}
           >
-            AI와 공간정보, 드론, 빅데이터 기술을 통해<span className="hidden md:inline"><br /></span>{' '}
-            도시·농업·재난 등 다양한 환경의 변화를 분석하고<span className="hidden md:inline"><br /></span>{' '}
-            예측부터 실행까지 연결합니다
+            {t(
+              <>AI와 공간정보, 드론, 빅데이터 기술을 통해<span className="hidden md:inline"><br /></span>{' '}도시·농업·재난 등 다양한 환경의 변화를 분석하고<span className="hidden md:inline"><br /></span>{' '}예측부터 실행까지 연결합니다</>,
+              <>Analyzing and predicting changes in urban, agricultural, and disaster environments<span className="hidden md:inline"><br /></span>{' '}through AI, geospatial, drone, and big data technologies —<span className="hidden md:inline"><br /></span>{' '}bridging insight to action.</>
+            )}
           </p>
         </div>
       </div>

@@ -4,6 +4,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { asset } from '../utils/asset';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const companySubMenu = [
   { label: 'Introduction', href: '/company/introduction' },
@@ -18,6 +19,7 @@ export default function Header() {
   const [companyOpen, setCompanyOpen] = useState(false)
   const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const { lang, setLang } = useLanguage()
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -38,6 +40,26 @@ export default function Header() {
     { label: 'Solutions', href: '/solutions', isRoute: true },
     { label: 'News', href: '/news', isRoute: true },
   ]
+
+  function LangToggle({ className = '' }) {
+    return (
+      <div className={`flex items-center gap-1 font-pretendard font-semibold text-[16px] ${className}`}>
+        <button
+          onClick={() => setLang('ko')}
+          className={`transition-all ${lang === 'ko' ? 'font-bold text-[#1e273f]' : 'opacity-50 text-[#6d758f]'}`}
+        >
+          KO
+        </button>
+        <span className="text-[#6d758f] opacity-40">|</span>
+        <button
+          onClick={() => setLang('en')}
+          className={`transition-all ${lang === 'en' ? 'font-bold text-[#1e273f]' : 'opacity-50 text-[#6d758f]'}`}
+        >
+          EN
+        </button>
+      </div>
+    )
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
@@ -113,6 +135,11 @@ export default function Header() {
                 )}
               </li>
             ))}
+
+            {/* Language toggle — desktop */}
+            <li>
+              <LangToggle />
+            </li>
           </ul>
         </nav>
 
@@ -184,6 +211,11 @@ export default function Header() {
                 )}
               </li>
             ))}
+
+            {/* Language toggle — mobile */}
+            <li className="border-b border-[#e9e9e9] px-6 py-4">
+              <LangToggle />
+            </li>
           </ul>
         </nav>
       )}

@@ -3,91 +3,256 @@ import { useState } from "react";
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
 import { useFadeUp } from '../utils/useFadeUp';
-
-const projects = [
-  {
-    id: 0,
-    title: "GEO-AI 영상분석 서비스",
-    subtitle: "멀티센서(위성, 항공, 드론)영상 기반의 GeoAI 분석 플랫폼 서비스",
-    features: [
-      { title: "데이터 수집 · 관리", desc: "위성, 드론, 항공 영상 데이터를 한 곳에 모아 쉽게 저장하고 관리" },
-      { title: "GEO-AI 모델 개발", desc: "모델 앙상블 적용을 통한 AI모델 객체 탐지 정확도 제고" },
-      { title: "One-Stop AI 서비스", desc: "학습데이터 수집, 전처리, 구축, 관리를 위한 One-Stop 서비스" },
-      { title: "모델 학습 갱신", desc: "플랫폼에서 구축된 학습데이터를 이용해 직접 모델 학습 갱신" },
-    ],
-    image: asset('assets/industries-case-screen.jpg'),
-    tag: '도시변화 모니터링',
-  },
-  {
-    id: 1,
-    title: "재배면적 관리 서비스",
-    subtitle: "드론·위성 영상 기반 농작물 재배면적 AI 자동 분석 및 관리 서비스",
-    features: [
-      { title: "작물 자동 탐지 및 분류", desc: "드론·위성 영상으로 월동무·감귤·양배추 등 작물 종류를 AI가 자동 식별" },
-      { title: "재배면적 산출", desc: "필지별 작물 재배면적을 자동 계산하여 지역별 통계 데이터 제공" },
-      { title: "생산량 예측", desc: "AI 분석 기반 작물별 예측 생산량 및 검출면적·건수 정보 제공" },
-      { title: "데이터 기반 행정 업무 지원", desc: "재배 현황 데이터를 직불금 지급·휴경지 관리 등 농업 행정에 연계" },
-    ],
-    image: asset('assets/crop-management-service.png'),
-    tag: '농업분석',
-  },
-  {
-    id: 2,
-    title: "드론영상관리 시스템",
-    subtitle: "농업 드론 영상 데이터의 수집·저장·분석을 통합하는 관리 플랫폼",
-    features: [
-      { title: "드론 기체 운영 관리", desc: "등록된 드론 기체의 비행 이력, 상태, 스케줄을 통합 관리" },
-      { title: "영상 데이터 업로드 및 전처리", desc: "업로드된 영상의 정합·보정·AI 분석을 자동화하여 데이터 품질 향상" },
-      { title: "분석결과 시각화", desc: "GIS 기반 지도에서 AI 분석 결과와 공간정보를 직관적으로 조회" },
-      { title: "보고서 자동생성", desc: "분석 결과를 기반으로 행정용 보고서를 자동으로 생성" },
-    ],
-    image: asset('assets/drone-mgmt-service.png'),
-    tag: '농업분석',
-  },
-  {
-    id: 3,
-    title: "불법 산림훼손 관리 서비스",
-    subtitle: "위성·드론 영상 기반 산림 변화 탐지 및 훼손지 관리 서비스",
-    features: [
-      { title: "산림 훼손 자동 탐지", desc: "다시기 영상 분석으로 산림 훼손 지역을 자동으로 감지" },
-      { title: "복구지 관리", desc: "훼손 지역의 복구 진행 현황을 주기적으로 모니터링" },
-      { title: "불법 훼손 감시", desc: "항공·위성 영상 분석으로 불법 산림 훼손 모니터링" },
-      { title: "변화 이력 관리", desc: "산림 변화 이력을 체계적으로 기록하고 리포트 자동 생성" },
-    ],
-    image: asset('assets/forest-aerial.png'),
-    tag: '산림 · 해양',
-  },
-  {
-    id: 4,
-    title: "해양쓰레기 관리 서비스",
-    subtitle: "위성·드론 영상 기반 해양환경 변화 탐지 및 해양 쓰레기 관리 서비스",
-    features: [
-      { title: "해양 쓰레기 탐지", desc: "드론 영상으로 해안선 및 해양 쓰레기 분포를 자동 탐지" },
-      { title: "해안선 퇴적물 및 쓰레기 모니터링", desc: "시기별 위성영상으로 해안선 퇴적물 및 쓰레기 분포 변화를 모니터링" },
-      { title: "탐지 이력 관리", desc: "쓰레기 탐지 이력 데이터베이스 구축 및 통계 제공" },
-      { title: "현장 업무 지원", desc: "수거 및 관리 업무에 지원할 수 있는 데이터 제공" },
-    ],
-    image: asset('assets/ocean-waste-service.png'),
-    tag: '산림 · 해양',
-  },
-  {
-    id: 5,
-    title: "정사영상생성 솔루션",
-    subtitle: "드론·항공 영상을 활용한 고정밀 정사영상 및 3D 모델 자동 생성 솔루션",
-    features: [
-      { title: "정사영상 자동 생성", desc: "드론·항공 촬영 영상을 자동으로 처리하여 기하보정된 정사영상 생성" },
-      { title: "3D 포인트클라우드", desc: "SfM/MVS 기반으로 고밀도 3D 포인트클라우드 및 DSM 자동 생성" },
-      { title: "정확도 검증", desc: "GCP(지상기준점) 기반 정확도 검증 및 품질 리포트 자동 생성" },
-      { title: "공간정보 연계", desc: "생성된 정사영상을 GIS 시스템에 바로 연동하여 분석에 활용" },
-    ],
-    image: asset('assets/ortho-3d-model.png'),
-    tag: '공간정보',
-  },
-];
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function ProjectSection() {
+  const { t } = useLanguage();
+
+  const projects = [
+    {
+      id: 0,
+      title: t('GEO-AI 영상분석 서비스', 'GEO-AI Image Analysis Service'),
+      subtitle: t(
+        '멀티센서(위성, 항공, 드론)영상 기반의 GeoAI 분석 플랫폼 서비스',
+        'GeoAI analysis platform service based on multi-sensor (satellite, aerial, drone) imagery'
+      ),
+      features: [
+        {
+          title: t('데이터 수집 · 관리', 'Data Collection & Management'),
+          desc: t(
+            '위성, 드론, 항공 영상 데이터를 한 곳에 모아 쉽게 저장하고 관리',
+            'Consolidate satellite, drone, and aerial imagery into a single platform for easy storage and management'
+          ),
+        },
+        {
+          title: t('GEO-AI 모델 개발', 'GEO-AI Model Development'),
+          desc: t(
+            '모델 앙상블 적용을 통한 AI모델 객체 탐지 정확도 제고',
+            'Improved object detection accuracy through AI model ensemble techniques'
+          ),
+        },
+        {
+          title: t('One-Stop AI 서비스', 'One-Stop AI Service'),
+          desc: t(
+            '학습데이터 수집, 전처리, 구축, 관리를 위한 One-Stop 서비스',
+            'One-stop service for training data collection, preprocessing, construction, and management'
+          ),
+        },
+        {
+          title: t('모델 학습 갱신', 'Model Training Update'),
+          desc: t(
+            '플랫폼에서 구축된 학습데이터를 이용해 직접 모델 학습 갱신',
+            'Directly update model training using training data built within the platform'
+          ),
+        },
+      ],
+      image: asset('assets/industries-case-screen.jpg'),
+      tag: t('도시변화 모니터링', 'Urban Change Monitoring'),
+    },
+    {
+      id: 1,
+      title: t('재배면적 관리 서비스', 'Cultivation Area Management Service'),
+      subtitle: t(
+        '드론·위성 영상 기반 농작물 재배면적 AI 자동 분석 및 관리 서비스',
+        'AI-based automatic analysis and management of crop cultivation areas using drone and satellite imagery'
+      ),
+      features: [
+        {
+          title: t('작물 자동 탐지 및 분류', 'Automatic Crop Detection & Classification'),
+          desc: t(
+            '드론·위성 영상으로 월동무·감귤·양배추 등 작물 종류를 AI가 자동 식별',
+            'AI automatically identifies crop types such as winter radish, citrus, and cabbage from drone/satellite imagery'
+          ),
+        },
+        {
+          title: t('재배면적 산출', 'Cultivation Area Calculation'),
+          desc: t(
+            '필지별 작물 재배면적을 자동 계산하여 지역별 통계 데이터 제공',
+            'Automatically calculates crop cultivation area per parcel and provides regional statistical data'
+          ),
+        },
+        {
+          title: t('생산량 예측', 'Yield Forecasting'),
+          desc: t(
+            'AI 분석 기반 작물별 예측 생산량 및 검출면적·건수 정보 제공',
+            'Provides AI-based yield predictions and detected area and count information per crop'
+          ),
+        },
+        {
+          title: t('데이터 기반 행정 업무 지원', 'Data-Driven Administrative Support'),
+          desc: t(
+            '재배 현황 데이터를 직불금 지급·휴경지 관리 등 농업 행정에 연계',
+            'Links cultivation data to agricultural administration including direct payments and fallow land management'
+          ),
+        },
+      ],
+      image: asset('assets/crop-management-service.png'),
+      tag: t('농업분석', 'Agricultural Analysis'),
+    },
+    {
+      id: 2,
+      title: t('드론영상관리 시스템', 'Drone Imagery Management System'),
+      subtitle: t(
+        '농업 드론 영상 데이터의 수집·저장·분석을 통합하는 관리 플랫폼',
+        'Integrated management platform for collection, storage, and analysis of agricultural drone imagery'
+      ),
+      features: [
+        {
+          title: t('드론 기체 운영 관리', 'Drone Fleet Management'),
+          desc: t(
+            '등록된 드론 기체의 비행 이력, 상태, 스케줄을 통합 관리',
+            'Integrated management of registered drone flight history, status, and schedules'
+          ),
+        },
+        {
+          title: t('영상 데이터 업로드 및 전처리', 'Image Upload & Preprocessing'),
+          desc: t(
+            '업로드된 영상의 정합·보정·AI 분석을 자동화하여 데이터 품질 향상',
+            'Automates alignment, correction, and AI analysis of uploaded imagery to improve data quality'
+          ),
+        },
+        {
+          title: t('분석결과 시각화', 'Analysis Result Visualization'),
+          desc: t(
+            'GIS 기반 지도에서 AI 분석 결과와 공간정보를 직관적으로 조회',
+            'Intuitively view AI analysis results and spatial data on a GIS-based map'
+          ),
+        },
+        {
+          title: t('보고서 자동생성', 'Automatic Report Generation'),
+          desc: t(
+            '분석 결과를 기반으로 행정용 보고서를 자동으로 생성',
+            'Automatically generates administrative reports based on analysis results'
+          ),
+        },
+      ],
+      image: asset('assets/drone-mgmt-service.png'),
+      tag: t('농업분석', 'Agricultural Analysis'),
+    },
+    {
+      id: 3,
+      title: t('불법 산림훼손 관리 서비스', 'Illegal Deforestation Management Service'),
+      subtitle: t(
+        '위성·드론 영상 기반 산림 변화 탐지 및 훼손지 관리 서비스',
+        'Forest change detection and damage site management using satellite and drone imagery'
+      ),
+      features: [
+        {
+          title: t('산림 훼손 자동 탐지', 'Automatic Forest Damage Detection'),
+          desc: t(
+            '다시기 영상 분석으로 산림 훼손 지역을 자동으로 감지',
+            'Automatically detects forest damage areas through multi-temporal image analysis'
+          ),
+        },
+        {
+          title: t('복구지 관리', 'Recovery Site Management'),
+          desc: t(
+            '훼손 지역의 복구 진행 현황을 주기적으로 모니터링',
+            'Periodically monitors the restoration progress of damaged areas'
+          ),
+        },
+        {
+          title: t('불법 훼손 감시', 'Illegal Damage Surveillance'),
+          desc: t(
+            '항공·위성 영상 분석으로 불법 산림 훼손 모니터링',
+            'Monitors illegal forest damage through aerial and satellite image analysis'
+          ),
+        },
+        {
+          title: t('변화 이력 관리', 'Change History Management'),
+          desc: t(
+            '산림 변화 이력을 체계적으로 기록하고 리포트 자동 생성',
+            'Systematically records forest change history and automatically generates reports'
+          ),
+        },
+      ],
+      image: asset('assets/forest-aerial.png'),
+      tag: t('산림 · 해양', 'Forest & Ocean'),
+    },
+    {
+      id: 4,
+      title: t('해양쓰레기 관리 서비스', 'Marine Debris Management Service'),
+      subtitle: t(
+        '위성·드론 영상 기반 해양환경 변화 탐지 및 해양 쓰레기 관리 서비스',
+        'Marine environment change detection and debris management using satellite and drone imagery'
+      ),
+      features: [
+        {
+          title: t('해양 쓰레기 탐지', 'Marine Debris Detection'),
+          desc: t(
+            '드론 영상으로 해안선 및 해양 쓰레기 분포를 자동 탐지',
+            'Automatically detects coastline and marine debris distribution from drone imagery'
+          ),
+        },
+        {
+          title: t('해안선 퇴적물 및 쓰레기 모니터링', 'Coastline Sediment & Debris Monitoring'),
+          desc: t(
+            '시기별 위성영상으로 해안선 퇴적물 및 쓰레기 분포 변화를 모니터링',
+            'Monitors changes in coastline sediment and debris distribution using time-series satellite imagery'
+          ),
+        },
+        {
+          title: t('탐지 이력 관리', 'Detection History Management'),
+          desc: t(
+            '쓰레기 탐지 이력 데이터베이스 구축 및 통계 제공',
+            'Builds a detection history database and provides statistical information'
+          ),
+        },
+        {
+          title: t('현장 업무 지원', 'Field Operations Support'),
+          desc: t(
+            '수거 및 관리 업무에 지원할 수 있는 데이터 제공',
+            'Provides data to support collection and management operations'
+          ),
+        },
+      ],
+      image: asset('assets/ocean-waste-service.png'),
+      tag: t('산림 · 해양', 'Forest & Ocean'),
+    },
+    {
+      id: 5,
+      title: t('정사영상생성 솔루션', 'Orthophoto Generation Solution'),
+      subtitle: t(
+        '드론·항공 영상을 활용한 고정밀 정사영상 및 3D 모델 자동 생성 솔루션',
+        'High-precision orthophoto and 3D model automatic generation solution using drone and aerial imagery'
+      ),
+      features: [
+        {
+          title: t('정사영상 자동 생성', 'Automatic Orthophoto Generation'),
+          desc: t(
+            '드론·항공 촬영 영상을 자동으로 처리하여 기하보정된 정사영상 생성',
+            'Automatically processes drone and aerial imagery to generate geometrically corrected orthophotos'
+          ),
+        },
+        {
+          title: t('3D 포인트클라우드', '3D Point Cloud'),
+          desc: t(
+            'SfM/MVS 기반으로 고밀도 3D 포인트클라우드 및 DSM 자동 생성',
+            'Automatically generates high-density 3D point clouds and DSMs based on SfM/MVS'
+          ),
+        },
+        {
+          title: t('정확도 검증', 'Accuracy Verification'),
+          desc: t(
+            'GCP(지상기준점) 기반 정확도 검증 및 품질 리포트 자동 생성',
+            'GCP-based accuracy verification and automatic quality report generation'
+          ),
+        },
+        {
+          title: t('공간정보 연계', 'Spatial Data Integration'),
+          desc: t(
+            '생성된 정사영상을 GIS 시스템에 바로 연동하여 분석에 활용',
+            'Directly integrates generated orthophotos with GIS systems for analysis'
+          ),
+        },
+      ],
+      image: asset('assets/ortho-3d-model.png'),
+      tag: t('공간정보', 'Geospatial'),
+    },
+  ];
+
   const [current, setCurrent] = useState(0);
-  const [slideDir, setSlideDir] = useState('right'); // 'right' = 다음, 'left' = 이전
+  const [slideDir, setSlideDir] = useState('right');
   const [animKey, setAnimKey] = useState(0);
   const headerRef  = useFadeUp(0.1, 'up');
   const contentRef = useFadeUp(0.08, 'up');
@@ -109,9 +274,12 @@ export default function ProjectSection() {
       {/* Header */}
       <div ref={headerRef.ref} className={`flex flex-col items-center text-center max-w-[803px] ${headerRef.className}`}>
         <SectionLabel text="Project" />
-        <h2 className="section-title mt-4 mb-3">실제 도입 사례</h2>
+        <h2 className="section-title mt-4 mb-3">{t('실제 도입 사례', 'Real-World Case Studies')}</h2>
         <p className="font-pretendard text-[16px] text-[#444] leading-[1.4]">
-          공공기관 및 지자체와 함께 진행한 GeoAI 기반 주요 프로젝트 사례입니다.
+          {t(
+            '공공기관 및 지자체와 함께 진행한 GeoAI 기반 주요 프로젝트 사례입니다.',
+            'Key GeoAI-based project cases conducted with public institutions and local governments.'
+          )}
         </p>
       </div>
 
@@ -134,7 +302,7 @@ export default function ProjectSection() {
                 className={`rounded-full transition-all duration-300 ${
                   i === current ? 'w-5 h-2 bg-[#4262ff]' : 'w-2 h-2 bg-gray-200'
                 }`}
-                aria-label={`${i + 1}번째 슬라이드`}
+                aria-label={`${i + 1}`}
               />
             ))}
           </div>
@@ -153,7 +321,7 @@ export default function ProjectSection() {
             onClick={() => go(current - 1)}
             disabled={current === 0}
             className="hidden md:flex shrink-0 w-[44px] h-[44px] rounded-full border border-[#e1e4ed] items-center justify-center text-[#6d758f] hover:bg-[#4262ff] hover:text-white hover:border-[#4262ff] disabled:opacity-25 disabled:cursor-not-allowed transition-all"
-            aria-label="이전"
+            aria-label={t('이전', 'Previous')}
           >
             ←
           </button>
@@ -209,7 +377,7 @@ export default function ProjectSection() {
             onClick={() => go(current + 1)}
             disabled={current === projects.length - 1}
             className="hidden md:flex shrink-0 w-[44px] h-[44px] rounded-full border border-[#e1e4ed] bg-white items-center justify-center text-[#6d758f] hover:bg-[#4262ff] hover:text-white hover:border-[#4262ff] disabled:opacity-25 disabled:cursor-not-allowed transition-all"
-            aria-label="다음"
+            aria-label={t('다음', 'Next')}
           >
             →
           </button>
@@ -227,7 +395,7 @@ export default function ProjectSection() {
                     ? 'w-6 h-2.5 bg-[#4262ff]'
                     : 'w-2.5 h-2.5 bg-gray-200 hover:bg-gray-400'
                 }`}
-                aria-label={`${i + 1}번째 슬라이드`}
+                aria-label={`${i + 1}`}
               />
             ))}
           </div>

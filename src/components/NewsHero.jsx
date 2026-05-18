@@ -1,7 +1,10 @@
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function NewsHero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative w-full h-[400px] overflow-hidden bg-[#1a1008]">
 
@@ -33,7 +36,7 @@ export default function NewsHero() {
           News
         </h1>
         <p className="font-pretendard font-normal text-white text-[15px] md:text-[20px] leading-[1.4] max-w-[451px]">
-          이노팸의 주요 소식과 언론보도 내용을 전합니다.
+          {t('이노팸의 주요 소식과 언론보도 내용을 전합니다.', "Stay updated with Innopam's latest news and press coverage.")}
         </p>
       </div>
     </section>

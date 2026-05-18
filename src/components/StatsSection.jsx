@@ -1,17 +1,21 @@
 // Figma node: 163:2647 (Frame 19 — stats bar)
 import { asset } from '../utils/asset';
 import { useFadeUp } from '../utils/useFadeUp';
-const imgBgPattern = asset('assets/stats-bg-pattern.png');
+import { useLanguage } from '../i18n/LanguageContext';
 
-const stats = [
-  { label: "GeoAI 연구", value: "10년+", suffix: "" },
-  { label: "산업분야", value: "7개+", suffix: "" },
-  { label: "AI모델 보유", value: "30개+", suffix: "" },
-  { label: "프로젝트 수행", value: "30개+", suffix: "" },
-];
+const imgBgPattern = asset('assets/stats-bg-pattern.png');
 
 export default function StatsSection() {
   const { ref, className } = useFadeUp(0.1, 'stagger');
+  const { t } = useLanguage();
+
+  const stats = [
+    { label: t('GeoAI 연구', 'GeoAI Research'), value: "10+", suffix: t('년', ' Yrs') },
+    { label: t('산업분야', 'Industries'), value: "7+", suffix: "" },
+    { label: t('AI모델 보유', 'AI Models'), value: "30+", suffix: "" },
+    { label: t('프로젝트 수행', 'Projects'), value: "30+", suffix: "" },
+  ];
+
   return (
     <section className="relative bg-[#eef1ff] py-[57px] px-6 md:px-[147px]">
       {/* Subtle bg pattern */}

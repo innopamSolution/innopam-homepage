@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 import SectionLabel from './SectionLabel';
 import { asset } from '../utils/asset';
 import { useFadeUp } from '../utils/useFadeUp';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function ProductsSection() {
   const { ref, className } = useFadeUp(0.1, 'up');
+  const { t } = useLanguage();
+
   return (
     <section id="products" className="relative w-full h-[480px] md:h-[638px] overflow-hidden">
       {/* Background image */}
@@ -25,7 +28,7 @@ export default function ProductsSection() {
 
         <div className="flex flex-col gap-[4px] items-center w-full max-w-[794px]">
           <p className="font-pretendard font-bold text-[26px] md:text-[48px] text-white leading-[1.3] md:leading-[65px] tracking-[-1px] md:tracking-[-2px] text-center w-full">
-            공간정보 기술과 인공지능의 융합
+            {t('공간정보 기술과 인공지능의 융합', 'The Fusion of Geospatial Technology and Artificial Intelligence')}
           </p>
           <div className="flex items-center gap-[8px] md:gap-[10px]">
             <img
@@ -40,15 +43,17 @@ export default function ProductsSection() {
         </div>
 
         <p className="font-pretendard font-normal text-[14px] md:text-[20px] text-white leading-[1.6] md:leading-[1.4] max-w-[794px] text-center px-2">
-          GeoX는 '공간(Geo)'과 '확장(eXpansion)'의 의미를 담고 있으며, 이노팸이 개발한 공간지능정보(GeoAI) 기반의
-          '차세대 미래지향 GeoX 플랫폼 솔루션 서비스' 시리즈입니다.
+          {t(
+            "GeoX는 '공간(Geo)'과 '확장(eXpansion)'의 의미를 담고 있으며, 이노팸이 개발한 공간지능정보(GeoAI) 기반의 '차세대 미래지향 GeoX 플랫폼 솔루션 서비스' 시리즈입니다.",
+            "GeoX combines 'Geo' (space) and 'eXpansion', representing Innopam's next-generation GeoAI-based platform solution service series."
+          )}
         </p>
 
         <Link
           to="/products"
           className="brand-gradient inline-flex items-center text-white font-pretendard font-bold text-[13px] md:text-[14px] tracking-[1.3px] px-[36px] md:px-[54px] py-[12px] md:py-[15px] rounded-full hover:opacity-90 transition-opacity"
         >
-          자세히보기
+          {t('자세히보기', 'Learn More')}
         </Link>
       </div>
     </section>

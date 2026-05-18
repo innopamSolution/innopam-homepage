@@ -1,6 +1,8 @@
 // Figma node: 183:3535 (Clients section)
 import { asset } from '../utils/asset';
 import { useFadeUp } from '../utils/useFadeUp';
+import { useLanguage } from '../i18n/LanguageContext';
+
 const imgLogo1  = asset('assets/client-logo1.svg');
 const imgLogo2  = asset('assets/client-logo2.svg');
 const imgLogo3  = asset('assets/client-logo3.svg');
@@ -32,6 +34,8 @@ const clientRows = [
 export default function ClientsSection() {
   const headerRef = useFadeUp(0.1, 'up');
   const logosRef  = useFadeUp(0.05, 'stagger');
+  const { t } = useLanguage();
+
   return (
     <section className="bg-[#f8f8f8] flex flex-col gap-[60px] lg:gap-[120px] items-center px-4 md:px-[88px] py-[60px] lg:py-[100px]">
       {/* Header */}
@@ -40,7 +44,7 @@ export default function ClientsSection() {
           Clients
         </h2>
         <p className="font-pretendard text-[16px] text-[#444] leading-[1.4]">
-          이노팸의 공공기관 및 지자체 파트너
+          {t('이노팸의 공공기관 및 지자체 파트너', "Innopam's public institution and local government partners")}
         </p>
       </div>
 

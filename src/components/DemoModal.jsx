@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { submitDemoRequest } from '../lib/supabase';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const PRODUCTS = [
   'GeoXRealMap',
@@ -9,12 +10,20 @@ const PRODUCTS = [
   '기타 / 미정',
 ];
 
-const INQUIRY_TYPES = [
+const INQUIRY_TYPES_KO = [
   '제품 데모 신청',
   '기술 문의',
   '도입 검토',
   '파트너십',
   '기타',
+];
+
+const INQUIRY_TYPES_EN = [
+  'Product Demo Request',
+  'Technical Inquiry',
+  'Adoption Review',
+  'Partnership',
+  'Other',
 ];
 
 const EMPTY = {
@@ -32,14 +41,27 @@ const EMPTY = {
 export default function DemoModal({
   open,
   onClose,
-  title = '데모 신청',
-  subtitle = '이노팸 솔루션 데모를 신청해 주시면 빠르게 연락드리겠습니다.',
-  submitLabel = '데모 신청하기',
+  title,
+  subtitle,
+  submitLabel,
 }) {
+  const { t, lang } = useLanguage();
   const [form, setForm] = useState(EMPTY);
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState('');
+
+  const modalTitle = title ?? t('데모 신청', 'Request a Demo');
+  const modalSubtitle = subtitle ?? t('이노팸 솔루션 데모를 신청해 주시면 빠르게 연락드리겠습니다.', 'Request a demo of Innopam solutions and we will contact you promptly.');
+  const modalSubmitLabel = submitLabel ?? t('데모 신청하기', 'Submit Request');
+
+  const INQUIRY_TYPES = lang === 'en' ? INQUIRY_TYPES_EN : INQUIRY_TYPES_KO;
+  const PRODUCT_LABELS = {
+    'GeoXRealMap': 'GeoXRealMap',
+    'GeoX CityVision': 'GeoX CityVision',
+    'CrackEyeX': 'CrackEyeX',
+    '기타 / 미정': t('기타 / 미정', 'Other / TBD'),
+  };
 
   // 열릴 때 초기화
   useEffect(() => {
@@ -58,10 +80,12 @@ export default function DemoModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.agreed) { setError('개인정보 수집 및 이용에 동의해 주세요.'); return; }
+    if (!form.agreed) {
+      setError(t('개인정보 수집 및 이용에 동의해 주세요.', 'Please agree to the collection and use of personal information.'));
+      return;
+    }
     setError(''); setSending(true);
     try {
-      // 1) Supabase 저장
       await submitDemoRequest({
         name: form.name,
         company: form.company,
@@ -74,7 +98,6 @@ export default function DemoModal({
         status: 'new',
       });
 
-      // 2) EmailJS 이메일 발송 (설정된 경우)
       const svcId  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const tplId  = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
       const pubKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -95,7 +118,7 @@ export default function DemoModal({
       setDone(true);
     } catch (err) {
       const msg = err?.message || JSON.stringify(err);
-      setError(`전송 중 오류가 발생했습니다. (${msg})`);
+      setError(t(`전송 중 오류가 발생했습니다. (${msg})`, `An error occurred while sending. (${msg})`));
       console.error(err);
     } finally {
       setSending(false);
@@ -112,15 +135,15 @@ export default function DemoModal({
         {/* 헤더 */}
         <div className="flex items-center justify-between px-8 py-5 border-b border-gray-100 shrink-0">
           <div>
-            <h2 className="font-pretendard font-bold text-[20px] text-[#1a1a2e]">{title}</h2>
+            <h2 className="font-pretendard font-bold text-[20px] text-[#1a1a2e]">{modalTitle}</h2>
             <p className="font-pretendard text-[14px] text-[#6d758f] mt-0.5">
-              {subtitle}
+              {modalSubtitle}
             </p>
           </div>
           <button
             onClick={onClose}
             className="w-11 h-11 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-900 transition-all text-2xl font-light"
-            aria-label="닫기"
+            aria-label={t('닫기', 'Close')}
           >×</button>
         </div>
 
@@ -133,16 +156,18 @@ export default function DemoModal({
               </svg>
             </div>
             <div>
-              <p className="font-pretendard font-bold text-[20px] text-[#1a1a2e] mb-2">데모 신청이 정상적으로 완료되었습니다.</p>
+              <p className="font-pretendard font-bold text-[20px] text-[#1a1a2e] mb-2">
+                {t('데모 신청이 정상적으로 완료되었습니다.', 'Your request has been successfully submitted.')}
+              </p>
               <p className="font-pretendard text-[15px] text-[#6d758f] leading-relaxed">
-                빠른 시일내로 이노팸의 담당자가 연락드리겠습니다.
+                {t('빠른 시일내로 이노팸의 담당자가 연락드리겠습니다.', 'An Innopam representative will contact you shortly.')}
               </p>
             </div>
             <button
               onClick={onClose}
               className="mt-2 px-8 py-3 brand-gradient text-white font-pretendard font-bold text-[14px] rounded-full hover:opacity-90 transition-opacity"
             >
-              닫기
+              {t('닫기', 'Close')}
             </button>
           </div>
         ) : (
@@ -151,26 +176,26 @@ export default function DemoModal({
 
             {/* 기본 정보 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Field label="담당자 이름" required>
-                <input required className={input} placeholder="홍길동" value={form.name} onChange={e => set('name', e.target.value)} />
+              <Field label={t('담당자 이름', 'Contact Name')} required>
+                <input required className={input} placeholder={t('홍길동', 'John Doe')} value={form.name} onChange={e => set('name', e.target.value)} />
               </Field>
-              <Field label="회사명">
-                <input className={input} placeholder="(주)이노팸" value={form.company} onChange={e => set('company', e.target.value)} />
+              <Field label={t('회사명', 'Company')}>
+                <input className={input} placeholder={t('(주)이노팸', 'Innopam Inc.')} value={form.company} onChange={e => set('company', e.target.value)} />
               </Field>
-              <Field label="부서 / 직책">
-                <input className={input} placeholder="개발팀 / 과장" value={form.position} onChange={e => set('position', e.target.value)} />
+              <Field label={t('부서 / 직책', 'Department / Title')}>
+                <input className={input} placeholder={t('개발팀 / 과장', 'R&D Team / Manager')} value={form.position} onChange={e => set('position', e.target.value)} />
               </Field>
-              <Field label="연락처">
+              <Field label={t('연락처', 'Phone')}>
                 <input className={input} placeholder="010-0000-0000" value={form.phone} onChange={e => set('phone', e.target.value)} />
               </Field>
             </div>
 
-            <Field label="이메일" required>
+            <Field label={t('이메일', 'Email')} required>
               <input required type="email" className={input} placeholder="example@company.com" value={form.email} onChange={e => set('email', e.target.value)} />
             </Field>
 
             {/* 관심 제품 */}
-            <Field label="관심 제품">
+            <Field label={t('관심 제품', 'Product of Interest')}>
               <div className="flex flex-wrap gap-2">
                 {PRODUCTS.map(p => (
                   <button
@@ -181,33 +206,39 @@ export default function DemoModal({
                         ? 'bg-[#4262ff] text-white border-[#4262ff]'
                         : 'bg-white text-[#6d758f] border-gray-200 hover:border-[#4262ff] hover:text-[#4262ff]'
                     }`}
-                  >{p}</button>
+                  >{PRODUCT_LABELS[p] || p}</button>
                 ))}
               </div>
             </Field>
 
             {/* 문의 유형 */}
-            <Field label="문의 유형">
+            <Field label={t('문의 유형', 'Inquiry Type')}>
               <div className="flex flex-wrap gap-2">
-                {INQUIRY_TYPES.map(t => (
-                  <button
-                    key={t} type="button"
-                    onClick={() => set('inquiry_type', form.inquiry_type === t ? '' : t)}
-                    className={`px-4 py-2 rounded-full text-[13px] font-pretendard font-medium border transition-colors ${
-                      form.inquiry_type === t
-                        ? 'bg-[#1a1a2e] text-white border-[#1a1a2e]'
-                        : 'bg-white text-[#6d758f] border-gray-200 hover:border-[#1a1a2e] hover:text-[#1a1a2e]'
-                    }`}
-                  >{t}</button>
-                ))}
+                {INQUIRY_TYPES.map((t_item, idx) => {
+                  const koVal = INQUIRY_TYPES_KO[idx];
+                  return (
+                    <button
+                      key={t_item} type="button"
+                      onClick={() => set('inquiry_type', form.inquiry_type === koVal ? '' : koVal)}
+                      className={`px-4 py-2 rounded-full text-[13px] font-pretendard font-medium border transition-colors ${
+                        form.inquiry_type === koVal
+                          ? 'bg-[#1a1a2e] text-white border-[#1a1a2e]'
+                          : 'bg-white text-[#6d758f] border-gray-200 hover:border-[#1a1a2e] hover:text-[#1a1a2e]'
+                      }`}
+                    >{t_item}</button>
+                  );
+                })}
               </div>
             </Field>
 
             {/* 문의 내용 */}
-            <Field label="문의 내용">
+            <Field label={t('문의 내용', 'Message')}>
               <textarea
                 className={`${input} resize-none min-h-[120px]`}
-                placeholder="프로젝트 개요, 도입 목적, 원하시는 기능 등을 자유롭게 작성해 주세요."
+                placeholder={t(
+                  '프로젝트 개요, 도입 목적, 원하시는 기능 등을 자유롭게 작성해 주세요.',
+                  'Please describe your project overview, adoption purpose, desired features, etc.'
+                )}
                 value={form.message}
                 onChange={e => set('message', e.target.value)}
               />
@@ -215,12 +246,17 @@ export default function DemoModal({
 
             {/* 개인정보 동의 */}
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 flex flex-col gap-3">
-              <p className="font-pretendard font-bold text-[13px] text-[#3a343b]">개인정보 수집 및 이용 동의</p>
+              <p className="font-pretendard font-bold text-[13px] text-[#3a343b]">
+                {t('개인정보 수집 및 이용 동의', 'Consent to Collection and Use of Personal Information')}
+              </p>
               <div className="font-pretendard text-[12px] text-[#6d758f] leading-relaxed max-h-24 overflow-y-auto">
-                <p><strong>수집 항목:</strong> 이름, 회사명, 직책, 이메일, 연락처, 문의 내용</p>
-                <p><strong>수집 목적:</strong> 데모 신청 접수 및 담당자 연락</p>
-                <p><strong>보유 기간:</strong> 문의 처리 완료 후 1년</p>
-                <p className="mt-1">귀하는 개인정보 제공을 거부할 권리가 있으나, 거부 시 데모 신청이 어려울 수 있습니다.</p>
+                <p><strong>{t('수집 항목:', 'Items collected:')}</strong> {t('이름, 회사명, 직책, 이메일, 연락처, 문의 내용', 'Name, company, title, email, phone, message')}</p>
+                <p><strong>{t('수집 목적:', 'Purpose:')}</strong> {t('데모 신청 접수 및 담당자 연락', 'Processing demo requests and contacting you')}</p>
+                <p><strong>{t('보유 기간:', 'Retention period:')}</strong> {t('문의 처리 완료 후 1년', '1 year after inquiry processing is complete')}</p>
+                <p className="mt-1">{t(
+                  '귀하는 개인정보 제공을 거부할 권리가 있으나, 거부 시 데모 신청이 어려울 수 있습니다.',
+                  'You have the right to refuse the provision of personal information; however, refusal may make it difficult to process your demo request.'
+                )}</p>
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -230,7 +266,7 @@ export default function DemoModal({
                   className="w-4 h-4 accent-[#4262ff]"
                 />
                 <span className="font-pretendard text-[13px] text-[#3a343b] font-medium">
-                  개인정보 수집 및 이용에 동의합니다. <span className="text-red-500">*</span>
+                  {t('개인정보 수집 및 이용에 동의합니다.', 'I agree to the collection and use of personal information.')} <span className="text-red-500">*</span>
                 </span>
               </label>
             </div>
@@ -245,7 +281,7 @@ export default function DemoModal({
               disabled={sending}
               className="w-full py-4 brand-gradient text-white font-pretendard font-bold text-[15px] rounded-full hover:opacity-90 disabled:opacity-50 transition-opacity"
             >
-              {sending ? '전송 중...' : submitLabel}
+              {sending ? t('전송 중...', 'Sending...') : modalSubmitLabel}
             </button>
           </form>
         )}

@@ -5,8 +5,7 @@ import SectionLabel from './SectionLabel';
 import { fetchNews } from '../lib/supabase';
 import { newsItems as localNewsItems } from '../data/news';
 import { useFadeUp } from '../utils/useFadeUp';
-
-const TABS = ['All', '이노팸 소식', '언론보도'];
+import { useLanguage } from '../i18n/LanguageContext';
 
 function IconCalendar() {
   return (
@@ -47,6 +46,9 @@ function IconArrow() {
 }
 
 export default function NewsSection() {
+  const { t } = useLanguage();
+  const TABS = ['All', t('이노팸 소식', 'Innopam News'), t('언론보도', 'Press Coverage')];
+
   const [activeTab, setActiveTab] = useState('All');
   const [allNews, setAllNews] = useState(localNewsItems);
   const headerRef  = useFadeUp(0.1, 'up');
@@ -59,9 +61,15 @@ export default function NewsSection() {
       .catch(() => {});
   }, []);
 
+  // Reset tab on language change (tabs are Korean category names in DB)
+  useEffect(() => {
+    setActiveTab('All');
+  }, [t]);
+
   const filtered = (activeTab === 'All'
     ? allNews
-    : allNews.filter(item => item.category === activeTab)
+    : allNews.filter(item => item.category === '이노팸 소식' && activeTab === t('이노팸 소식', 'Innopam News')
+        || item.category === '언론보도' && activeTab === t('언론보도', 'Press Coverage'))
   ).slice(0, 3);
 
   return (
@@ -71,16 +79,15 @@ export default function NewsSection() {
       <div ref={headerRef.ref} className={`flex flex-col items-center text-center max-w-[803px] ${headerRef.className}`}>
         <SectionLabel text="News" />
         <h2 className="font-space font-light text-[32px] md:text-[40px] leading-[48px] text-black mt-4 mb-3">
-          이노팸 소식과 언론보도
+          {t('이노팸 소식과 언론보도', 'Innopam News & Press Coverage')}
         </h2>
         <p className="font-pretendard text-[16px] text-[#444] leading-[1.4]">
-          이노팸의 최근 소식과 언론보도 내용을 전합니다.
+          {t('이노팸의 최근 소식과 언론보도 내용을 전합니다.', "Stay updated with Innopam's latest news and press coverage.")}
         </p>
       </div>
 
       {/* Tabs + 더 보기 */}
       <div ref={tabsRef.ref} className={`flex flex-col gap-[40px] items-center w-full max-w-[1104px] ${tabsRef.className}`}>
-        {/* 모바일: 탭 + 더보기 세로 배치 / 데스크탑: 가로 배치 */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 w-full">
           {/* 필터 탭 */}
           <div className="flex gap-[6px] md:gap-[8px] items-center">
@@ -104,7 +111,7 @@ export default function NewsSection() {
             to="/news"
             className="flex items-center gap-[5px] text-[#4262ff] text-[13px] md:text-[14px] font-pretendard hover:opacity-70 transition-opacity self-start md:self-auto"
           >
-            더 보기 <IconArrow />
+            {t('더 보기', 'View More')} <IconArrow />
           </Link>
         </div>
 
@@ -112,7 +119,7 @@ export default function NewsSection() {
         <div ref={cardsRef.ref} className={`flex flex-col gap-[48px] w-full ${cardsRef.className}`}>
           {filtered.length === 0 ? (
             <p className="font-pretendard text-[#6d758f] text-[16px] text-center py-12">
-              해당 카테고리의 소식이 없습니다.
+              {t('해당 카테고리의 소식이 없습니다.', 'No news available in this category.')}
             </p>
           ) : filtered.map((item) => (
             <article
@@ -155,7 +162,7 @@ export default function NewsSection() {
                     to={`/news/${item.id}`}
                     className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
                   >
-                    자세히 보기 <IconArrow />
+                    {t('자세히 보기', 'Read More')} <IconArrow />
                   </Link>
                 ) : (
                   <a
@@ -164,7 +171,7 @@ export default function NewsSection() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-[5px] text-[#4262ff] text-[14px] font-pretendard hover:opacity-70 transition-opacity"
                   >
-                    기사 보기 <IconExternal />
+                    {t('기사 보기', 'View Article')} <IconExternal />
                   </a>
                 )}
               </div>

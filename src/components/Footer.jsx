@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import { asset } from '../utils/asset';
 import DemoModal from './DemoModal';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Footer() {
   const [contactOpen, setContactOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <footer className="relative bg-black flex flex-col gap-[60px] md:gap-[100px] items-center pb-[40px] pt-[80px] md:pt-[100px] px-6 md:px-[80px]">
@@ -17,17 +19,16 @@ export default function Footer() {
               className="font-pretendard font-normal text-white mb-7 md:mb-10 text-[15px] md:text-[24px]"
               style={{ lineHeight: "1.8", letterSpacing: "-0.48px" }}
             >
-              공간정보 기반 AI 프로젝트를 계획 중이신가요?
-              <br />
-              도시·농업·재난·시설물 관리까지
-              <br />
-              다양한 분야의 문제 해결을 지원합니다
+              {t(
+                <>공간정보 기반 AI 프로젝트를 계획 중이신가요?<br />도시·농업·재난·시설물 관리까지<br />다양한 분야의 문제 해결을 지원합니다</>,
+                <>Planning a geospatial AI project?<br />From urban and agricultural to disaster and infrastructure management —<br />we support problem-solving across diverse fields.</>
+              )}
             </p>
             <button
               onClick={() => setContactOpen(true)}
               className="brand-gradient inline-flex items-center text-white font-space font-bold text-[11px] md:text-[12px] tracking-[1.3px] uppercase px-[36px] md:px-[54px] py-[12px] md:py-[15px] rounded-full hover:opacity-90 transition-opacity"
             >
-              문의하기
+              {t('문의하기', 'Contact Us')}
             </button>
           </div>
 
@@ -39,11 +40,11 @@ export default function Footer() {
                 Address
               </p>
               <div className="font-space text-[13px] md:text-[17px] text-white leading-[22px] md:leading-[27.2px]">
-                <p>본사</p>
-                <p>서울시 용산구 원효로 146 금강프라임빌딩 6층, 13층</p>
+                <p>{t('본사', 'Headquarters')}</p>
+                <p>{t('서울시 용산구 원효로 146 금강프라임빌딩 6층, 13층', '146 Wonhyo-ro, Yongsan-gu, Seoul, Geumgang Prime Bldg. 6F & 13F')}</p>
                 <br />
-                <p>제주지사</p>
-                <p>제주특별자치도 제주시 신대로 145. 2층 005호 (연동, 앤써밀당)</p>
+                <p>{t('제주지사', 'Jeju Branch')}</p>
+                <p>{t('제주특별자치도 제주시 신대로 145. 2층 005호 (연동, 앤써밀당)', '145 Sindae-ro, Jeju-si, Jeju-do, 2F #005')}</p>
               </div>
             </div>
 
@@ -86,9 +87,9 @@ export default function Footer() {
       <DemoModal
         open={contactOpen}
         onClose={() => setContactOpen(false)}
-        title="문의하기"
-        subtitle="이노팸에 문의사항을 남겨주시면 빠르게 연락드리겠습니다."
-        submitLabel="문의하기"
+        title={t('문의하기', 'Contact Us')}
+        subtitle={t('이노팸에 문의사항을 남겨주시면 빠르게 연락드리겠습니다.', 'Leave us a message and we will get back to you shortly.')}
+        submitLabel={t('문의하기', 'Submit')}
       />
     </footer>
   );
