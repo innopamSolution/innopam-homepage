@@ -5,20 +5,20 @@ import { useLanguage } from '../i18n/LanguageContext';
 
 // 모든 로고를 하나의 배열로 — 높이를 40px 기준으로 통일
 const clients = [
-  { src: asset('assets/clients/client-sanrimcheong.png'), alt: '산림청',             h: 40 },
-  { src: asset('assets/clients/client-ngii.png'),         alt: '국토지리정보원',     h: 40 },
-  { src: asset('assets/clients/client-mois.png'),         alt: '행정안전부',         h: 40 },
-  { src: asset('assets/clients/client-seoul.png'),        alt: '서울특별시',         h: 38 },
-  { src: asset('assets/clients/client-jeju.png'),         alt: '제주특별자치도',     h: 32 },
-  { src: asset('assets/clients/client-asan.png'),         alt: '아산시',             h: 34 },
-  { src: asset('assets/clients/client-uos.png'),          alt: '서울시립대학교',     h: 30 },
-  { src: asset('assets/clients/client-nia.png'),          alt: '한국지능정보사회진흥원', h: 24 },
-  { src: asset('assets/clients/client-krei.png'),         alt: 'KREI 한국농촌경제연구원', h: 48 },
-  { src: asset('assets/clients/client-kict.png'),         alt: 'KICT 한국건설기술연구원', h: 44 },
-  { src: asset('assets/clients/client-kiast-new.png'),    alt: 'KIAST 항공안전기술원',  h: 38 },
-  { src: asset('assets/clients/client-kofpi.png'),        alt: '한국임업진흥원',     h: 38 },
-  { src: asset('assets/clients/client-kwater.png'),       alt: '한국수자원공사',     h: 34 },
-  { src: asset('assets/clients/client-sba.png'),          alt: '서울경제진흥원',     h: 34 },
+  { src: asset('assets/clients/client-sanrimcheong.svg'), alt: '산림청',             h: 40 },
+  { src: asset('assets/clients/client-ngii.svg'),         alt: '국토지리정보원',     h: 40 },
+  { src: asset('assets/clients/client-mois.svg'),         alt: '행정안전부',         h: 40 },
+  { src: asset('assets/clients/client-seoul.svg'),        alt: '서울특별시',         h: 38 },
+  { src: asset('assets/clients/client-jeju.svg'),         alt: '제주특별자치도',     h: 32 },
+  { src: asset('assets/clients/client-asan.svg'),         alt: '아산시',             h: 34 },
+  { src: asset('assets/clients/client-uos.svg'),          alt: '서울시립대학교',     h: 30 },
+  { src: asset('assets/clients/client-nia.svg'),          alt: '한국지능정보사회진흥원', h: 24 },
+  { src: asset('assets/clients/client-krei.svg'),         alt: 'KREI 한국농촌경제연구원', h: 48 },
+  { src: asset('assets/clients/client-kict.svg'),         alt: 'KICT 한국건설기술연구원', h: 44 },
+  { src: asset('assets/clients/client-kiast.svg'),        alt: 'KIAST 항공안전기술원',  h: 38 },
+  { src: asset('assets/clients/client-kofpi.svg'),        alt: '한국임업진흥원',     h: 38 },
+  { src: asset('assets/clients/client-kwater.svg'),       alt: '한국수자원공사',     h: 34 },
+  { src: asset('assets/clients/client-sba.svg'),          alt: '서울경제진흥원',     h: 34 },
 ];
 
 export default function ClientsSection() {
